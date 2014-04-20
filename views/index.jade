@@ -3,7 +3,7 @@ extends layout
 block content
   .container
     .row
-      .col-md-8(style="background: green; height: 300px;")
+      .col-md-8(style="height: 300px;")
         h1 TABLES
         table.table
           tr
@@ -26,34 +26,20 @@ block content
             td Birthday
             td
             td 1993/5/3
-      .col-md-4.op-list-col(style="background: blue; height: 600px;")
+      .col-md-4.op-list-col(style="height: 600px;")
         h1 OPERATIONS
-        select.form-control(multiple, style="height: 500px;")
-          option 1
-          option 2
-          option 3
-          option 4
-          option 5
-          option 6
-          option 1
-          option 1
-          option 1
-          option 2
-          option 3
-          option 4
-          option 5
-          option 6
-          option 2
-          option 3
-          option 4
-          option 5
-          option 6
-          option 2
-          option 3
-          option 4
-          option 5
-          option 6
-      .col-md-8(style="background: red; height: 300px;")
+        .list-group
+          a.list-group-item(href="#") Operation 1
+          a.list-group-item(href="#") Operation 2
+          a.list-group-item(href="#") Operation 3
+          a.list-group-item(href="#") Operation 4
+          a.list-group-item(href="#") Operation 5
+          a.list-group-item.active(href="#") Operation 6
+          a.list-group-item(href="#") Operation 7
+          a.list-group-item(href="#") Operation 8
+          a.list-group-item(href="#") Operation 9
+          a.list-group-item(href="#") Operation 10
+      .col-md-8(style="height: 300px;")
         h1 OPERATE
         h2 FOR PUT
         form.form-inline(role="form")
