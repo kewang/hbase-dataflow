@@ -34,3 +34,16 @@ block content
           option 6
       .col-md-8(style="background: red; height: 300px;")
         h1 OPERATE
+        form.form-inline(role="form")
+          .form-group
+            label(for="inputOperate") Operate
+            select.form-control(id="inputOperate")
+              option PUT
+              option GET
+              option SCAN
+          .form-group
+            label(for="inputTable") Table
+            select.form-control(id="inputTable")
+              option Table A
+              option Table B
+              option Table C
