@@ -6,3 +6,9 @@ body {
 a {
   color: #00B7FF;
 }
+
+@media (min-width: 992px){
+  .op-list-col {
+    float: right;
+  }
+}
