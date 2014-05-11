@@ -4,12 +4,8 @@ function dataflow($scope){
   $scope.createTable = function(){
     name = prompt("Create a new table");
 
-    this.tableList.push({
-      "name": name
-    });
-  }
+    var table = new Table(name);
 
-  $scope.changeTable = function(){
-  
+    console.log(table);
   }
 }
