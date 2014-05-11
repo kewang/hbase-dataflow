@@ -4,7 +4,7 @@ block content
   .container
     .row
       .col-md-8(style="height: 300px;")
-        h1 TABLES
+        h2 TABLES
         form.form-inline(role="form")
           button.btn.btn-default(type="button") Create table
           select.form-control
@@ -18,26 +18,26 @@ block content
         table.table
           tr
             th CQ
-            th Description
             th R1
             th R2
           tr
+            th RK
+            th rk1
+            th rk2
+          tr
             td id
-            td Identify
             td kewang
             td mxxx
           tr
             td name
-            td Name
             td Michael Jordan
             td
           tr
             td bir
-            td Birthday
             td
             td 1993/5/3
       .col-md-4.op-list-col(style="height: 600px;")
-        h1 OPERATIONS
+        h2 OPERATIONS
         .list-group
           a.list-group-item(href="#") Operation 1
           a.list-group-item(href="#") Operation 2
@@ -50,13 +50,9 @@ block content
           a.list-group-item(href="#") Operation 9
           a.list-group-item(href="#") Operation 10
       .col-md-8(style="height: 300px;")
-        h1 OPERATE
-        h2 FOR PUT
+        h2 COMMANDS
+        h3 Create
         form.form-inline(role="form")
-          .form-group
-            label(for="inputOperate") Operate
-            select.form-control(id="inputOperate")
-              option PUT
           .form-group
             label(for="inputTable") Table
             select.form-control(id="inputTable")
@@ -66,13 +62,10 @@ block content
           .form-group
             label(for="inputRowKey") Row Key
             input.form-control(type="text", placeholder="Input or Select CQs to build Row Key")
-        h2 FOR GET
+          button.btn.btn-default(type="button") Create CQs
+          button.btn.btn-default(type="button") Submit
+        h3 Update
         form.form-inline(role="form")
-          .form-group
-            label(for="inputOperate") Operate
-            select.form-control(id="inputOperate")
-              option GET
-              option SCAN
           .form-group
             label(for="inputTable") Table
             select.form-control(id="inputTable")
@@ -82,6 +75,21 @@ block content
           .form-group
             label(for="inputRowKey") Row Key
             select.form-control(id="inputRowKey")
-              option RK1
-              option RK2
-              option RK3
+              option rk1
+              option rk2
+          button.btn.btn-default(type="button") Update CQs
+          button.btn.btn-default(type="button") Submit
+        h3 Get
+        form.form-inline(role="form")
+          .form-group
+            label(for="inputTable") Table
+            select.form-control(id="inputTable")
+              option Table A
+              option Table B
+              option Table C
+          .form-group
+            label(for="inputRowKey") Row Key
+            select.form-control(id="inputRowKey")
+              option rk1
+              option rk2
+          button.btn.btn-default(type="button") Submit
