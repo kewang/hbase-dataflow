@@ -6,15 +6,9 @@ block content
       .col-md-8(style="height: 300px;")
         h2 TABLES
         form.form-inline(role="form")
-          button.btn.btn-default(type="button") Create table
-          select.form-control
-            option Table A
-            option Table B
-            option Table C
-            option Table D
-            option Table E
-            option Table F
-            option Table G
+          button.btn.btn-default(type="button", ng-click="createTable()") Create table
+          select.form-control(ng-model="selectTable", ng-options="t.name for t in tableList")
+            option(value="") Please select a table
         table.table
           tr
             th CQ
@@ -55,10 +49,8 @@ block content
         form.form-inline(role="form")
           .form-group
             label(for="inputTable") Table
-            select.form-control(id="inputTable")
-              option Table A
-              option Table B
-              option Table C
+            select.form-control(id="inputTable", ng-model="selectTable", ng-options="t.name for t in tableList")
+              option(value="") Please select a table
           .form-group
             label(for="inputRowKey") Row Key
             input.form-control(type="text", placeholder="Input or Select CQs to build Row Key")
@@ -68,10 +60,8 @@ block content
         form.form-inline(role="form")
           .form-group
             label(for="inputTable") Table
-            select.form-control(id="inputTable")
-              option Table A
-              option Table B
-              option Table C
+            select.form-control(id="inputTable", ng-model="selectTable", ng-options="t.name for t in tableList")
+              option(value="") Please select a table
           .form-group
             label(for="inputRowKey") Row Key
             select.form-control(id="inputRowKey")
@@ -83,10 +73,8 @@ block content
         form.form-inline(role="form")
           .form-group
             label(for="inputTable") Table
-            select.form-control(id="inputTable")
-              option Table A
-              option Table B
-              option Table C
+            select.form-control(id="inputTable", ng-model="selectTable", ng-options="t.name for t in tableList")
+              option(value="") Please select a table
           .form-group
             label(for="inputRowKey") Row Key
             select.form-control(id="inputRowKey")
