@@ -9,23 +9,7 @@ block content
           button.btn.btn-default(type="button", ng-click="createTable()") Create table
           select.form-control(ng-model="selectTable1", ng-options="t.name for t in tableList")
             option(value="") Please select a table
-        table.table
-          tr
-            th CQ
-            th rk1
-            th rk2
-          tr
-            td id
-            td kewang
-            td mxxx
-          tr
-            td name
-            td Michael Jordan
-            td
-          tr
-            td bir
-            td
-            td 1993/5/3
+        .table(ng-grid="gridOptions")
       .col-md-4.op-list-col(style="height: 600px;")
         h2 OPERATIONS
         .list-group
