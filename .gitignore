@@ -2,4 +2,3 @@ node_modules
 public/javascripts/bootstrap
 public/javascripts/jquery
 public/javascripts/angular
-public/javascripts/ng-table
