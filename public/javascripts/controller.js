@@ -5,6 +5,8 @@ function dataflow($scope){
     var name = prompt("Create a new table");
     var table = new Table(name);
 
-    console.log(table);
+    this.tableList.push(table);
+
+    console.log(this.tableList);
   }
 }
