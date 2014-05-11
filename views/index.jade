@@ -50,7 +50,7 @@ block content
           .form-group
             label(for="inputRowKey") Row Key
             input.form-control(type="text", placeholder="Input or Select CQs to build Row Key")
-          button.btn.btn-default(type="button") Create CQs
+          button.btn.btn-default(type="button", data-toggle="modal", data-target="#create-qualifiers-dialog") Create CQs
           button.btn.btn-default(type="button") Submit
         h3 Update
         form.form-inline(role="form")
@@ -77,3 +77,14 @@ block content
               option rk1
               option rk2
           button.btn.btn-default(type="button") Submit
+  .modal.fade#create-qualifiers-dialog(tabindex="-1", role="dialog", aria-labelledby="create-qualifiers-dialog-title", aria-hidden=true)
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
+          h4.modal-title#create-qualifiers-dialog-title Modal title
+        .modal-body
+
+        .modal-footer
+          button.btn.btn-default(type="button", data-dismiss="modal") Close
+          button.btn.btn-primary(type="button") Save changes
