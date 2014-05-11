@@ -7,7 +7,8 @@ block content
         h2 TABLES
         form.form-inline(role="form")
           button.btn.btn-default(type="button", ng-click="createTable()") Create table
-          include includes/select_table
+          select.form-control(ng-model="selectTable1", ng-options="t.name for t in tableList")
+            option(value="") Please select a table
         table.table
           tr
             th CQ
@@ -48,7 +49,8 @@ block content
         form.form-inline(role="form")
           .form-group
             label(for="inputTable") Table
-            include includes/select_table
+            select.form-control(ng-model="selectTable2", ng-options="t.name for t in tableList")
+              option(value="") Please select a table
           .form-group
             label(for="inputRowKey") Row Key
             input.form-control(type="text", placeholder="Input or Select CQs to build Row Key")
@@ -58,7 +60,8 @@ block content
         form.form-inline(role="form")
           .form-group
             label(for="inputTable") Table
-            include includes/select_table
+            select.form-control(ng-model="selectTable3", ng-options="t.name for t in tableList")
+              option(value="") Please select a table
           .form-group
             label(for="inputRowKey") Row Key
             select.form-control(id="inputRowKey")
@@ -70,7 +73,8 @@ block content
         form.form-inline(role="form")
           .form-group
             label(for="inputTable") Table
-            include includes/select_table
+            select.form-control(ng-model="selectTable4", ng-options="t.name for t in tableList")
+              option(value="") Please select a table
           .form-group
             label(for="inputRowKey") Row Key
             select.form-control(id="inputRowKey")
