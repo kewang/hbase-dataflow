@@ -4,6 +4,6 @@
   "dependencies": {
     "bootstrap": "latest",
     "angular": "latest",
-    "angular-grid": "latest"
+    "ng-table": "latest"
   }
 }
