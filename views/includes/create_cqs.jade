@@ -1,0 +1,17 @@
+.modal.fade#create-qualifiers-dialog(tabindex="-1", role="dialog", aria-labelledby="create-qualifiers-dialog-title", aria-hidden=true)
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
+        h4.modal-title#create-qualifiers-dialog-title Create CQs 
+      .modal-body
+        button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
+        table.table(ng-table="cqParams")
+          tr(ng-repeat="cq in cqs")
+            td(data-title="'CQ'")
+              input.form-control(type="text", ng-model="cq.name")
+            td(data-title="'Value'")
+              input.form-control(type="text", ng-model="cq.value")
+      .modal-footer
+        button.btn.btn-default(type="button", data-dismiss="modal") Close
+        button.btn.btn-primary(type="button") Save changes
