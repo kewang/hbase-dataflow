@@ -7,6 +7,8 @@ app.controller("dataflow", function($scope, ngTableParams){
     {name: "Enos", age: 34}
   ];
 
+  $scope.cqs = [];
+
   $scope.tableParams = new ngTableParams({
     page: 1,
     count: 10
@@ -17,14 +19,31 @@ app.controller("dataflow", function($scope, ngTableParams){
     }
   });
 
+  $scope.cqParams = new ngTableParams({
+    page: 1,
+    count: 10
+  }, {
+    total: $scope.cqs.length,
+    getData: function($defer, params){
+      $defer.resolve($scope.cqs.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+    }
+  });
+
   $scope.tableList = [];
 
-  $scope.createTable = function(){
+  $scope.createTable = function() {
     var name = prompt("Create a new table");
     var table = new Table(name);
 
     this.tableList.push(table);
 
     console.log(this.tableList);
-  }
+  };
+
+  $scope.addCQ = function() {
+    $scope.cqs.push({
+      name: "aaa",
+      value: "asdfasdf"
+    });
+  };
 });
