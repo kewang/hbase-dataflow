@@ -9,10 +9,6 @@ block content
           button.btn.btn-default(type="button", ng-click="createTable()") Create table
           select.form-control(ng-model="selectTable1", ng-options="t.name for t in tableList")
             option(value="") Please select a table
-        table.table(ng-table="tableParams")
-          tr(ng-repeat="user in data")
-            td(data-title="'Name'") {{ user.name }}
-            td(data-title="'Age'") {{ user.age }}
       .col-md-4.op-list-col(style="height: 600px;")
         h2 OPERATIONS
         .list-group

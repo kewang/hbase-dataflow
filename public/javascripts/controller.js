@@ -1,6 +1,6 @@
-var app = angular.module("hbase-dataflow-app", ["ngTable"]);
+var app = angular.module("hbase-dataflow-app", []);
 
-app.controller("dataflow", function($scope, ngTableParams){
+app.controller("dataflow", function($scope){
   $scope.data = [
     {name: "Moroni", age: 50},
     {name: "Nephi", age: 29},
@@ -8,27 +8,6 @@ app.controller("dataflow", function($scope, ngTableParams){
   ];
 
   $scope.cqs = [];
-
-  $scope.tableParams = new ngTableParams({
-    page: 1,
-    count: 10
-  }, {
-    total: $scope.data.length,
-    getData: function($defer, params){
-      $defer.resolve($scope.data.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-    }
-  });
-
-  $scope.cqParams = new ngTableParams({
-    page: 1,
-    count: 10
-  }, {
-    total: $scope.cqs.length,
-    getData: function($defer, params){
-      $defer.resolve($scope.cqs.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-    }
-  });
-
   $scope.tableList = [];
 
   $scope.createTable = function() {
