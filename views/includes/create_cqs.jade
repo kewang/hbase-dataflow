@@ -3,7 +3,7 @@
     .modal-content
       .modal-header
         button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
-        h4.modal-title#create-qualifiers-dialog-title Create CQs 
+        h4.modal-title#create-qualifiers-dialog-title Create {{ selectTable2.name }}
       .modal-body
         input.form-control(type="text", placeholder="Please Input Row Key")
         button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
