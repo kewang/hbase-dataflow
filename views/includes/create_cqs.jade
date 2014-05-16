@@ -5,17 +5,17 @@
         button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
         h4.modal-title#create-qualifiers-dialog-title Create {{ selectTable2.name }}
       .modal-body
-        input.form-control(type="text", placeholder="Please Input Row Key")
+        input.form-control(type="text", placeholder="Please Input Row Key", ng-model="tmp_rk")
         button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
         table.table
           tr
             th CQ name
             th Value
-          tr
+          tr(ng-repeat="cq in tmp_cqs")
             td
-              input.form-control(type="text")
+              input.form-control(type="text", ng-model="cq.name")
             td
-              input.form-control(type="text")
+              input.form-control(type="text", ng-model="cq.value")
       .modal-footer
         button.btn.btn-default(type="button", data-dismiss="modal") Close
-        button.btn.btn-primary(type="button") Save changes
+        button.btn.btn-primary(type="button", ng-click="createRowkeyAndCQ()") Save changes
