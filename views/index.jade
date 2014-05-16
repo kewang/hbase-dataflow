@@ -30,9 +30,6 @@ block content
             label(for="inputTable") Table
             select.form-control(ng-model="selectTable2", ng-options="t.name for t in tableList")
               option(value="") Please select a table
-          .form-group
-            label(for="inputRowKey") Row Key
-            input.form-control(type="text", placeholder="Input or Select CQs to build Row Key")
           button.btn.btn-default(type="button", data-toggle="modal", data-target="#create-qualifiers-dialog") Create CQs
           button.btn.btn-default(type="button") Submit
         h3 Update

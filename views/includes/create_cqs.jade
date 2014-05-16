@@ -5,13 +5,17 @@
         button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
         h4.modal-title#create-qualifiers-dialog-title Create CQs 
       .modal-body
+        input.form-control(type="text", placeholder="Please Input Row Key")
         button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
-        table.table(ng-table="cqParams")
-          tr(ng-repeat="cq in cqs")
-            td(data-title="'CQ'")
-              input.form-control(type="text", ng-model="cq.name")
-            td(data-title="'Value'")
-              input.form-control(type="text", ng-model="cq.value")
+        table.table
+          tr
+            th CQ name
+            th Value
+          tr
+            td
+              input.form-control(type="text")
+            td
+              input.form-control(type="text")
       .modal-footer
         button.btn.btn-default(type="button", data-dismiss="modal") Close
         button.btn.btn-primary(type="button") Save changes
