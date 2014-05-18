@@ -4,6 +4,7 @@ app.controller("dataflow", function($scope){
   $scope.cqs = [];
   $scope.tableList = [];
   $scope.tmp_cqs = [];
+  $scope.currentTable;
 
   $scope.createTable = function() {
     var name = prompt("Create a new table");
@@ -24,5 +25,9 @@ app.controller("dataflow", function($scope){
     }
 
     $("#create-qualifiers-dialog").modal("hide");
+  };
+
+  $scope.showTable = function() {
+    this.currentTable = this.selectTable1;
   };
 });

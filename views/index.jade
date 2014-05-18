@@ -7,8 +7,15 @@ block content
         h2 TABLES
         form.form-inline(role="form")
           button.btn.btn-default(type="button", ng-click="createTable()") Create table
-          select.form-control(ng-model="selectTable1", ng-options="t.name for t in tableList")
+          select.form-control(ng-model="selectTable1", ng-options="t.name for t in tableList", ng-change="showTable()")
             option(value="") Please select a table
+        table.table.table-bordered.table-condensed
+          tr
+            th CQ
+            th(ng-repeat="r in currentTable.rowkeys") {{ r.rowkey }}
+          tr(ng-repeat="cq in currentCQs")
+            th {{ cq.name }}
+            td(ng-repeat="") {{ cq.value }}
       .col-md-4.op-list-col(style="height: 600px;")
         h2 OPERATIONS
         .list-group
