@@ -9,7 +9,7 @@ block content
           button.btn.btn-default(type="button", ng-click="createTable()") Create table
           select.form-control(ng-model="selectTable1", ng-options="t.name for t in tableList", ng-change="showTable()")
             option(value="") Please select a table
-        table.table.table-bordered.table-condensed
+        table.table.table-bordered.table-condensed.table-hover
           tr
             th Row Key
             th(ng-repeat="c in current_cqs") {{ c }}
