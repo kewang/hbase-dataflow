@@ -25,6 +25,9 @@ app.controller("dataflow", function($scope){
       this.selectTable2.createCQ(this.tmp_rk, this.tmp_cqs[i].name, this.tmp_cqs[i].value);
     }
 
+    this.tmp_rk = "";
+    this.tmp_cqs = [];
+
     $("#create-qualifiers-dialog").modal("hide");
   };
 
