@@ -22,7 +22,11 @@ module.exports = function(grunt){
     },
     "gh-pages": {
       options: {
-        base: "build/templates"
+        base: "build/templates",
+        user: {
+          name: "kewang",
+          email: "cpckewang@gmail.com"
+        }
       },
       src: ["**"]
     }
