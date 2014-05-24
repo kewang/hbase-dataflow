@@ -7,7 +7,7 @@ block content
         h2 TABLES
         form.form-inline(role="form")
           button.btn.btn-default(type="button", ng-click="createTable()") Create table
-          select.form-control(ng-model="selectTable1", ng-options="t.name for t in tableList", ng-change="showTable()")
+          select.form-control(ng-model="selectTable1", ng-options="t.name for t in tableList")
             option(value="") Please select a table
         table.table.table-bordered.table-condensed.table-hover
           tr

@@ -31,7 +31,7 @@ Table.prototype.createCQ = function(rowkey, cq, value) {
   }
 };
 
-Table.prototype.getFullTable = function() {
+Table.prototype.buildFullTable = function() {
   var current_rowkeys = [];
   var current_cqs = [];
 
@@ -77,4 +77,12 @@ Table.prototype.getFullTable = function() {
 
   this.fullRowkeys = current_rowkeys;
   this.fullCQs = current_cqs;
+};
+
+Table.prototype.getFullRowkeys = function() {
+  return this.fullRowkeys;
+};
+
+Table.prototype.getFullCQs = function() {
+  return this.fullCQs;
 };

@@ -26,10 +26,8 @@ app.controller("dataflow", function($scope){
     this.tmp_rk = "";
     this.tmp_cqs = [];
 
+    this.selectTable2.buildFullTable();
+
     $("#create-qualifiers-dialog").modal("hide");
-  };
-
-  $scope.showTable = function() {
-
   };
 });
