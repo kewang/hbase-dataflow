@@ -7,8 +7,8 @@ module.exports = function(grunt){
         }
       }
     }
-
-    grunt.loadNpmTasks("grunt-contrib-jade");
-    grunt.registerTask("default", ["jade"]);
   });
+
+  grunt.loadNpmTasks("grunt-contrib-jade");
+  grunt.registerTask("default", ["jade"]);
 };
