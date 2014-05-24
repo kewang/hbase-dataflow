@@ -12,8 +12,8 @@ block content
         table.table.table-bordered.table-condensed.table-hover
           tr
             th Row Key
-            th(ng-repeat="c in current_cqs") {{ c }}
-          tr(ng-repeat="r in current_rowkeys")
+            th(ng-repeat="c in selectTable1.getFullCQs()") {{ c }}
+          tr(ng-repeat="r in selectTable1.getFullRowkeys()")
             th {{ r.rowkey }}
             td(ng-repeat="c in r.cqs track by $index") {{ c }}
       .col-md-4.op-list-col(style="height: 600px;")
