@@ -9,9 +9,20 @@ module.exports = function(grunt){
           "build/templates/index.htm": "views/index.jade"
         }
       }
+    },
+    copy: {
+      main: {
+        files: [{
+          expand: true,
+          src: "public/**",
+          dest: "build/templates/"
+        }]
+      }
     }
   });
 
   grunt.loadNpmTasks("grunt-contrib-jade");
-  grunt.registerTask("default", ["jade"]);
+  grunt.loadNpmTasks("grunt-contrib-copy");
+
+  grunt.registerTask("default", ["jade", "copy"]);
 };
