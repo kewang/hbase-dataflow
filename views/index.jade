@@ -57,8 +57,7 @@ block content
               option(value="") Please select a table
           .form-group
             label Row Key
-            select.form-control
-              option rk1
-              option rk2
+            select.form-control(ng-model="getRow", ng-options="r.rowkey for r in selectTable4.getFullRowkeys()")
+              option(value="") Please select a row key
           button.btn.btn-default(type="button") Submit
   include includes/create_cqs
