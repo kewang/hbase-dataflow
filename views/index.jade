@@ -41,14 +41,13 @@ block content
         h3 Update
         form.form-inline(role="form")
           .form-group
-            label(for="inputTable") Table
+            label Table
             select.form-control(ng-model="selectTable3", ng-options="t.name for t in tableList")
               option(value="") Please select a table
           .form-group
-            label(for="inputRowKey") Row Key
-            select.form-control(id="inputRowKey")
-              option rk1
-              option rk2
+            label Row Key
+            select.form-control(ng-model="updateRow", ng-options="r.rowkey for r in selectTable3.getFullRowkeys()")
+              option(value="") Please select a row key
           button.btn.btn-default(type="button") Update CQs
           button.btn.btn-default(type="button") Submit
         h3 Get
