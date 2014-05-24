@@ -23,6 +23,7 @@ module.exports = function(grunt){
     "gh-pages": {
       options: {
         base: "build/templates",
+        repo: "https://github.com/kewangtw/hbase-dataflow.git",
         user: {
           name: "kewang",
           email: "cpckewang@gmail.com"
