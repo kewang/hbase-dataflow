@@ -1,6 +1,6 @@
 module.exports = function(grunt){
   grunt.initConfig({
-    jade: {
+    "jade": {
       compile: {
         options: {
           pretty: true
@@ -10,7 +10,7 @@ module.exports = function(grunt){
         }
       }
     },
-    copy: {
+    "copy": {
       main: {
         files: [{
           expand: true,
@@ -19,11 +19,18 @@ module.exports = function(grunt){
           dest: "build/templates/"
         }]
       }
+    },
+    "gh-pages": {
+      options: {
+        base: "build/templates"
+      },
+      src: ["**"]
     }
   });
 
   grunt.loadNpmTasks("grunt-contrib-jade");
   grunt.loadNpmTasks("grunt-contrib-copy");
+  grunt.loadNpmTasks("grunt-gh-pages");
 
-  grunt.registerTask("default", ["jade", "copy"]);
+  grunt.registerTask("default", ["jade", "copy", "gh-pages"]);
 };
