@@ -1,1 +1,152 @@
-My GitHub Page
+<!DOCTYPE html>
+<html ng-app="hbase-dataflow-app">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="/javascripts/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body ng-controller="dataflow">
+    <div role="navigation" class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="about">About</a></li>
+            <li><a href="contact">Contact</a></li>
+            <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../navbar/">Default</a></li>
+            <li><a href="../navbar-static-top/">Static top</a></li>
+            <li class="active"><a href="./">Fixed top</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div style="height: 300px;" class="col-md-8">
+          <h2>TABLES</h2>
+          <form role="form" class="form-inline">
+            <button type="button" ng-click="createTable()" class="btn btn-default">Create table</button>
+            <select ng-model="selectTable1" ng-options="t.name for t in tableList" class="form-control">
+              <option value="">Please select a table</option>
+            </select>
+          </form>
+          <table class="table table-bordered table-condensed table-hover">
+            <tr>
+              <th>Row Key</th>
+              <th ng-repeat="c in selectTable1.getFullCQs()">{{ c }}</th>
+            </tr>
+            <tr ng-repeat="r in selectTable1.getFullRowkeys()">
+              <th>{{ r.rowkey }}</th>
+              <td ng-repeat="c in r.cqs track by $index">{{ c }}</td>
+            </tr>
+          </table>
+        </div>
+        <div style="height: 600px;" class="col-md-4 op-list-col">
+          <h2>OPERATIONS</h2>
+          <div class="list-group"><a href="#" class="list-group-item">Operation 1</a><a href="#" class="list-group-item">Operation 2</a><a href="#" class="list-group-item">Operation 3</a><a href="#" class="list-group-item">Operation 4</a><a href="#" class="list-group-item">Operation 5</a><a href="#" class="list-group-item active">Operation 6</a><a href="#" class="list-group-item">Operation 7</a><a href="#" class="list-group-item">Operation 8</a><a href="#" class="list-group-item">Operation 9</a><a href="#" class="list-group-item">Operation 10</a></div>
+        </div>
+        <div style="height: 300px;" class="col-md-8">
+          <h2>COMMANDS</h2>
+          <h3>Create</h3>
+          <form role="form" class="form-inline">
+            <div class="form-group">
+              <label>Table</label>
+              <select ng-model="selectTable2" ng-options="t.name for t in tableList" class="form-control">
+                <option value="">Please select a table</option>
+              </select>
+            </div>
+            <button type="button" data-toggle="modal" data-target="#create-qualifiers-dialog" class="btn btn-default">Create CQs</button>
+          </form>
+          <h3>Update</h3>
+          <form role="form" class="form-inline">
+            <div class="form-group">
+              <label>Table</label>
+              <select ng-model="selectTable3" ng-options="t.name for t in tableList" class="form-control">
+                <option value="">Please select a table</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Row Key</label>
+              <select ng-model="updateRow" ng-options="r.rowkey for r in selectTable3.getFullRowkeys()" class="form-control">
+                <option value="">Please select a row key</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-default">Update CQs</button>
+          </form>
+          <h3>Get</h3>
+          <form role="form" class="form-inline">
+            <div class="form-group">
+              <label>Table</label>
+              <select ng-model="selectTable4" ng-options="t.name for t in tableList" class="form-control">
+                <option value="">Please select a table</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Row Key</label>
+              <select ng-model="getRow" ng-options="r.rowkey for r in selectTable4.getFullRowkeys()" class="form-control">
+                <option value="">Please select a row key</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-default">Get Row</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="create-qualifiers-dialog" tabindex="-1" role="dialog" aria-labelledby="create-qualifiers-dialog-title" aria-hidden class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" data-dismiss="modal" aria-hidden class="close">&times;</button>
+            <h4 id="create-qualifiers-dialog-title" class="modal-title">Create {{ selectTable2.name }}</h4>
+          </div>
+          <div class="modal-body">
+            <input type="text" placeholder="Please Input Row Key" ng-model="tmp_rk" class="form-control">
+            <button type="button" ng-click="addCQ()" class="btn btn-default">Add CQ</button>
+            <table class="table table-bordered">
+              <tr>
+                <th>CQ name</th>
+                <th>Value</th>
+              </tr>
+              <tr ng-repeat="cq in tmp_cqs">
+                <td>
+                  <input type="text" ng-model="cq.name" class="form-control">
+                </td>
+                <td>
+                  <input type="text" ng-model="cq.value" class="form-control">
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+            <button type="button" ng-click="createRowkeyAndCQ()" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/javascripts/jquery/dist/jquery.js"></script>
+    <script src="/javascripts/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/javascripts/angular/angular.js"></script>
+    <script src="/javascripts/models/Table.js"></script>
+    <script src="/javascripts/controller.js"></script>
+  </body>
+</html>
