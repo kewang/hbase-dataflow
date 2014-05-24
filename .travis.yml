@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "0.10"
 before_script:
-  #  - git remote set-url origin "https://${GH_TOKEN}@github.com/kewangtw/hbase-dataflow.git"
+  - git remote set-url origin "https://${GH_TOKEN}@github.com/kewangtw/hbase-dataflow.git"
   - npm install -g bower
   - npm install -g grunt-cli
   - bower install
