@@ -4,6 +4,9 @@ module.exports = function(grunt){
       compile: {
         options: {
           pretty: true
+        },
+        files: {
+          "build/templates/index.htm": "views/index.jade"
         }
       }
     }
