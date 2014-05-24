@@ -34,7 +34,7 @@ block content
         h3 Create
         form.form-inline(role="form")
           .form-group
-            label(for="inputTable") Table
+            label Table
             select.form-control(ng-model="selectTable2", ng-options="t.name for t in tableList")
               option(value="") Please select a table
           button.btn.btn-default(type="button", data-toggle="modal", data-target="#create-qualifiers-dialog") Create CQs
@@ -49,16 +49,15 @@ block content
             select.form-control(ng-model="updateRow", ng-options="r.rowkey for r in selectTable3.getFullRowkeys()")
               option(value="") Please select a row key
           button.btn.btn-default(type="button") Update CQs
-          button.btn.btn-default(type="button") Submit
         h3 Get
         form.form-inline(role="form")
           .form-group
-            label(for="inputTable") Table
+            label Table
             select.form-control(ng-model="selectTable4", ng-options="t.name for t in tableList")
               option(value="") Please select a table
           .form-group
-            label(for="inputRowKey") Row Key
-            select.form-control(id="inputRowKey")
+            label Row Key
+            select.form-control
               option rk1
               option rk2
           button.btn.btn-default(type="button") Submit
