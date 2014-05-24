@@ -1,4 +1,5 @@
 node_modules
+build
 public/javascripts/bootstrap
 public/javascripts/jquery
 public/javascripts/angular
