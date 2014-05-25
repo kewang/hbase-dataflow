@@ -46,7 +46,12 @@ app.controller("dataflow", function($scope){
     this.selectTable2.createRowkey(this.tmp_rk);
 
     for(var i=0;i<this.tmp_cqs.length;i++){
-      this.selectTable2.createCQ(this.tmp_rk, this.tmp_cqs[i].name, this.tmp_cqs[i].value);
+      var name = this.tmp_cqs[i].name;
+      var value = this.tmp_cqs[i].value;
+
+      if(name && value){
+        this.selectTable2.createCQ(this.tmp_rk, name, value);
+      }
     }
 
     // create operation
