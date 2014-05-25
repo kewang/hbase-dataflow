@@ -62,7 +62,7 @@
         </div>
         <div style="height: 600px;" class="col-md-4 op-list-col">
           <h2>OPERATIONS</h2>
-          <div class="list-group"><a href="#" class="list-group-item">Operation 1</a><a href="#" class="list-group-item">Operation 2</a><a href="#" class="list-group-item">Operation 3</a><a href="#" class="list-group-item">Operation 4</a><a href="#" class="list-group-item">Operation 5</a><a href="#" class="list-group-item active">Operation 6</a><a href="#" class="list-group-item">Operation 7</a><a href="#" class="list-group-item">Operation 8</a><a href="#" class="list-group-item">Operation 9</a><a href="#" class="list-group-item">Operation 10</a></div>
+          <div class="list-group"><a href="#" ng-repeat="o in operationList" class="list-group-item">{{ o.title }}</a></div>
         </div>
         <div style="height: 300px;" class="col-md-8">
           <h2>COMMANDS</h2>
@@ -119,6 +119,7 @@
             <h4 id="create-qualifiers-dialog-title" class="modal-title">Create {{ selectTable2.name }}</h4>
           </div>
           <div class="modal-body">
+            <input type="text" placeholder="Please Input Operation title" ng-model="tmp_operation_title" class="form-control">
             <input type="text" placeholder="Please Input Row Key" ng-model="tmp_rk" class="form-control">
             <button type="button" ng-click="addCQ()" class="btn btn-default">Add CQ</button>
             <table class="table table-bordered">
