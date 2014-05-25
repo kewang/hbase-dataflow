@@ -3,7 +3,7 @@
     .modal-content
       .modal-header
         button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
-        h4.modal-title#show-operation-dialog-title(ng-model="o") {{ o.title }}
+        h4.modal-title#show-operation-dialog-title {{ tmp_operation.getTitle() }}
       .modal-body
       .modal-footer
         button.btn.btn-default(type="button", data-dismiss="modal") Close

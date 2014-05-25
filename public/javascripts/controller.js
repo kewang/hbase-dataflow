@@ -5,6 +5,7 @@ app.controller("dataflow", function($scope){
   $scope.tableList = [];
   $scope.operationList = [];
   $scope.tmp_cqs = [];
+  $scope.tmp_operation = {};
 
   $scope.createTable = function() {
     var name = prompt("Create a new table");
@@ -38,5 +39,11 @@ app.controller("dataflow", function($scope){
     this.selectTable2.buildFullTable();
 
     $("#create-qualifiers-dialog").modal("hide");
+  };
+
+  $scope.showOperation = function(operation) {
+    this.tmp_operation = operation;
+
+    $("#show-operation-dialog").modal("show");
   };
 });

@@ -19,7 +19,7 @@ block content
       .col-md-4.op-list-col(style="height: 600px;")
         h2 OPERATIONS
         .list-group
-          a.list-group-item(href="#", ng-repeat="o in operationList") {{ o.title }}
+          a.list-group-item(href="#", ng-click="showOperation(o)", ng-repeat="o in operationList") {{ o.title }}
       .col-md-8(style="height: 300px;")
         h2 COMMANDS
         h3 Create
@@ -52,3 +52,4 @@ block content
               option(value="") Please select a row key
           button.btn.btn-default(type="button") Get Row
   include includes/create_cqs
+  include includes/show_operation
