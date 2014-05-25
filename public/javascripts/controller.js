@@ -12,10 +12,6 @@ app.controller("dataflow", function($scope){
     this.tableList.push(t);
   };
 
-  $scope.addCQ = function() {
-    this.tmp_cqs.push({});
-  };
-
   $scope.createRowkeyAndCQ = function() {
     this.selectTable2.createRowkey(this.tmp_rk);
 
