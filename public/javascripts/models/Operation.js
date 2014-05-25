@@ -1,7 +1,5 @@
-function Operation(title){
-  this.title = title;
+function Operation(){
 }
 
-Operation.prototype.getTitle = function() {
-  return this.title;
+Operation.prototype.getDetail = function() {
 };
