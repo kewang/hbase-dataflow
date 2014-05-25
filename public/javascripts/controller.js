@@ -3,6 +3,7 @@ var app = angular.module("hbase-dataflow-app", []);
 app.controller("dataflow", function($scope){
   $scope.cqs = [];
   $scope.tableList = [];
+  $scope.operationList = [];
   $scope.tmp_cqs = [];
 
   $scope.createTable = function() {
@@ -17,6 +18,7 @@ app.controller("dataflow", function($scope){
   };
 
   $scope.createRowkeyAndCQ = function() {
+    // create row key and cq
     this.selectTable2.createRowkey(this.tmp_rk);
 
     for(var i=0;i<this.tmp_cqs.length;i++){
@@ -27,6 +29,11 @@ app.controller("dataflow", function($scope){
     this.tmp_cqs = [];
 
     this.selectTable2.buildFullTable();
+
+    // create operation
+    var o = new Operation(this.tmp_operation_title);
+
+    this.operationList.push(o);
 
     $("#create-qualifiers-dialog").modal("hide");
   };
