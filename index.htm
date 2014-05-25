@@ -15,6 +15,8 @@
           <h2>TABLES</h2>
           <form role="form" class="form-inline">
             <button type="button" ng-click="createTable()" class="btn btn-default">Create table</button>
+            <button type="button" ng-click="exportTables()" class="btn btn-default">Export</button>
+            <button type="button" data-toggle="modal" data-target="#import-tables-dialog" class="btn btn-default">Import</button>
             <select ng-model="selectTable1" ng-options="t.name for t in tableList" class="form-control">
               <option value="">Please select a table</option>
             </select>
@@ -130,7 +132,23 @@
           </div>
         </div>
       </div>
-    </div><a href="https://github.com/kewangtw/hbase-dataflow"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+    </div>
+    <div id="import-tables-dialog" tabindex="-1" role="dialog" aria-labelledby="import-tables-dialog-title" aria-hidden class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" data-dismiss="modal" aria-hidden class="close">&times;</button>
+            <h4 id="import-tables-dialog-title" class="modal-title">Import Tables</h4>
+          </div>
+          <div class="modal-body">
+            <textarea rows="10" class="form-control"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+          </div>
+        </div>
+      </div>
+    </div><a href="https://github.com/kewangtw/hbase-dataflow" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
     <script src="javascripts/jquery/dist/jquery.js"></script>
     <script src="javascripts/bootstrap/dist/js/bootstrap.js"></script>
     <script src="javascripts/angular/angular.js"></script>
