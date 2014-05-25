@@ -9,9 +9,14 @@ app.controller("dataflow", function($scope){
 
   $scope.createTable = function() {
     var name = prompt("Create a new table");
-    var t = new Table(name);
 
-    this.tableList.push(t);
+    if(name){
+      var t = new Table(name);
+
+      this.tableList.push(t);
+    }else{
+      alert("Please input a table name");
+    }
   };
 
   $scope.addCQ = function() {
