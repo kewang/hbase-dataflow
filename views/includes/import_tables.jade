@@ -5,6 +5,7 @@
         button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
         h4.modal-title#import-tables-dialog-title Import Tables
       .modal-body
-        textarea.form-control(rows="10")
+        textarea.form-control(rows="10", ng-model="tmp_import_data")
       .modal-footer
         button.btn.btn-default(type="button", data-dismiss="modal") Close
+        button.btn.btn-primary(type="button", ng-click="importTables()") Import

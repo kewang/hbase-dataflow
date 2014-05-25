@@ -86,4 +86,10 @@ app.controller("dataflow", function($scope){
     //
     // TODO
   };
+
+  $scope.importTables = function() {
+    this.tmp_import_data = "";
+
+    $("#import-tables-dialog").modal("hide");
+  };
 });
