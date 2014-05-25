@@ -19,16 +19,7 @@ block content
       .col-md-4.op-list-col(style="height: 600px;")
         h2 OPERATIONS
         .list-group
-          a.list-group-item(href="#") Operation 1
-          a.list-group-item(href="#") Operation 2
-          a.list-group-item(href="#") Operation 3
-          a.list-group-item(href="#") Operation 4
-          a.list-group-item(href="#") Operation 5
-          a.list-group-item.active(href="#") Operation 6
-          a.list-group-item(href="#") Operation 7
-          a.list-group-item(href="#") Operation 8
-          a.list-group-item(href="#") Operation 9
-          a.list-group-item(href="#") Operation 10
+          a.list-group-item(href="#", ng-repeat="o in operationList") {{ o.title }}
       .col-md-8(style="height: 300px;")
         h2 COMMANDS
         h3 Create

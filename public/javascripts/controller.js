@@ -25,15 +25,17 @@ app.controller("dataflow", function($scope){
       this.selectTable2.createCQ(this.tmp_rk, this.tmp_cqs[i].name, this.tmp_cqs[i].value);
     }
 
-    this.tmp_rk = "";
-    this.tmp_cqs = [];
-
-    this.selectTable2.buildFullTable();
 
     // create operation
     var o = new Operation(this.tmp_operation_title);
 
     this.operationList.push(o);
+
+    this.tmp_rk = "";
+    this.tmp_cqs = [];
+    this.tmp_operation_title = "";
+
+    this.selectTable2.buildFullTable();
 
     $("#create-qualifiers-dialog").modal("hide");
   };
