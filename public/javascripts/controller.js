@@ -42,7 +42,8 @@ app.controller("dataflow", function($scope){
   };
 
   $scope.showOperation = function(operation) {
-    this.tmp_operation = operation;
+    // retreive operation variable from child scope to parent scope
+    this.$parent.tmp_operation = operation;
 
     $("#show-operation-dialog").modal("show");
   };
