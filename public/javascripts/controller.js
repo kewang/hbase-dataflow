@@ -24,13 +24,30 @@ app.controller("dataflow", function($scope){
   };
 
   $scope.createRowkeyAndCQ = function() {
+    if(!this.tmp_operation_title){
+      alert("Please input a operation title");
+
+      return;
+    }
+
+    if(!this.tmp_rk){
+      alert("Please input a row key");
+
+      return;
+    }
+
+    if(this.tmp_cqs.length === 0){
+      alert("Please add a column qualifier");
+
+      return;
+    }
+
     // create row key and cq
     this.selectTable2.createRowkey(this.tmp_rk);
 
     for(var i=0;i<this.tmp_cqs.length;i++){
       this.selectTable2.createCQ(this.tmp_rk, this.tmp_cqs[i].name, this.tmp_cqs[i].value);
     }
-
 
     // create operation
     var o = new Operation(this.tmp_operation_title);
