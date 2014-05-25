@@ -79,6 +79,10 @@ Table.prototype.buildFullTable = function() {
   this.fullCQs = current_cqs;
 };
 
+Table.prototype.setRowkeys = function(rowkeys) {
+  this.rowkeys = rowkeys;
+};
+
 Table.prototype.getFullRowkeys = function() {
   return this.fullRowkeys;
 };
