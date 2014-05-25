@@ -74,4 +74,16 @@ app.controller("dataflow", function($scope){
 
     $("#show-operation-dialog").modal("show");
   };
+
+  $scope.exportTables = function() {
+    var jsonHeader = "data:attachment/json;charset=utf-8,";
+    var exportData = angular.toJson(this.tableList);
+    var encodedUri = encodeURI(jsonHeader+exportData);
+
+    window.open(encodedUri);
+
+    // new method refs http://html5-demos.appspot.com/static/a.download.html
+    //
+    // TODO
+  };
 });

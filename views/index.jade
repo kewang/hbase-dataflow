@@ -7,6 +7,7 @@ block content
         h2 TABLES
         form.form-inline(role="form")
           button.btn.btn-default(type="button", ng-click="createTable()") Create table
+          button.btn.btn-default(type="button", ng-click="exportTables()") Export
           select.form-control(ng-model="selectTable1", ng-options="t.name for t in tableList")
             option(value="") Please select a table
         hr
