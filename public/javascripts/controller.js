@@ -88,6 +88,18 @@ app.controller("dataflow", function($scope){
   };
 
   $scope.importTables = function() {
+    this.tmp_import_data = JSON.parse(this.tmp_import_data);
+
+    for(var i=0;i<this.tmp_import_data.length;i++){
+      var tmpTable = new Table(this.tmp_import_data[i].name);
+
+      tmpTable.setRowkeys(this.tmp_import_data[i].rowkeys);
+
+      tmpTable.buildFullTable();
+
+      this.tableList.push(tmpTable);
+    }
+
     this.tmp_import_data = "";
 
     $("#import-tables-dialog").modal("hide");
