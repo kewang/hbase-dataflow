@@ -17,11 +17,11 @@
             <button type="button" ng-click="createTable()" class="btn btn-default">Create table</button>
             <button type="button" ng-click="exportTables()" class="btn btn-default">Export</button>
             <button type="button" data-toggle="modal" data-target="#import-tables-dialog" class="btn btn-default">Import</button>
-            <select ng-model="selectTable1" ng-options="t.name for t in tableList" class="form-control">
-              <option value="">Please select a table</option>
-            </select>
           </form>
           <hr>
+          <select ng-model="selectTable1" ng-options="t.name for t in tableList" class="form-control">
+            <option value="">Please select a table</option>
+          </select>
           <table class="table table-bordered table-condensed table-hover">
             <tr>
               <th>Row Key</th>
@@ -141,7 +141,7 @@
             <h4 id="import-tables-dialog-title" class="modal-title">Import Tables</h4>
           </div>
           <div class="modal-body">
-            <textarea rows="10" ng-model="tmp_import_data" class="form-control"></textarea>
+            <input id="fileChoose" type="file">
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
