@@ -91,20 +91,29 @@ app.controller("dataflow", function($scope){
   };
 
   $scope.importTables = function() {
-    this.tmp_import_data = JSON.parse(this.tmp_import_data);
+    var file = $("#fileChoose")[0].files[0];
+    var reader = new FileReader();
 
-    for(var i=0;i<this.tmp_import_data.length;i++){
-      var tmpTable = new Table(this.tmp_import_data[i].name);
+    (function(that){
+      reader.onloadend = function(e) {
+        var data = JSON.parse(e.target.result);
 
-      tmpTable.setRowkeys(this.tmp_import_data[i].rowkeys);
+        for(var i=0;i<data.length;i++){
+          var tmpTable = new Table(data[i].name);
 
-      tmpTable.buildFullTable();
+          tmpTable.setRowkeys(data[i].rowkeys);
 
-      this.tableList.push(tmpTable);
-    }
+          tmpTable.buildFullTable();
 
-    this.tmp_import_data = "";
+          $scope.$apply(function(){
+            that.tableList.push(tmpTable);
+          });
+        }
 
-    $("#import-tables-dialog").modal("hide");
+        $("#import-tables-dialog").modal("hide");
+      }
+
+      reader.readAsText(file);
+    })(this);
   };
 });
