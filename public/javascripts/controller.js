@@ -76,15 +76,18 @@ app.controller("dataflow", function($scope){
   };
 
   $scope.exportTables = function() {
-    var jsonHeader = "data:attachment/json;charset=utf-8,";
+    var MIMETYPE = "application/json";
     var exportData = angular.toJson(this.tableList);
-    var encodedUri = encodeURI(jsonHeader+exportData);
+    var blob = new Blob([exportData], {type: MIMETYPE});
+    var a = document.createElement("a");
 
-    window.open(encodedUri);
+    window.URL = window.webkitURL || window.URL;
 
-    // new method refs http://html5-demos.appspot.com/static/a.download.html
-    //
-    // TODO
+    a.download = "export.json";
+    a.href = window.URL.createObjectURL(blob);
+    a.dataset.downloadurl = [MIMETYPE, a.download, a.href].join(":");
+
+    a.click();
   };
 
   $scope.importTables = function() {
