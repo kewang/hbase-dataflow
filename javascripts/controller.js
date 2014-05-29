@@ -19,29 +19,17 @@ app.controller("dataflow", function($scope){
     }
   };
 
+  $scope.showCreateQualifiersDialog = function() {
+    this.tmp_cqs.push({});
+
+    $("#create-qualifiers-dialog").modal("show");
+  };
+
   $scope.addCQ = function() {
     this.tmp_cqs.push({});
   };
 
   $scope.createRowkeyAndCQ = function() {
-    if(!this.tmp_operation_title){
-      alert("Please input a operation title");
-
-      return;
-    }
-
-    if(!this.tmp_rk){
-      alert("Please input a row key");
-
-      return;
-    }
-
-    if(this.tmp_cqs.length === 0){
-      alert("Please add a column qualifier");
-
-      return;
-    }
-
     // create row key and cq
     this.selectTable2.createRowkey(this.tmp_rk);
 
