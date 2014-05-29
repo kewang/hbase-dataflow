@@ -19,6 +19,12 @@ app.controller("dataflow", function($scope){
     }
   };
 
+  $scope.showCreateQualifiersDialog = function() {
+    this.tmp_cqs.push({});
+
+    $("#create-qualifiers-dialog").modal("show");
+  };
+
   $scope.addCQ = function() {
     this.tmp_cqs.push({});
   };

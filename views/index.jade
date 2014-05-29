@@ -31,7 +31,7 @@ block content
             label Table
             select.form-control(ng-model="selectTable2", ng-options="t.name for t in tableList")
               option(value="") Please select a table
-          button.btn.btn-default(type="button", data-toggle="modal", data-target="#create-qualifiers-dialog") Create CQs
+          button.btn.btn-default(type="button", ng-click="showCreateQualifiersDialog()") Create CQs
         h3 Update
         form.form-inline(role="form")
           .form-group

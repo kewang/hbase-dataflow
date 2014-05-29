@@ -1,4 +1,4 @@
-form(role="form", name="createRowkeyAndCQForm")
+form(role="form", name="createQualifiersForm")
   .modal.fade#create-qualifiers-dialog(tabindex="-1", role="dialog", aria-labelledby="create-qualifiers-dialog-title", aria-hidden=true)
     .modal-dialog
       .modal-content
@@ -22,4 +22,4 @@ form(role="form", name="createRowkeyAndCQForm")
                 input.form-control(type="text", ng-model="cq.value", required)
         .modal-footer
           button.btn.btn-default(type="button", data-dismiss="modal") Close
-          button.btn.btn-primary(type="button", ng-click="createRowkeyAndCQ()", ng-disabled="!createRowkeyAndCQForm.$valid") Create
+          button.btn.btn-primary(type="button", ng-click="createRowkeyAndCQ()", ng-disabled="!createQualifiersForm.$valid") Create
