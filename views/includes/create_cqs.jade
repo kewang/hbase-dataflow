@@ -1,24 +1,25 @@
-.modal.fade#create-qualifiers-dialog(tabindex="-1", role="dialog", aria-labelledby="create-qualifiers-dialog-title", aria-hidden=true)
-  .modal-dialog
-    .modal-content
-      .modal-header
-        button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
-        h4.modal-title#create-qualifiers-dialog-title Create {{ selectTable2.name }}
-      .modal-body
-        input.form-control(type="text", placeholder="Please Input Operation title", ng-model="tmp_operation_title")
-        hr
-        input.form-control(type="text", placeholder="Please Input Row Key", ng-model="tmp_rk")
-        hr
-        button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
-        table.table.table-bordered
-          tr
-            th CQ name
-            th Value
-          tr(ng-repeat="cq in tmp_cqs")
-            td
-              input.form-control(type="text", ng-model="cq.name")
-            td
-              input.form-control(type="text", ng-model="cq.value")
-      .modal-footer
-        button.btn.btn-default(type="button", data-dismiss="modal") Close
-        button.btn.btn-primary(type="button", ng-click="createRowkeyAndCQ()") Create
+form(role="form", name="createRowkeyAndCQForm")
+  .modal.fade#create-qualifiers-dialog(tabindex="-1", role="dialog", aria-labelledby="create-qualifiers-dialog-title", aria-hidden=true)
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
+          h4.modal-title#create-qualifiers-dialog-title Create {{ selectTable2.name }}
+        .modal-body
+          input.form-control(type="text", placeholder="Please Input Operation title", ng-model="tmp_operation_title", required)
+          hr
+          input.form-control(type="text", placeholder="Please Input Row Key", ng-model="tmp_rk", required)
+          hr
+          button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
+          table.table.table-bordered
+            tr
+              th CQ name
+              th Value
+            tr(ng-repeat="cq in tmp_cqs")
+              td
+                input.form-control(type="text", ng-model="cq.name", required)
+              td
+                input.form-control(type="text", ng-model="cq.value", required)
+        .modal-footer
+          button.btn.btn-default(type="button", data-dismiss="modal") Close
+          button.btn.btn-primary(type="button", ng-click="createRowkeyAndCQ()", ng-disabled="!createRowkeyAndCQForm.$valid") Create
