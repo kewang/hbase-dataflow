@@ -20,7 +20,7 @@ app.controller("dataflow", function($scope){
   };
 
   $scope.showCreateQualifiersDialog = function() {
-    $scope.tmp_cqs.push({});
+    $scope.addCQ();
 
     $("#create-qualifiers-dialog").modal("show");
   };
@@ -37,9 +37,7 @@ app.controller("dataflow", function($scope){
       var name = $scope.tmp_cqs[i].name;
       var value = $scope.tmp_cqs[i].value;
 
-      if(name && value){
-        $scope.selectTable2.createCQ($scope.tmp_rk, name, value);
-      }
+      $scope.selectTable2.createCQ($scope.tmp_rk, name, value);
     }
 
     // create operation
