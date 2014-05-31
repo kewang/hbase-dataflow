@@ -13,59 +13,59 @@ app.controller("dataflow", function($scope){
     if(name){
       var t = new Table(name);
 
-      this.tableList.push(t);
+      $scope.tableList.push(t);
     }else{
       alert("Please input a table name");
     }
   };
 
   $scope.showCreateQualifiersDialog = function() {
-    this.tmp_cqs.push({});
+    $scope.tmp_cqs.push({});
 
     $("#create-qualifiers-dialog").modal("show");
   };
 
   $scope.addCQ = function() {
-    this.tmp_cqs.push({});
+    $scope.tmp_cqs.push({});
   };
 
   $scope.createRowkeyAndCQ = function() {
     // create row key and cq
-    this.selectTable2.createRowkey(this.tmp_rk);
+    $scope.selectTable2.createRowkey($scope.tmp_rk);
 
-    for(var i=0;i<this.tmp_cqs.length;i++){
-      var name = this.tmp_cqs[i].name;
-      var value = this.tmp_cqs[i].value;
+    for(var i=0;i<$scope.tmp_cqs.length;i++){
+      var name = $scope.tmp_cqs[i].name;
+      var value = $scope.tmp_cqs[i].value;
 
       if(name && value){
-        this.selectTable2.createCQ(this.tmp_rk, name, value);
+        $scope.selectTable2.createCQ($scope.tmp_rk, name, value);
       }
     }
 
     // create operation
-    var o = new Operation(this.tmp_operation_title);
+    var o = new Operation($scope.tmp_operation_title);
 
-    this.operationList.push(o);
+    $scope.operationList.push(o);
 
-    this.tmp_rk = "";
-    this.tmp_cqs = [];
-    this.tmp_operation_title = "";
+    $scope.tmp_rk = "";
+    $scope.tmp_cqs = [];
+    $scope.tmp_operation_title = "";
 
-    this.selectTable2.buildFullTable();
+    $scope.selectTable2.buildFullTable();
 
     $("#create-qualifiers-dialog").modal("hide");
   };
 
   $scope.showOperation = function(operation) {
     // retreive operation variable from child scope to parent scope
-    this.$parent.tmp_operation = operation;
+    $scope.tmp_operation = operation;
 
     $("#show-operation-dialog").modal("show");
   };
 
   $scope.exportTables = function() {
     var MIMETYPE = "application/json";
-    var exportData = angular.toJson(this.tableList);
+    var exportData = angular.toJson($scope.tableList);
     var blob = new Blob([exportData], {type: MIMETYPE});
     var a = document.createElement("a");
 
@@ -82,26 +82,24 @@ app.controller("dataflow", function($scope){
     var file = $("#fileChoose")[0].files[0];
     var reader = new FileReader();
 
-    (function(that){
-      reader.onloadend = function(e) {
-        var data = JSON.parse(e.target.result);
+    reader.onloadend = function(e) {
+      var data = JSON.parse(e.target.result);
 
-        for(var i=0;i<data.length;i++){
-          var tmpTable = new Table(data[i].name);
+      for(var i=0;i<data.length;i++){
+        var tmpTable = new Table(data[i].name);
 
-          tmpTable.setRowkeys(data[i].rowkeys);
+        tmpTable.setRowkeys(data[i].rowkeys);
 
-          tmpTable.buildFullTable();
+        tmpTable.buildFullTable();
 
-          $scope.$apply(function(){
-            that.tableList.push(tmpTable);
-          });
-        }
-
-        $("#import-tables-dialog").modal("hide");
+        $scope.$apply(function(){
+          $scope.tableList.push(tmpTable);
+        });
       }
 
-      reader.readAsText(file);
-    })(this);
+      $("#import-tables-dialog").modal("hide");
+    }
+
+    reader.readAsText(file);
   };
 });
