@@ -1,6 +1,7 @@
 var app = angular.module("hbase-dataflow-app", []);
 
-app.controller("dataflow", function($scope){
+app.controller("CreateRowCtrl", function($scope){
+  $scope.tableList = [];
   $scope.cqs = [];
   $scope.operationList = [];
   $scope.tmp_cqs = [];
@@ -47,9 +48,13 @@ app.controller("dataflow", function($scope){
 
     $("#show-operation-dialog").modal("show");
   };
+
+  $scope.$on("createTable", function(event, msg){
+    $scope.tableList.push(msg);
+  });
 });
 
-app.controller("TableCtrl", function($scope){
+app.controller("TableCtrl", function($rootScope, $scope){
   $scope.tableList = [];
 
   $scope.createTable = function() {
@@ -59,15 +64,11 @@ app.controller("TableCtrl", function($scope){
       var t = new Table(name);
 
       $scope.tableList.push(t);
+
+      $rootScope.$broadcast("createTable", t);
     }else{
       alert("Please input a table name");
     }
-  };
-
-  $scope.showCreateQualifiersDialog = function() {
-    $scope.addCQ();
-
-    $("#create-qualifiers-dialog").modal("show");
   };
 
   $scope.exportTables = function() {
