@@ -4,3 +4,4 @@ build
 public/javascripts/bootstrap
 public/javascripts/jquery
 public/javascripts/angular
+public/javascripts/angular-bootstrap
