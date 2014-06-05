@@ -1,4 +1,4 @@
-var app = angular.module("hbase-dataflow-app");
+var app = angular.module("hbase-dataflow-app", ["hbase-dataflow-app.services", "ui.bootstrap"]);
 
 app.controller("CreateRowCtrl", function($scope){
   $scope.tableList = [];
