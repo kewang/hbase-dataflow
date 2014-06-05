@@ -32,7 +32,6 @@ block content
             select.form-control(ng-model="selectTable2", ng-options="t.name for t in tableList")
               option(value="") Please select a table
           button.btn.btn-default(type="button", ng-click="showCreateQualifiersDialog()") Create CQs
-          include includes/create_cqs
         h3 Update
         form.form-inline(role="form")
           .form-group
@@ -55,5 +54,6 @@ block content
             select.form-control(ng-model="getRow", ng-options="r.rowkey for r in selectTable4.getFullRowkeys()")
               option(value="") Please select a row key
           button.btn.btn-default(type="button") Get Row
+  include includes/create_cqs
   include includes/show_operation
   include includes/import_tables
