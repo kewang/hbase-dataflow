@@ -53,8 +53,6 @@ app.controller("CreateRowCtrl", function($scope){
 app.controller("TableCtrl", function($scope, Table){
   $scope.tables = Table.findAll();
 
-  // https://medium.com/opinionated-angularjs/angular-model-objects-with-javascript-classes-2e6a067c73bc
-  // http://stackoverflow.com/questions/11112608/angularjs-where-to-put-model-data-and-behaviour
   $scope.createTable = function() {
     var name = prompt("Create a new table");
 
