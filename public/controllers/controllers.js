@@ -1,4 +1,4 @@
-var app = angular.module("hbase-dataflow-app", []);
+var app = angular.module("hbase-dataflow-app");
 
 app.controller("CreateRowCtrl", function($scope){
   $scope.tableList = [];
@@ -50,16 +50,16 @@ app.controller("CreateRowCtrl", function($scope){
   };
 });
 
-app.controller("TableCtrl", function($scope){
-  $scope.tableList = [];
+app.controller("TableCtrl", function($scope, Table){
+  $scope.tables = Table.findAll();
 
   $scope.createTable = function() {
     var name = prompt("Create a new table");
 
     if(name){
-      var t = new Table(name);
-
-      $scope.tableList.push(t);
+      Table.create({
+        "name": name
+      });
     }else{
       alert("Please input a table name");
     }
