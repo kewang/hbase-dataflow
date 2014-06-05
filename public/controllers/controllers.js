@@ -48,13 +48,9 @@ app.controller("CreateRowCtrl", function($scope){
 
     $("#show-operation-dialog").modal("show");
   };
-
-  $scope.$on("createTable", function(event, msg){
-    $scope.tableList.push(msg);
-  });
 });
 
-app.controller("TableCtrl", function($rootScope, $scope){
+app.controller("TableCtrl", function($scope){
   $scope.tableList = [];
 
   $scope.createTable = function() {
@@ -64,8 +60,6 @@ app.controller("TableCtrl", function($rootScope, $scope){
       var t = new Table(name);
 
       $scope.tableList.push(t);
-
-      $rootScope.$broadcast("createTable", t);
     }else{
       alert("Please input a table name");
     }
