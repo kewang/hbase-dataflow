@@ -59,9 +59,9 @@ app.controller("TableCtrl", function($scope, Table){
     var name = prompt("Create a new table");
 
     if(name){
-      Table.create({
-        "name": name
-      });
+      var t = new Table(name);
+
+      Table.create(t);
     }else{
       alert("Please input a table name");
     }

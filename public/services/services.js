@@ -1,18 +1,25 @@
 var app = angular.module("hbase-dataflow-app", []);
 
 app.factory("Table", function() {
-  var tables = {};
   var entities = [];
 
-  tables.create = function(table){
+  function Table(name){
+    this.name = name;
+  }
+
+  Table.prototype.getName = function(){
+    return this.name;
+  };
+
+  Table.create = function(table){
     entities.push(table);
   }
 
-  tables.findAll = function(){
+  Table.findAll = function(){
     return entities;
   };
 
-  tables.findByName = function(name){
+  Table.findByName = function(name){
     var found;
 
     for(entity in entities){
@@ -26,5 +33,5 @@ app.factory("Table", function() {
     return found;
   }
 
-  return tables;
+  return Table;
 });

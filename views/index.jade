@@ -10,7 +10,7 @@ block content
           button.btn.btn-default(type="button", ng-click="exportTables()") Export
           button.btn.btn-default(type="button", data-toggle="modal", data-target="#import-tables-dialog") Import
         hr
-        select.form-control(ng-model="selectTable1", ng-options="t.name for t in tables")
+        select.form-control(ng-model="selectTable1", ng-options="t.getName() for t in tables")
           option(value="") Please select a table
         table.table.table-bordered.table-condensed.table-hover
           tr
