@@ -56,11 +56,13 @@ app.controller("TableCtrl", function($scope, Table){
   };
 });
 
-app.controller("PutRowCtrl", function($scope, Table){
+app.controller("PutRowCtrl", function($scope, $modal, Table){
   $scope.tables = Table.findAll();
 
   $scope.showPutRowDialog = function(){
-  
+    var modalInstance = $modal.open({
+      templateUrl: "/includes/create_cqs"
+    });
   };
 });
 
