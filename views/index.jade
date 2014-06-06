@@ -25,6 +25,13 @@ block content
           a.list-group-item(href="#", ng-click="showOperation(o)", ng-repeat="o in operationList") {{ o.title }}
       .col-md-8(style="height: 300px;")
         h2 COMMANDS
+        h3 Put
+        form.form-inline(ng-controller="PutRowCtrl", role="form")
+          .form-group
+            label Table
+            select.form-control(ng-model="putTable", ng-options="t.getName() for t in tables")
+              option(value="") Please select a table
+          button.btn.btn-default(type="button", ng-click="showPutRowDialog()") Put Row
         h3 Create
         form.form-inline(ng-controller="CreateRowCtrl", role="form")
           .form-group

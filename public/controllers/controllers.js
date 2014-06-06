@@ -56,6 +56,14 @@ app.controller("TableCtrl", function($scope, Table){
   };
 });
 
+app.controller("PutRowCtrl", function($scope, Table){
+  $scope.tables = Table.findAll();
+
+  $scope.showPutRowDialog = function(){
+  
+  };
+});
+
 app.controller("CreateRowCtrl", function($scope, Table){
   $scope.tables = Table.findAll();
   $scope.cqs = [];
