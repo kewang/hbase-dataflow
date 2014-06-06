@@ -1,55 +1,5 @@
 var app = angular.module("hbase-dataflow-app", ["hbase-dataflow-app.services", "ui.bootstrap"]);
 
-app.controller("CreateRowCtrl", function($scope){
-  $scope.tableList = [];
-  $scope.cqs = [];
-  $scope.operationList = [];
-  $scope.tmp_cqs = [];
-  $scope.tmp_operation = {};
-
-  $scope.showCreateQualifiersDialog = function() {
-    $scope.addCQ();
-
-    $("#create-qualifiers-dialog").modal("show");
-  };
-
-  $scope.addCQ = function() {
-    $scope.tmp_cqs.push({});
-  };
-
-  $scope.createRowkeyAndCQ = function() {
-    // create row key and cq
-    $scope.selectTable2.createRowkey($scope.tmp_rk);
-
-    for(var i=0;i<$scope.tmp_cqs.length;i++){
-      var name = $scope.tmp_cqs[i].name;
-      var value = $scope.tmp_cqs[i].value;
-
-      $scope.selectTable2.createCQ($scope.tmp_rk, name, value);
-    }
-
-    // create operation
-    var o = new Operation($scope.tmp_operation_title);
-
-    $scope.operationList.push(o);
-
-    $scope.tmp_rk = "";
-    $scope.tmp_cqs = [];
-    $scope.tmp_operation_title = "";
-
-    $scope.selectTable2.buildFullTable();
-
-    $("#create-qualifiers-dialog").modal("hide");
-  };
-
-  $scope.showOperation = function(operation) {
-    // retreive operation variable from child scope to parent scope
-    $scope.tmp_operation = operation;
-
-    $("#show-operation-dialog").modal("show");
-  };
-});
-
 app.controller("TableCtrl", function($scope, Table){
   $scope.tables = Table.findAll();
 
@@ -103,5 +53,55 @@ app.controller("TableCtrl", function($scope, Table){
     }
 
     reader.readAsText(file);
+  };
+});
+
+app.controller("CreateRowCtrl", function($scope, Table){
+  $scope.tables = Table.findAll();
+  $scope.cqs = [];
+  $scope.operationList = [];
+  $scope.tmp_cqs = [];
+  $scope.tmp_operation = {};
+
+  $scope.showCreateQualifiersDialog = function() {
+    $scope.addCQ();
+
+    $("#create-qualifiers-dialog").modal("show");
+  };
+
+  $scope.addCQ = function() {
+    $scope.tmp_cqs.push({});
+  };
+
+  $scope.createRowkeyAndCQ = function() {
+    // create row key and cq
+    $scope.selectTable2.createRowkey($scope.tmp_rk);
+
+    for(var i=0;i<$scope.tmp_cqs.length;i++){
+      var name = $scope.tmp_cqs[i].name;
+      var value = $scope.tmp_cqs[i].value;
+
+      $scope.selectTable2.createCQ($scope.tmp_rk, name, value);
+    }
+
+    // create operation
+    var o = new Operation($scope.tmp_operation_title);
+
+    $scope.operationList.push(o);
+
+    $scope.tmp_rk = "";
+    $scope.tmp_cqs = [];
+    $scope.tmp_operation_title = "";
+
+    $scope.selectTable2.buildFullTable();
+
+    $("#create-qualifiers-dialog").modal("hide");
+  };
+
+  $scope.showOperation = function(operation) {
+    // retreive operation variable from child scope to parent scope
+    $scope.tmp_operation = operation;
+
+    $("#show-operation-dialog").modal("show");
   };
 });

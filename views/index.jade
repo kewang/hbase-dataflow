@@ -29,7 +29,7 @@ block content
         form.form-inline(ng-controller="CreateRowCtrl", role="form")
           .form-group
             label Table
-            select.form-control(ng-model="selectTable2", ng-options="t.name for t in tableList")
+            select.form-control(ng-model="selectTable2", ng-options="t.getName() for t in tables")
               option(value="") Please select a table
           button.btn.btn-default(type="button", ng-click="showCreateQualifiersDialog()") Create CQs
         h3 Update
