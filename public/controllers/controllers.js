@@ -77,25 +77,25 @@ app.controller("ImportTablesDialogCtrl", function($scope, $modalInstance, Table)
   };
 });
 
-app.controller("PutRowCtrl", function($scope, $modal, Table){
+app.controller("CreateRowCtrl", function($scope, $modal, Table){
   $scope.tables = Table.findAll();
 
-  $scope.showPutRowDialog = function(){
+  $scope.showCreateRowDialog = function(){
     var modalInstance = $modal.open({
-      templateUrl: "/includes/put_row_dialog",
-      controller: "PutRowDialogCtrl",
+      templateUrl: "/includes/create_row_dialog",
+      controller: "CreateRowDialogCtrl",
       size: "lg",
       resolve: {
-        putTable: function(){
-          return $scope.putTable;
+        createTable: function(){
+          return $scope.createTable;
         }
       }
     });
   };
 });
 
-app.controller("PutRowDialogCtrl", function($scope, $modalInstance, putTable, Operation){
-  $scope.table = putTable;
+app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, createTable, Operation){
+  $scope.table = createTable;
   $scope.form = {};
   $scope.form.cqs = [];
 
@@ -103,7 +103,7 @@ app.controller("PutRowDialogCtrl", function($scope, $modalInstance, putTable, Op
     $scope.form.cqs.push({});
   };
 
-  $scope.put = function() {
+  $scope.create = function() {
     // create row key and cq
     $scope.table.createRowkey($scope.form.rowKey);
 

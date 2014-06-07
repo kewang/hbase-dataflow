@@ -2,7 +2,7 @@
   button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
   h4.modal-title Create {{ table.getName() }}
 .modal-body
-  form(name="putRowDialogForm", role="form")
+  form(name="createRowDialogForm", role="form")
     input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operationTitle", required)
     hr
     input.form-control(type="text", placeholder="Please Input Row Key", ng-model="form.rowKey", required)
@@ -19,4 +19,4 @@
           input.form-control(type="text", ng-model="cq.value", required)
 .modal-footer
   button.btn.btn-default(type="button", data-dismiss="modal") Close
-  button.btn.btn-primary(type="button", ng-click="put()", ng-disabled="!putRowDialogForm.$valid") Put
+  button.btn.btn-primary(type="button", ng-click="create()", ng-disabled="!createRowDialogForm.$valid") Create
