@@ -129,6 +129,27 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, createTab
   };
 });
 
+app.controller("UpdateRowCtrl", function($scope, $modal, Table){
+  $scope.tables = Table.findAll();
+
+  $scope.showUpdateRowDialog = function(){
+    var modalInstance = $modal.open({
+      templateUrl: "/includes/update_row_dialog",
+      controller: "UpdateRowDialogCtrl",
+      size: "lg",
+      resolve: {
+        updateTable: function(){
+          return $scope.updateTable;
+        }
+      }
+    });
+  };
+});
+
+app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, updateTable){
+  $scope.table = updateTable;
+});
+
 app.controller("OperationCtrl", function($scope, $modal, Operation){
   $scope.operations = Operation.findAll();
 

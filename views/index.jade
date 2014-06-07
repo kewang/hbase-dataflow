@@ -33,16 +33,12 @@ block content
               option(value="") Please select a table
           button.btn.btn-default(type="button", ng-click="showCreateRowDialog()") Create Row
         h3 Update
-        form.form-inline(role="form")
+        form.form-inline(ng-controller="UpdateRowCtrl", role="form")
           .form-group
             label Table
-            select.form-control(ng-model="selectTable3", ng-options="t.name for t in tableList")
+            select.form-control(ng-model="updateTable", ng-options="t.getName() for t in tables")
               option(value="") Please select a table
-          .form-group
-            label Row Key
-            select.form-control(ng-model="updateRow", ng-options="r.rowkey for r in selectTable3.getFullRowkeys()")
-              option(value="") Please select a row key
-          button.btn.btn-default(type="button") Update CQs
+          button.btn.btn-default(type="button", ng-click="showUpdateRowDialog()") Update Row
         h3 Get
         form.form-inline(role="form")
           .form-group

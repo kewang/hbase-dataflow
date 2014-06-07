@@ -1,0 +1,23 @@
+.modal-header
+  button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
+  h4.modal-title Update {{ table.getName() }}
+.modal-body
+  form(name="updateRowDialogForm", role="form")
+    input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operationTitle", required)
+    hr
+    select.form-control(ng-model="row", ng-options="r.rowkey for r in table.getFullRowkeys()")
+      option(value="") Please select a row
+    hr
+    button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
+    table.table.table-bordered
+      tr
+        th CQ name
+        th Value
+      tr(ng-repeat="cq in form.cqs")
+        td
+          input.form-control(type="text", ng-model="cq.name", required)
+        td
+          input.form-control(type="text", ng-model="cq.value", required)
+.modal-footer
+  button.btn.btn-default(type="button", data-dismiss="modal") Close
+  button.btn.btn-primary(type="button", ng-click="update()", ng-disabled="!updateRowDialogForm.$valid") Update
