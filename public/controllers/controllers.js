@@ -94,7 +94,7 @@ app.controller("PutRowCtrl", function($scope, $modal, Table){
   };
 });
 
-app.controller("PutRowDialogCtrl", function($scope, $modalInstance, putTable){
+app.controller("PutRowDialogCtrl", function($scope, $modalInstance, putTable, Operation){
   $scope.table = putTable;
   $scope.form = {};
   $scope.form.cqs = [];
@@ -114,6 +114,10 @@ app.controller("PutRowDialogCtrl", function($scope, $modalInstance, putTable){
       $scope.table.createCQ($scope.form.rowKey, name, value);
     }
 
+    var o = new Operation($scope.form.operationTitle);
+
+    Operation.create(o);
+
     // clear form field
     $scope.form.rowKey = "";
     $scope.form.cqs = [];
@@ -125,52 +129,23 @@ app.controller("PutRowDialogCtrl", function($scope, $modalInstance, putTable){
   };
 });
 
-app.controller("CreateRowCtrl", function($scope, Table){
-  $scope.tables = Table.findAll();
-  $scope.cqs = [];
-  $scope.operationList = [];
-  $scope.tmp_cqs = [];
-  $scope.tmp_operation = {};
+app.controller("OperationCtrl", function($scope, $modal, Operation){
+  $scope.operations = Operation.findAll();
 
-  $scope.showCreateQualifiersDialog = function() {
-    $scope.addCQ();
-
-    $("#create-qualifiers-dialog").modal("show");
+  $scope.showOperationDialog = function(operation){
+    var modalInstance = $modal.open({
+      templateUrl: "/includes/operation_dialog",
+      controller: "OperationDialogCtrl",
+      size: "lg",
+      resolve: {
+        operation: function(){
+          return operation;
+        }
+      }
+    });
   };
+});
 
-  $scope.addCQ = function() {
-    $scope.tmp_cqs.push({});
-  };
-
-  $scope.createRowkeyAndCQ = function() {
-    // create row key and cq
-    $scope.selectTable2.createRowkey($scope.tmp_rk);
-
-    for(var i=0;i<$scope.tmp_cqs.length;i++){
-      var name = $scope.tmp_cqs[i].name;
-      var value = $scope.tmp_cqs[i].value;
-
-      $scope.selectTable2.createCQ($scope.tmp_rk, name, value);
-    }
-
-    // create operation
-    var o = new Operation($scope.tmp_operation_title);
-
-    $scope.operationList.push(o);
-
-    $scope.tmp_rk = "";
-    $scope.tmp_cqs = [];
-    $scope.tmp_operation_title = "";
-
-    $scope.selectTable2.buildFullTable();
-
-    $("#create-qualifiers-dialog").modal("hide");
-  };
-
-  $scope.showOperation = function(operation) {
-    // retreive operation variable from child scope to parent scope
-    $scope.tmp_operation = operation;
-
-    $("#show-operation-dialog").modal("show");
-  };
+app.controller("OperationDialogCtrl", function($scope, $modalInstance, operation){
+  $scope.operation = operation;
 });

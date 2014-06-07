@@ -19,10 +19,10 @@ block content
           tr(ng-repeat="r in showTable.getFullRowkeys()")
             th {{ r.rowkey }}
             td(ng-repeat="c in r.cqs track by $index") {{ c }}
-      .col-md-4.op-list-col(style="height: 600px;")
+      .col-md-4.op-list-col(ng-controller="OperationCtrl", style="height: 600px;")
         h2 OPERATIONS
         .list-group
-          a.list-group-item(href="#", ng-click="showOperation(o)", ng-repeat="o in operationList") {{ o.title }}
+          a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations") {{ o.title }}
       .col-md-8(style="height: 300px;")
         h2 COMMANDS
         h3 Put
@@ -32,13 +32,6 @@ block content
             select.form-control(ng-model="putTable", ng-options="t.getName() for t in tables")
               option(value="") Please select a table
           button.btn.btn-default(type="button", ng-click="showPutRowDialog()") Put Row
-        h3 Create
-        form.form-inline(ng-controller="CreateRowCtrl", role="form")
-          .form-group
-            label Table
-            select.form-control(ng-model="selectTable2", ng-options="t.getName() for t in tables")
-              option(value="") Please select a table
-          button.btn.btn-default(type="button", ng-click="showCreateQualifiersDialog()") Create CQs
         h3 Update
         form.form-inline(role="form")
           .form-group
@@ -61,4 +54,3 @@ block content
             select.form-control(ng-model="getRow", ng-options="r.rowkey for r in selectTable4.getFullRowkeys()")
               option(value="") Please select a row key
           button.btn.btn-default(type="button") Get Row
-//  include includes/show_operation

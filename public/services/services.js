@@ -137,6 +137,10 @@ app.factory("Operation", function() {
     return this.title;
   };
 
+  Operation.create = function(operation){
+    entities.push(operation);
+  };
+
   Operation.findAll = function(){
     return entities;
   };
