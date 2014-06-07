@@ -125,3 +125,21 @@ app.factory("Table", function() {
 
   return Table;
 });
+
+app.factory("Operation", function() {
+  var entities = [];
+
+  function Operation(title){
+    this.title = title;
+  }
+
+  Operation.prototype.getTitle = function(){
+    return this.title;
+  };
+
+  Operation.findAll = function(){
+    return entities;
+  };
+
+  return Operation;
+});
