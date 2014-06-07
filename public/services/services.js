@@ -22,6 +22,10 @@ app.factory("Table", function() {
     });
   };
 
+  Table.prototype.getRowkeys = function(){
+    return this.rowkeys;
+  };
+
   Table.prototype.createCQ = function(rowkey, cq, value) {
     var found;
 
