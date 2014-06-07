@@ -1,6 +1,6 @@
 var app = angular.module("hbase-dataflow-app", ["hbase-dataflow-app.services", "ui.bootstrap"]);
 
-app.controller("TableCtrl", function($scope, Table){
+app.controller("TableCtrl", function($scope, $modal, Table){
   $scope.tables = Table.findAll();
 
   $scope.createTable = function() {
@@ -17,7 +17,16 @@ app.controller("TableCtrl", function($scope, Table){
 
   $scope.exportTables = function() {
     var MIMETYPE = "application/json";
-    var exportData = angular.toJson($scope.tableList);
+    var tmpTables = angular.copy($scope.tables);
+
+    for(var i=0;i<tmpTables.length;i++){
+      var table = tmpTables[i];
+
+      delete table.fullRowkeys;
+      delete table.fullCQs;
+    }
+
+    var exportData = angular.toJson(tmpTables);
     var blob = new Blob([exportData], {type: MIMETYPE});
     var a = document.createElement("a");
 
@@ -29,6 +38,18 @@ app.controller("TableCtrl", function($scope, Table){
 
     a.click();
   };
+
+  $scope.showImportTablesDialog = function(){
+    var modalInstance = $modal.open({
+      templateUrl: "/includes/import_tables_dialog",
+      controller: "ImportTablesDialogCtrl",
+      size: "lg"
+    });
+  };
+});
+
+app.controller("ImportTablesDialogCtrl", function($scope, $modalInstance, Table){
+  $scope.tables = Table.findAll();
 
   $scope.importTables = function() {
     var file = $("#fileChoose")[0].files[0];
@@ -45,11 +66,11 @@ app.controller("TableCtrl", function($scope, Table){
         tmpTable.buildFullTable();
 
         $scope.$apply(function(){
-          $scope.tableList.push(tmpTable);
+          $scope.tables.push(tmpTable);
         });
       }
 
-      $("#import-tables-dialog").modal("hide");
+      $modalInstance.close();
     }
 
     reader.readAsText(file);

@@ -8,7 +8,7 @@ block content
         form.form-inline(role="form")
           button.btn.btn-default(type="button", ng-click="createTable()") Create table
           button.btn.btn-default(type="button", ng-click="exportTables()") Export
-          button.btn.btn-default(type="button", data-toggle="modal", data-target="#import-tables-dialog") Import
+          button.btn.btn-default(type="button", ng-click="showImportTablesDialog()") Import
         hr
         select.form-control(ng-model="showTable", ng-options="t.getName() for t in tables")
           option(value="") Please select a table
@@ -62,4 +62,3 @@ block content
               option(value="") Please select a row key
           button.btn.btn-default(type="button") Get Row
 //  include includes/show_operation
-//  include includes/import_tables
