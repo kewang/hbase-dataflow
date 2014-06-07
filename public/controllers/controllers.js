@@ -61,11 +61,20 @@ app.controller("PutRowCtrl", function($scope, $modal, Table){
 
   $scope.showPutRowDialog = function(){
     var modalInstance = $modal.open({
-      templateUrl: "/includes/create_cqs",
-      controller: "PutRowCtrl",
-      size: "lg"
+      templateUrl: "/includes/put_row_dialog",
+      controller: "PutRowDialogCtrl",
+      size: "lg",
+      resolve: {
+        putTable: function(){
+          return $scope.putTable;
+        }
+      }
     });
   };
+});
+
+app.controller("PutRowDialogCtrl", function($scope, $modalInstance, putTable){
+  $scope.table = putTable;
 });
 
 app.controller("CreateRowCtrl", function($scope, Table){

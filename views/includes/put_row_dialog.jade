@@ -1,6 +1,6 @@
 .modal-header
   button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
-  h4.modal-title#create-qualifiers-dialog-title Create {{ selectTable2.name }}
+  h4.modal-title#create-qualifiers-dialog-title Create {{ table.getName() }}
 .modal-body
   input.form-control(type="text", placeholder="Please Input Operation title", ng-model="tmp_operation_title", required)
   hr
