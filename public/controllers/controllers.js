@@ -75,6 +75,33 @@ app.controller("PutRowCtrl", function($scope, $modal, Table){
 
 app.controller("PutRowDialogCtrl", function($scope, $modalInstance, putTable){
   $scope.table = putTable;
+  $scope.form = {};
+  $scope.form.cqs = [];
+
+  $scope.addCQ = function(){
+    $scope.form.cqs.push({});
+  };
+
+  $scope.put = function() {
+    // create row key and cq
+    $scope.table.createRowkey($scope.form.rowKey);
+
+    for(var i=0;i<$scope.form.cqs.length;i++){
+      var name = $scope.form.cqs[i].name;
+      var value = $scope.form.cqs[i].value;
+
+      $scope.table.createCQ($scope.form.rowKey, name, value);
+    }
+
+    // clear form field
+    $scope.form.rowKey = "";
+    $scope.form.cqs = [];
+    $scope.form.operationTitle = "";
+
+    $scope.table.buildFullTable();
+
+    $modalInstance.close();
+  };
 });
 
 app.controller("CreateRowCtrl", function($scope, Table){
