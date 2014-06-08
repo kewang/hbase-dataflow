@@ -4,10 +4,14 @@ block content
   .container
     .row
       .col-md-2(ng-controller="TableCtrl")
-        button.btn.btn-default(type="button", ng-click="createTable()") Create table
+        h2
+          | Tables
+          button.btn.btn-default(type="button", ng-click="createTable()")
+            span.glyphicon.glyphicon-plus
         .list-group
           a.list-group-item(href="#", ng-repeat="t in tables", ng-click="changeTable(t)") {{ t.getName() }}
       .col-md-6(ng-controller="TableDetailCtrl")
+        h2 {{ table.getName() }}
         table.table.table-bordered.table-condensed.table-hover
           tr
             th Row Key
