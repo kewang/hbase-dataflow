@@ -5,7 +5,7 @@
   form(name="updateRowDialogForm", role="form")
     input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operationTitle", required)
     hr
-    select.form-control(ng-model="row", ng-options="r.rowkey for r in table.getRowkeys()")
+    select.form-control(ng-model="form.row", ng-options="r.rowkey for r in table.getRowkeys()")
       option(value="") Please select a row
     hr
     button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
@@ -13,9 +13,9 @@
       tr
         th CQ name
         th Value
-      tr(ng-repeat="cq in row.cqs")
+      tr(ng-repeat="cq in form.row.cqs")
         td
-          {{ cq.name }}
+          input.form-control(type="text", ng-model="cq.name", required)
         td
           input.form-control(type="text", ng-model="cq.value", required)
 .modal-footer

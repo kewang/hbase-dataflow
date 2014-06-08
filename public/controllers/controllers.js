@@ -148,6 +148,11 @@ app.controller("UpdateRowCtrl", function($scope, $modal, Table){
 
 app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, updateTable){
   $scope.table = updateTable;
+  $scope.form = {};
+
+  $scope.addCQ = function(){
+    $scope.form.row.cqs.push({});
+  };
 });
 
 app.controller("OperationCtrl", function($scope, $modal, Operation){
