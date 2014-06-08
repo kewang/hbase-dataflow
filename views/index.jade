@@ -3,7 +3,7 @@ extends layout
 block content
   .container
     .row
-      .col-md-8(ng-controller="TableCtrl", style="height: 300px;")
+      .col-md-8(ng-controller="TableCtrl")
         h2 TABLES
         form.form-inline(role="form")
           button.btn.btn-default(type="button", ng-click="createTable()") Create table
@@ -19,21 +19,20 @@ block content
           tr(ng-repeat="r in showTable.getFullRowkeys()")
             th {{ r.rowkey }}
             td(ng-repeat="c in r.cqs track by $index") {{ c }}
-      .col-md-4.op-list-col(ng-controller="OperationCtrl", style="height: 600px;")
+      .col-md-4(ng-controller="OperationCtrl")
         h2 OPERATIONS
         .list-group
           a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations", ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning'}[o.getType()]") {{ o.getTitle() }}
-      .col-md-8(style="height: 300px;")
-        h2 COMMANDS
-        form.form-inline(name="formCommand", ng-controller="RowCtrl", role="form")
-          .form-group
-            label Table
-            select.form-control(ng-model="table", ng-options="t.getName() for t in tables")
-              option(value="") Please select a table
-            select.form-control(ng-model="rowCommand")
-              option(value="") Please select a command
-              option(value="create") Create Row
-              option(value="update") Update Row
-              option(value="get") Get Row
-              option(value="scan") Scan Row
-          button.btn.btn-primary(type="button", ng-click="showRowCtrlDialog()", ng-disabled="!(table && rowCommand)") Execute
+  nav.navbar.navbar-default.navbar-fixed-bottom(role="navigation")
+    .container
+      form.form-inline(ng-controller="RowCtrl", role="form")
+        .form-group
+          select.form-control(ng-model="table", ng-options="t.getName() for t in tables")
+            option(value="") Please select a table
+          select.form-control(ng-model="rowCommand")
+            option(value="") Please select a command
+            option(value="create") Create Row
+            option(value="update") Update Row
+            option(value="get") Get Row
+            option(value="scan") Scan Row
+        button.btn.btn-primary(type="button", ng-click="showRowCtrlDialog()", ng-disabled="!(table && rowCommand)") Execute
