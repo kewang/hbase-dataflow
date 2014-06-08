@@ -41,7 +41,7 @@ app.controller("TableCtrl", function($scope, $modal, Table){
 
   $scope.showImportTablesDialog = function(){
     var modalInstance = $modal.open({
-      templateUrl: "/includes/import_tables_dialog",
+      templateUrl: "includes/import_tables_dialog",
       controller: "ImportTablesDialogCtrl",
       size: "lg"
     });
@@ -82,7 +82,7 @@ app.controller("CreateRowCtrl", function($scope, $modal, Table){
 
   $scope.showCreateRowDialog = function(){
     var modalInstance = $modal.open({
-      templateUrl: "/includes/create_row_dialog",
+      templateUrl: "includes/create_row_dialog",
       controller: "CreateRowDialogCtrl",
       size: "lg",
       resolve: {
@@ -134,7 +134,7 @@ app.controller("UpdateRowCtrl", function($scope, $modal, Table){
 
   $scope.showUpdateRowDialog = function(){
     var modalInstance = $modal.open({
-      templateUrl: "/includes/update_row_dialog",
+      templateUrl: "includes/update_row_dialog",
       controller: "UpdateRowDialogCtrl",
       size: "lg",
       resolve: {
@@ -186,7 +186,7 @@ app.controller("OperationCtrl", function($scope, $modal, Operation){
 
   $scope.showOperationDialog = function(operation){
     var modalInstance = $modal.open({
-      templateUrl: "/includes/operation_dialog",
+      templateUrl: "includes/operation_dialog",
       controller: "OperationDialogCtrl",
       size: "lg",
       resolve: {
