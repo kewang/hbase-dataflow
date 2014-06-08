@@ -1,3 +1,5 @@
+"use strict";
+
 var app = angular.module("hbase-dataflow-app", ["hbase-dataflow-app.services", "ui.bootstrap"]);
 
 app.controller("TableCtrl", function($scope, $modal, Table){
@@ -77,25 +79,43 @@ app.controller("ImportTablesDialogCtrl", function($scope, $modalInstance, Table)
   };
 });
 
-app.controller("CreateRowCtrl", function($scope, $modal, Table){
+app.controller("RowCtrl", function($scope, $modal, Table){
   $scope.tables = Table.findAll();
 
-  $scope.showCreateRowDialog = function(){
-    var modalInstance = $modal.open({
-      templateUrl: "includes/create_row_dialog",
-      controller: "CreateRowDialogCtrl",
-      size: "lg",
-      resolve: {
-        createTable: function(){
-          return $scope.createTable;
+  $scope.showRowCtrlDialog = function(){
+    switch($scope.rowCommand){
+    case "create":
+      var modalInstance = $modal.open({
+        templateUrl: "includes/create_row_dialog",
+        controller: "CreateRowDialogCtrl",
+        size: "lg",
+        resolve: {
+          table: function(){
+            return $scope.table;
+          }
         }
-      }
-    });
+      });
+
+      break;
+    case "update":
+      var modalInstance = $modal.open({
+        templateUrl: "includes/update_row_dialog",
+        controller: "UpdateRowDialogCtrl",
+        size: "lg",
+        resolve: {
+          table: function(){
+            return $scope.table;
+          }
+        }
+      });
+
+      break;
+    }
   };
 });
 
-app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, createTable, Operation){
-  $scope.table = createTable;
+app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Operation){
+  $scope.table = table;
   $scope.form = {};
   $scope.form.cqs = [];
 
@@ -129,25 +149,8 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, createTab
   };
 });
 
-app.controller("UpdateRowCtrl", function($scope, $modal, Table){
-  $scope.tables = Table.findAll();
-
-  $scope.showUpdateRowDialog = function(){
-    var modalInstance = $modal.open({
-      templateUrl: "includes/update_row_dialog",
-      controller: "UpdateRowDialogCtrl",
-      size: "lg",
-      resolve: {
-        updateTable: function(){
-          return $scope.updateTable;
-        }
-      }
-    });
-  };
-});
-
-app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, updateTable, Operation){
-  $scope.table = updateTable;
+app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Operation){
+  $scope.table = table;
   $scope.form = {};
 
   $scope.addCQ = function(){

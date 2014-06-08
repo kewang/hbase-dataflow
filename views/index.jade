@@ -25,28 +25,15 @@ block content
           a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations") {{ o.title }}
       .col-md-8(style="height: 300px;")
         h2 COMMANDS
-        h3 Create
-        form.form-inline(ng-controller="CreateRowCtrl", role="form")
+        form.form-inline(name="formCommand", ng-controller="RowCtrl", role="form")
           .form-group
             label Table
-            select.form-control(ng-model="createTable", ng-options="t.getName() for t in tables")
+            select.form-control(ng-model="table", ng-options="t.getName() for t in tables")
               option(value="") Please select a table
-          button.btn.btn-default(type="button", ng-click="showCreateRowDialog()") Create Row
-        h3 Update
-        form.form-inline(ng-controller="UpdateRowCtrl", role="form")
-          .form-group
-            label Table
-            select.form-control(ng-model="updateTable", ng-options="t.getName() for t in tables")
-              option(value="") Please select a table
-          button.btn.btn-default(type="button", ng-click="showUpdateRowDialog()") Update Row
-        h3 Get
-        form.form-inline(role="form")
-          .form-group
-            label Table
-            select.form-control(ng-model="selectTable4", ng-options="t.name for t in tableList")
-              option(value="") Please select a table
-          .form-group
-            label Row Key
-            select.form-control(ng-model="getRow", ng-options="r.rowkey for r in selectTable4.getFullRowkeys()")
-              option(value="") Please select a row key
-          button.btn.btn-default(type="button") Get Row
+            select.form-control(ng-model="rowCommand")
+              option(value="") Please select a command
+              option(value="create") Create Row
+              option(value="update") Update Row
+              option(value="get") Get Row
+              option(value="scan") Scan Row
+          button.btn.btn-primary(type="button", ng-click="showRowCtrlDialog()", ng-disabled="!(table && rowCommand)") Execute
