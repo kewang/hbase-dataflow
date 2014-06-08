@@ -3,20 +3,16 @@ extends layout
 block content
   .container
     .row
-      .col-md-8(ng-controller="TableCtrl")
-        h2 TABLES
-        form.form-inline(role="form")
-          button.btn.btn-default(type="button", ng-click="createTable()") Create table
-          button.btn.btn-default(type="button", ng-click="exportTables()") Export
-          button.btn.btn-default(type="button", ng-click="showImportTablesDialog()") Import
-        hr
-        select.form-control(ng-model="showTable", ng-options="t.getName() for t in tables")
-          option(value="") Please select a table
+      .col-md-2(ng-controller="TableCtrl")
+        button.btn.btn-default(type="button", ng-click="createTable()") Create table
+        .list-group
+          a.list-group-item(href="#", ng-repeat="t in tables", ng-click="changeTable(t)") {{ t.getName() }}
+      .col-md-6(ng-controller="TableDetailCtrl")
         table.table.table-bordered.table-condensed.table-hover
           tr
             th Row Key
-            th(ng-repeat="c in showTable.getFullCQs()") {{ c }}
-          tr(ng-repeat="r in showTable.getFullRowkeys()")
+            th(ng-repeat="c in table.getFullCQs()") {{ c }}
+          tr(ng-repeat="r in table.getFullRowkeys()")
             th {{ r.rowkey }}
             td(ng-repeat="c in r.cqs track by $index") {{ c }}
       .col-md-4(ng-controller="OperationCtrl")
@@ -36,3 +32,5 @@ block content
             option(value="get") Get Row
             option(value="scan") Scan Row
         button.btn.btn-primary(type="button", ng-click="showRowCtrlDialog()", ng-disabled="!(table && rowCommand)") Execute
+        button.btn.btn-default(type="button", ng-click="exportData()") Export
+        button.btn.btn-default(type="button", ng-click="showImportDataDialog()") Import

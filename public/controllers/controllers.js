@@ -2,9 +2,8 @@
 
 var app = angular.module("hbase-dataflow-app", ["hbase-dataflow-app.services", "ui.bootstrap"]);
 
-app.controller("TableCtrl", function($scope, $modal, Table, Operation){
+app.controller("TableCtrl", function($rootScope, $scope, Table){
   $scope.tables = Table.findAll();
-  $scope.operations = Operation.findAll();
 
   $scope.createTable = function() {
     var name = prompt("Create a new table");
@@ -18,86 +17,20 @@ app.controller("TableCtrl", function($scope, $modal, Table, Operation){
     }
   };
 
-  $scope.exportTables = function() {
-    var MIMETYPE = "application/json";
-    var tmpTables = angular.copy($scope.tables);
-
-    for(var i=0;i<tmpTables.length;i++){
-      var table = tmpTables[i];
-
-      delete table.fullRowkeys;
-      delete table.fullCQs;
-    }
-
-    var root = {};
-
-    root.tables = tmpTables;
-    root.operations = angular.copy($scope.operations);
-
-    var blob = new Blob([JSON.stringify(root)], {type: MIMETYPE});
-    var a = document.createElement("a");
-
-    window.URL = window.webkitURL || window.URL;
-
-    a.download = "export.json";
-    a.href = window.URL.createObjectURL(blob);
-    a.dataset.downloadurl = [MIMETYPE, a.download, a.href].join(":");
-
-    a.click();
-  };
-
-  $scope.showImportTablesDialog = function(){
-    var modalInstance = $modal.open({
-      templateUrl: "includes/import_tables_dialog",
-      controller: "ImportTablesDialogCtrl",
-      size: "lg"
-    });
+  $scope.changeTable = function(table){
+    $rootScope.$broadcast("changeTable", table);
   };
 });
 
-app.controller("ImportTablesDialogCtrl", function($scope, $modalInstance, Table, Operation){
+app.controller("TableDetailCtrl", function($scope){
+  $scope.$on("changeTable", function(event, table){
+    $scope.table = table;
+  });
+});
+
+app.controller("RowCtrl", function($scope, $modal, Table, Operation){
   $scope.tables = Table.findAll();
   $scope.operations = Operation.findAll();
-
-  $scope.importTables = function() {
-    var file = $("#fileChoose")[0].files[0];
-    var reader = new FileReader();
-
-    reader.onloadend = function(e) {
-      var root = JSON.parse(e.target.result);
-
-      if(root.tables){
-        for(var i=0;i<root.tables.length;i++){
-          var tmpTable = new Table(root.tables[i].name);
-
-          tmpTable.setRowkeys(root.tables[i].rowkeys);
-          tmpTable.buildFullTable();
-
-          $scope.$apply(function(){
-            $scope.tables.push(tmpTable);
-          });
-        }
-      }
-
-      if(root.operations){
-        for(var i=0;i<root.operations.length;i++){
-          var tmpOperation = new Operation(root.operations[i].title, root.operations[i].type);
-
-          $scope.$apply(function(){
-            $scope.operations.push(tmpOperation);
-          });
-        }
-      }
-
-      $modalInstance.close();
-    }
-
-    reader.readAsText(file);
-  };
-});
-
-app.controller("RowCtrl", function($scope, $modal, Table){
-  $scope.tables = Table.findAll();
 
   $scope.showRowCtrlDialog = function(){
     switch($scope.rowCommand){
@@ -128,6 +61,42 @@ app.controller("RowCtrl", function($scope, $modal, Table){
 
       break;
     }
+  };
+
+  $scope.exportData = function() {
+    var MIMETYPE = "application/json";
+    var tmpTables = angular.copy($scope.tables);
+
+    for(var i=0;i<tmpTables.length;i++){
+      var table = tmpTables[i];
+
+      delete table.fullRowkeys;
+      delete table.fullCQs;
+    }
+
+    var root = {};
+
+    root.tables = tmpTables;
+    root.operations = angular.copy($scope.operations);
+
+    var blob = new Blob([JSON.stringify(root)], {type: MIMETYPE});
+    var a = document.createElement("a");
+
+    window.URL = window.webkitURL || window.URL;
+
+    a.download = "export.json";
+    a.href = window.URL.createObjectURL(blob);
+    a.dataset.downloadurl = [MIMETYPE, a.download, a.href].join(":");
+
+    a.click();
+  };
+
+  $scope.showImportDataDialog = function(){
+    var modalInstance = $modal.open({
+      templateUrl: "includes/import_data_dialog",
+      controller: "ImportDataDialogCtrl",
+      size: "lg"
+    });
   };
 });
 
@@ -198,6 +167,47 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
     $scope.table.buildFullTable();
 
     $modalInstance.close();
+  };
+});
+
+app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, Operation){
+  $scope.tables = Table.findAll();
+  $scope.operations = Operation.findAll();
+
+  $scope.importTables = function() {
+    var file = $("#fileChoose")[0].files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function(e) {
+      var root = JSON.parse(e.target.result);
+
+      if(root.tables){
+        for(var i=0;i<root.tables.length;i++){
+          var tmpTable = new Table(root.tables[i].name);
+
+          tmpTable.setRowkeys(root.tables[i].rowkeys);
+          tmpTable.buildFullTable();
+
+          $scope.$apply(function(){
+            $scope.tables.push(tmpTable);
+          });
+        }
+      }
+
+      if(root.operations){
+        for(var i=0;i<root.operations.length;i++){
+          var tmpOperation = new Operation(root.operations[i].title, root.operations[i].type);
+
+          $scope.$apply(function(){
+            $scope.operations.push(tmpOperation);
+          });
+        }
+      }
+
+      $modalInstance.close();
+    }
+
+    reader.readAsText(file);
   };
 });
 
