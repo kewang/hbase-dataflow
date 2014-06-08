@@ -39,41 +39,21 @@
         </div>
         <div style="height: 300px;" class="col-md-8">
           <h2>COMMANDS</h2>
-          <h3>Create</h3>
-          <form ng-controller="CreateRowCtrl" role="form" class="form-inline">
+          <form name="formCommand" ng-controller="RowCtrl" role="form" class="form-inline">
             <div class="form-group">
               <label>Table</label>
-              <select ng-model="createTable" ng-options="t.getName() for t in tables" class="form-control">
+              <select ng-model="table" ng-options="t.getName() for t in tables" class="form-control">
                 <option value="">Please select a table</option>
               </select>
-            </div>
-            <button type="button" ng-click="showCreateRowDialog()" class="btn btn-default">Create Row</button>
-          </form>
-          <h3>Update</h3>
-          <form ng-controller="UpdateRowCtrl" role="form" class="form-inline">
-            <div class="form-group">
-              <label>Table</label>
-              <select ng-model="updateTable" ng-options="t.getName() for t in tables" class="form-control">
-                <option value="">Please select a table</option>
+              <select ng-model="rowCommand" class="form-control">
+                <option value="">Please select a command</option>
+                <option value="create">Create Row</option>
+                <option value="update">Update Row</option>
+                <option value="get">Get Row</option>
+                <option value="scan">Scan Row</option>
               </select>
             </div>
-            <button type="button" ng-click="showUpdateRowDialog()" class="btn btn-default">Update Row</button>
-          </form>
-          <h3>Get</h3>
-          <form role="form" class="form-inline">
-            <div class="form-group">
-              <label>Table</label>
-              <select ng-model="selectTable4" ng-options="t.name for t in tableList" class="form-control">
-                <option value="">Please select a table</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Row Key</label>
-              <select ng-model="getRow" ng-options="r.rowkey for r in selectTable4.getFullRowkeys()" class="form-control">
-                <option value="">Please select a row key</option>
-              </select>
-            </div>
-            <button type="button" class="btn btn-default">Get Row</button>
+            <button type="button" ng-click="showRowCtrlDialog()" ng-disabled="!(table &amp;&amp; rowCommand)" class="btn btn-primary">Execute</button>
           </form>
         </div>
       </div>
