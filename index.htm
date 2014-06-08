@@ -12,10 +12,13 @@
     <div class="container">
       <div class="row">
         <div ng-controller="TableCtrl" class="col-md-2">
-          <button type="button" ng-click="createTable()" class="btn btn-default">Create table</button>
+          <h2>Tables
+            <button type="button" ng-click="createTable()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+          </h2>
           <div class="list-group"><a href="#" ng-repeat="t in tables" ng-click="changeTable(t)" class="list-group-item">{{ t.getName() }}</a></div>
         </div>
         <div ng-controller="TableDetailCtrl" class="col-md-6">
+          <h2>{{ table.getName() }}</h2>
           <table class="table table-bordered table-condensed table-hover">
             <tr>
               <th>Row Key</th>
