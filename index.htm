@@ -11,53 +11,49 @@
   <body>
     <div class="container">
       <div class="row">
-        <div ng-controller="TableCtrl" style="height: 300px;" class="col-md-8">
-          <h2>TABLES</h2>
-          <form role="form" class="form-inline">
-            <button type="button" ng-click="createTable()" class="btn btn-default">Create table</button>
-            <button type="button" ng-click="exportTables()" class="btn btn-default">Export</button>
-            <button type="button" ng-click="showImportTablesDialog()" class="btn btn-default">Import</button>
-          </form>
-          <hr>
-          <select ng-model="showTable" ng-options="t.getName() for t in tables" class="form-control">
-            <option value="">Please select a table</option>
-          </select>
+        <div ng-controller="TableCtrl" class="col-md-2">
+          <button type="button" ng-click="createTable()" class="btn btn-default">Create table</button>
+          <div class="list-group"><a href="#" ng-repeat="t in tables" ng-click="changeTable(t)" class="list-group-item">{{ t.getName() }}</a></div>
+        </div>
+        <div ng-controller="TableDetailCtrl" class="col-md-6">
           <table class="table table-bordered table-condensed table-hover">
             <tr>
               <th>Row Key</th>
-              <th ng-repeat="c in showTable.getFullCQs()">{{ c }}</th>
+              <th ng-repeat="c in table.getFullCQs()">{{ c }}</th>
             </tr>
-            <tr ng-repeat="r in showTable.getFullRowkeys()">
+            <tr ng-repeat="r in table.getFullRowkeys()">
               <th>{{ r.rowkey }}</th>
               <td ng-repeat="c in r.cqs track by $index">{{ c }}</td>
             </tr>
           </table>
         </div>
-        <div ng-controller="OperationCtrl" style="height: 600px;" class="col-md-4 op-list-col">
+        <div ng-controller="OperationCtrl" class="col-md-4">
           <h2>OPERATIONS</h2>
           <div class="list-group"><a href="#" ng-click="showOperationDialog(o)" ng-repeat="o in operations" ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning'}[o.getType()]" class="list-group-item">{{ o.getTitle() }}</a></div>
         </div>
-        <div style="height: 300px;" class="col-md-8">
-          <h2>COMMANDS</h2>
-          <form name="formCommand" ng-controller="RowCtrl" role="form" class="form-inline">
-            <div class="form-group">
-              <label>Table</label>
-              <select ng-model="table" ng-options="t.getName() for t in tables" class="form-control">
-                <option value="">Please select a table</option>
-              </select>
-              <select ng-model="rowCommand" class="form-control">
-                <option value="">Please select a command</option>
-                <option value="create">Create Row</option>
-                <option value="update">Update Row</option>
-                <option value="get">Get Row</option>
-                <option value="scan">Scan Row</option>
-              </select>
-            </div>
-            <button type="button" ng-click="showRowCtrlDialog()" ng-disabled="!(table &amp;&amp; rowCommand)" class="btn btn-primary">Execute</button>
-          </form>
-        </div>
       </div>
-    </div><a href="https://github.com/kewangtw/hbase-dataflow" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+    </div>
+    <nav role="navigation" class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <form ng-controller="RowCtrl" role="form" class="form-inline">
+          <div class="form-group">
+            <select ng-model="table" ng-options="t.getName() for t in tables" class="form-control">
+              <option value="">Please select a table</option>
+            </select>
+            <select ng-model="rowCommand" class="form-control">
+              <option value="">Please select a command</option>
+              <option value="create">Create Row</option>
+              <option value="update">Update Row</option>
+              <option value="get">Get Row</option>
+              <option value="scan">Scan Row</option>
+            </select>
+          </div>
+          <button type="button" ng-click="showRowCtrlDialog()" ng-disabled="!(table &amp;&amp; rowCommand)" class="btn btn-primary">Execute</button>
+          <button type="button" ng-click="exportData()" class="btn btn-default">Export</button>
+          <button type="button" ng-click="showImportDataDialog()" class="btn btn-default">Import</button>
+        </form>
+      </div>
+    </nav><a href="https://github.com/kewangtw/hbase-dataflow" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
     <script src="javascripts/jquery/dist/jquery.js"></script>
     <script src="javascripts/bootstrap/dist/js/bootstrap.js"></script>
     <script src="javascripts/angular/angular.js"></script>
