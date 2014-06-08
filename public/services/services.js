@@ -1,3 +1,5 @@
+"use strict";
+
 var app = angular.module("hbase-dataflow-app.services", []);
 
 // imitate http://www.bennadel.com/blog/2527-defining-instantiatable-classes-in-the-angularjs-dependency-injection-framework.htm
