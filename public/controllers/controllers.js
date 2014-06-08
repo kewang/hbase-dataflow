@@ -146,12 +146,38 @@ app.controller("UpdateRowCtrl", function($scope, $modal, Table){
   };
 });
 
-app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, updateTable){
+app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, updateTable, Operation){
   $scope.table = updateTable;
   $scope.form = {};
 
   $scope.addCQ = function(){
-    $scope.form.row.cqs.push({});
+    $scope.form.rowKey.cqs.push({});
+  };
+
+  $scope.update = function() {
+    $scope.table.removeByRowkey($scope.form.rowKey);
+
+    // create row key and cq
+    $scope.table.createRowkey($scope.form.rowKey.rowkey);
+
+    for(var i=0;i<$scope.form.rowKey.cqs.length;i++){
+      var name = $scope.form.rowKey.cqs[i].name;
+      var value = $scope.form.rowKey.cqs[i].value;
+
+      $scope.table.createCQ($scope.form.rowKey.rowkey, name, value);
+    }
+
+    var o = new Operation($scope.form.operationTitle);
+
+    Operation.create(o);
+
+    // clear form field
+    $scope.form.rowKey = {};
+    $scope.form.operationTitle = "";
+
+    $scope.table.buildFullTable();
+
+    $modalInstance.close();
   };
 });
 

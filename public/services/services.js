@@ -105,9 +105,21 @@ app.factory("Table", function() {
     return this.fullCQs;
   };
 
+  Table.prototype.removeByRowkey = function(rowkey){
+    for(var i = 0;i<this.rowkeys.length;i++){
+      var r = this.rowkeys[i];
+
+      if(r.rowkey === rowkey.rowkey){
+        this.rowkeys.splice(i, 1);
+
+        break;
+      }
+    }
+  };
+
   Table.create = function(table){
     entities.push(table);
-  }
+  };
 
   Table.findAll = function(){
     return entities;
@@ -125,7 +137,7 @@ app.factory("Table", function() {
     }
 
     return found;
-  }
+  };
 
   return Table;
 });
