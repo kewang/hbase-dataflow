@@ -8,62 +8,56 @@
     <link rel="stylesheet" href="javascripts/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="stylesheets/style.css">
   </head>
-  <body ng-controller="dataflow">
+  <body>
     <div class="container">
       <div class="row">
-        <div style="height: 300px;" class="col-md-8">
+        <div ng-controller="TableCtrl" style="height: 300px;" class="col-md-8">
           <h2>TABLES</h2>
           <form role="form" class="form-inline">
             <button type="button" ng-click="createTable()" class="btn btn-default">Create table</button>
             <button type="button" ng-click="exportTables()" class="btn btn-default">Export</button>
-            <button type="button" data-toggle="modal" data-target="#import-tables-dialog" class="btn btn-default">Import</button>
+            <button type="button" ng-click="showImportTablesDialog()" class="btn btn-default">Import</button>
           </form>
           <hr>
-          <select ng-model="selectTable1" ng-options="t.name for t in tableList" class="form-control">
+          <select ng-model="showTable" ng-options="t.getName() for t in tables" class="form-control">
             <option value="">Please select a table</option>
           </select>
           <table class="table table-bordered table-condensed table-hover">
             <tr>
               <th>Row Key</th>
-              <th ng-repeat="c in selectTable1.getFullCQs()">{{ c }}</th>
+              <th ng-repeat="c in showTable.getFullCQs()">{{ c }}</th>
             </tr>
-            <tr ng-repeat="r in selectTable1.getFullRowkeys()">
+            <tr ng-repeat="r in showTable.getFullRowkeys()">
               <th>{{ r.rowkey }}</th>
               <td ng-repeat="c in r.cqs track by $index">{{ c }}</td>
             </tr>
           </table>
         </div>
-        <div style="height: 600px;" class="col-md-4 op-list-col">
+        <div ng-controller="OperationCtrl" style="height: 600px;" class="col-md-4 op-list-col">
           <h2>OPERATIONS</h2>
-          <div class="list-group"><a href="#" ng-click="showOperation(o)" ng-repeat="o in operationList" class="list-group-item">{{ o.title }}</a></div>
+          <div class="list-group"><a href="#" ng-click="showOperationDialog(o)" ng-repeat="o in operations" class="list-group-item">{{ o.title }}</a></div>
         </div>
         <div style="height: 300px;" class="col-md-8">
           <h2>COMMANDS</h2>
           <h3>Create</h3>
-          <form role="form" class="form-inline">
+          <form ng-controller="CreateRowCtrl" role="form" class="form-inline">
             <div class="form-group">
               <label>Table</label>
-              <select ng-model="selectTable2" ng-options="t.name for t in tableList" class="form-control">
+              <select ng-model="createTable" ng-options="t.getName() for t in tables" class="form-control">
                 <option value="">Please select a table</option>
               </select>
             </div>
-            <button type="button" ng-click="showCreateQualifiersDialog()" class="btn btn-default">Create CQs</button>
+            <button type="button" ng-click="showCreateRowDialog()" class="btn btn-default">Create Row</button>
           </form>
           <h3>Update</h3>
-          <form role="form" class="form-inline">
+          <form ng-controller="UpdateRowCtrl" role="form" class="form-inline">
             <div class="form-group">
               <label>Table</label>
-              <select ng-model="selectTable3" ng-options="t.name for t in tableList" class="form-control">
+              <select ng-model="updateTable" ng-options="t.getName() for t in tables" class="form-control">
                 <option value="">Please select a table</option>
               </select>
             </div>
-            <div class="form-group">
-              <label>Row Key</label>
-              <select ng-model="updateRow" ng-options="r.rowkey for r in selectTable3.getFullRowkeys()" class="form-control">
-                <option value="">Please select a row key</option>
-              </select>
-            </div>
-            <button type="button" class="btn btn-default">Update CQs</button>
+            <button type="button" ng-click="showUpdateRowDialog()" class="btn btn-default">Update Row</button>
           </form>
           <h3>Get</h3>
           <form role="form" class="form-inline">
@@ -83,80 +77,13 @@
           </form>
         </div>
       </div>
-    </div>
-    <form role="form" name="createQualifiersForm">
-      <div id="create-qualifiers-dialog" tabindex="-1" role="dialog" aria-labelledby="create-qualifiers-dialog-title" aria-hidden class="modal fade">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" data-dismiss="modal" aria-hidden class="close">&times;</button>
-              <h4 id="create-qualifiers-dialog-title" class="modal-title">Create {{ selectTable2.name }}</h4>
-            </div>
-            <div class="modal-body">
-              <input type="text" placeholder="Please Input Operation title" ng-model="tmp_operation_title" required class="form-control">
-              <hr>
-              <input type="text" placeholder="Please Input Row Key" ng-model="tmp_rk" required class="form-control">
-              <hr>
-              <button type="button" ng-click="addCQ()" class="btn btn-default">Add CQ</button>
-              <table class="table table-bordered">
-                <tr>
-                  <th>CQ name</th>
-                  <th>Value</th>
-                </tr>
-                <tr ng-repeat="cq in tmp_cqs">
-                  <td>
-                    <input type="text" ng-model="cq.name" required class="form-control">
-                  </td>
-                  <td>
-                    <input type="text" ng-model="cq.value" required class="form-control">
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <div class="modal-footer">
-              <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-              <button type="button" ng-click="createRowkeyAndCQ()" ng-disabled="!createQualifiersForm.$valid" class="btn btn-primary">Create</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-    <div id="show-operation-dialog" tabindex="-1" role="dialog" aria-labelledby="show-operation-dialog-title" aria-hidden class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" data-dismiss="modal" aria-hidden class="close">&times;</button>
-            <h4 id="show-operation-dialog-title" class="modal-title">{{ tmp_operation.getTitle() }}</h4>
-          </div>
-          <div class="modal-body"></div>
-          <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="import-tables-dialog" tabindex="-1" role="dialog" aria-labelledby="import-tables-dialog-title" aria-hidden class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" data-dismiss="modal" aria-hidden class="close">&times;</button>
-            <h4 id="import-tables-dialog-title" class="modal-title">Import Tables</h4>
-          </div>
-          <div class="modal-body">
-            <input id="fileChoose" type="file">
-          </div>
-          <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-            <button type="button" ng-click="importTables()" class="btn btn-primary">Import</button>
-          </div>
-        </div>
-      </div>
     </div><a href="https://github.com/kewangtw/hbase-dataflow" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
     <script src="javascripts/jquery/dist/jquery.js"></script>
     <script src="javascripts/bootstrap/dist/js/bootstrap.js"></script>
     <script src="javascripts/angular/angular.js"></script>
-    <script src="javascripts/models/Table.js"></script>
+    <script src="javascripts/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="javascripts/models/Operation.js"></script>
-    <script src="controllers/controller.js"></script>
+    <script src="services/services.js"></script>
+    <script src="controllers/controllers.js"></script>
   </body>
 </html>

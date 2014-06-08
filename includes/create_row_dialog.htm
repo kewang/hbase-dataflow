@@ -1,0 +1,32 @@
+
+<div class="modal-header">
+  <button type="button" data-dismiss="modal" aria-hidden="aria-hidden" class="close">&times;</button>
+  <h4 class="modal-title">Create {{ table.getName() }}</h4>
+</div>
+<div class="modal-body">
+  <form name="createRowDialogForm" role="form">
+    <input type="text" placeholder="Please Input Operation title" ng-model="form.operationTitle" required="required" class="form-control"/>
+    <hr/>
+    <input type="text" placeholder="Please Input Row Key" ng-model="form.rowKey" required="required" class="form-control"/>
+    <hr/>
+    <button type="button" ng-click="addCQ()" class="btn btn-default">Add CQ</button>
+    <table class="table table-bordered">
+      <tr>
+        <th>CQ name</th>
+        <th>Value</th>
+      </tr>
+      <tr ng-repeat="cq in form.cqs">
+        <td>
+          <input type="text" ng-model="cq.name" required="required" class="form-control"/>
+        </td>
+        <td>
+          <input type="text" ng-model="cq.value" required="required" class="form-control"/>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+  <button type="button" ng-click="create()" ng-disabled="!createRowDialogForm.$valid" class="btn btn-primary">Create</button>
+</div>
