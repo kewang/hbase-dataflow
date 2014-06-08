@@ -22,7 +22,7 @@ block content
       .col-md-4.op-list-col(ng-controller="OperationCtrl", style="height: 600px;")
         h2 OPERATIONS
         .list-group
-          a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations") {{ o.title }}
+          a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations", ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning'}[o.getType()]") {{ o.getTitle() }}
       .col-md-8(style="height: 300px;")
         h2 COMMANDS
         form.form-inline(name="formCommand", ng-controller="RowCtrl", role="form")

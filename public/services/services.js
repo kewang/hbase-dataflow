@@ -143,14 +143,26 @@ app.factory("Table", function() {
 });
 
 app.factory("Operation", function() {
+  Operation.Type = {
+    CREATE: 0,
+    UPDATE: 1,
+    GET: 2,
+    SCAN: 3
+  };
+
   var entities = [];
 
-  function Operation(title){
+  function Operation(title, type){
     this.title = title;
+    this.type = type;
   }
 
   Operation.prototype.getTitle = function(){
     return this.title;
+  };
+
+  Operation.prototype.getType = function(){
+    return this.type;
   };
 
   Operation.create = function(operation){

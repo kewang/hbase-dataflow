@@ -134,7 +134,7 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Op
       $scope.table.createCQ($scope.form.rowKey, name, value);
     }
 
-    var o = new Operation($scope.form.operationTitle);
+    var o = new Operation($scope.form.operationTitle, Operation.Type.CREATE);
 
     Operation.create(o);
 
@@ -170,7 +170,7 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
       $scope.table.createCQ($scope.form.rowKey.rowkey, name, value);
     }
 
-    var o = new Operation($scope.form.operationTitle);
+    var o = new Operation($scope.form.operationTitle, Operation.Type.UPDATE);
 
     Operation.create(o);
 
