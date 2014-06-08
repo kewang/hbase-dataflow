@@ -9,8 +9,6 @@ app.factory("Table", function() {
   function Table(name){
     this.name = name;
     this.rowkeys = [];
-    this.fullRowkeys;
-    this.fullCQs;
   }
 
   Table.prototype.getName = function(){
