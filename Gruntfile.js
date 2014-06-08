@@ -5,9 +5,14 @@ module.exports = function(grunt){
         options: {
           pretty: true
         },
-        files: {
-          "build/templates/index.htm": "views/index.jade"
-        }
+        files: [{
+          expand: true,
+          cwd: "views/",
+          src: ["**/*.jade", "!layout.jade"],
+          dest: "build/templates/",
+          ext: ".htm",
+          extDot: "first"
+        }]
       }
     },
     "copy": {
