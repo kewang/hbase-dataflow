@@ -1,3 +1,5 @@
+"use strict";
+
 var app = angular.module("hbase-dataflow-app.services", []);
 
 // imitate http://www.bennadel.com/blog/2527-defining-instantiatable-classes-in-the-angularjs-dependency-injection-framework.htm
@@ -7,8 +9,6 @@ app.factory("Table", function() {
   function Table(name){
     this.name = name;
     this.rowkeys = [];
-    this.fullRowkeys;
-    this.fullCQs;
   }
 
   Table.prototype.getName = function(){
@@ -143,14 +143,26 @@ app.factory("Table", function() {
 });
 
 app.factory("Operation", function() {
+  Operation.Type = {
+    CREATE: 0,
+    UPDATE: 1,
+    GET: 2,
+    SCAN: 3
+  };
+
   var entities = [];
 
-  function Operation(title){
+  function Operation(title, type){
     this.title = title;
+    this.type = type;
   }
 
   Operation.prototype.getTitle = function(){
     return this.title;
+  };
+
+  Operation.prototype.getType = function(){
+    return this.type;
   };
 
   Operation.create = function(operation){

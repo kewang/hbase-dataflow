@@ -2,8 +2,9 @@
 
 var app = angular.module("hbase-dataflow-app", ["hbase-dataflow-app.services", "ui.bootstrap"]);
 
-app.controller("TableCtrl", function($scope, $modal, Table){
+app.controller("TableCtrl", function($scope, $modal, Table, Operation){
   $scope.tables = Table.findAll();
+  $scope.operations = Operation.findAll();
 
   $scope.createTable = function() {
     var name = prompt("Create a new table");
@@ -28,8 +29,12 @@ app.controller("TableCtrl", function($scope, $modal, Table){
       delete table.fullCQs;
     }
 
-    var exportData = angular.toJson(tmpTables);
-    var blob = new Blob([exportData], {type: MIMETYPE});
+    var root = {};
+
+    root.tables = tmpTables;
+    root.operations = angular.copy($scope.operations);
+
+    var blob = new Blob([JSON.stringify(root)], {type: MIMETYPE});
     var a = document.createElement("a");
 
     window.URL = window.webkitURL || window.URL;
@@ -50,26 +55,38 @@ app.controller("TableCtrl", function($scope, $modal, Table){
   };
 });
 
-app.controller("ImportTablesDialogCtrl", function($scope, $modalInstance, Table){
+app.controller("ImportTablesDialogCtrl", function($scope, $modalInstance, Table, Operation){
   $scope.tables = Table.findAll();
+  $scope.operations = Operation.findAll();
 
   $scope.importTables = function() {
     var file = $("#fileChoose")[0].files[0];
     var reader = new FileReader();
 
     reader.onloadend = function(e) {
-      var data = JSON.parse(e.target.result);
+      var root = JSON.parse(e.target.result);
 
-      for(var i=0;i<data.length;i++){
-        var tmpTable = new Table(data[i].name);
+      if(root.tables){
+        for(var i=0;i<root.tables.length;i++){
+          var tmpTable = new Table(root.tables[i].name);
 
-        tmpTable.setRowkeys(data[i].rowkeys);
+          tmpTable.setRowkeys(root.tables[i].rowkeys);
+          tmpTable.buildFullTable();
 
-        tmpTable.buildFullTable();
+          $scope.$apply(function(){
+            $scope.tables.push(tmpTable);
+          });
+        }
+      }
 
-        $scope.$apply(function(){
-          $scope.tables.push(tmpTable);
-        });
+      if(root.operations){
+        for(var i=0;i<root.operations.length;i++){
+          var tmpOperation = new Operation(root.operations[i].title, root.operations[i].type);
+
+          $scope.$apply(function(){
+            $scope.operations.push(tmpOperation);
+          });
+        }
       }
 
       $modalInstance.close();
@@ -134,7 +151,7 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Op
       $scope.table.createCQ($scope.form.rowKey, name, value);
     }
 
-    var o = new Operation($scope.form.operationTitle);
+    var o = new Operation($scope.form.operationTitle, Operation.Type.CREATE);
 
     Operation.create(o);
 
@@ -170,7 +187,7 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
       $scope.table.createCQ($scope.form.rowKey.rowkey, name, value);
     }
 
-    var o = new Operation($scope.form.operationTitle);
+    var o = new Operation($scope.form.operationTitle, Operation.Type.UPDATE);
 
     Operation.create(o);
 

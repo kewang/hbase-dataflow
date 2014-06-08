@@ -35,7 +35,7 @@
         </div>
         <div ng-controller="OperationCtrl" style="height: 600px;" class="col-md-4 op-list-col">
           <h2>OPERATIONS</h2>
-          <div class="list-group"><a href="#" ng-click="showOperationDialog(o)" ng-repeat="o in operations" class="list-group-item">{{ o.title }}</a></div>
+          <div class="list-group"><a href="#" ng-click="showOperationDialog(o)" ng-repeat="o in operations" ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning'}[o.getType()]" class="list-group-item">{{ o.getTitle() }}</a></div>
         </div>
         <div style="height: 300px;" class="col-md-8">
           <h2>COMMANDS</h2>
