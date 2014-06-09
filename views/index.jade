@@ -10,7 +10,7 @@ block content
             span.glyphicon.glyphicon-plus
         .list-group
           a.list-group-item(href="#", ng-repeat="t in tables", ng-click="changeTable(t)") {{ t.getName() }}
-      #table-detail.col-md-6(ng-controller="TableDetailCtrl")
+      #table-detail.col-md-7(ng-controller="TableDetailCtrl")
         h2 {{ table.getName() }}
         table.table.table-bordered.table-condensed.table-hover
           tr
@@ -19,7 +19,7 @@ block content
           tr(ng-repeat="r in table.getFullRowkeys()")
             th {{ r.rowkey }}
             td(ng-repeat="c in r.cqs track by $index") {{ c }}
-      #operations.col-md-4(ng-controller="OperationCtrl")
+      #operations.col-md-3(ng-controller="OperationCtrl")
         h2 OPERATIONS
         .list-group
           a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations", ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning'}[o.getType()]") {{ o.getTitle() }}
