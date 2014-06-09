@@ -3,5 +3,5 @@ body {
 }
 
 #table-detail {
-  overflow-x: scroll;
+  overflow-x: auto;
 }

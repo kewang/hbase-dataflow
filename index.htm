@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>HBase Data Flow</title>
     <link rel="stylesheet" href="javascripts/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="stylesheets/style.css">
   </head>
@@ -12,14 +12,16 @@
     <div class="container">
       <div class="row">
         <div id="tables" ng-controller="TableCtrl" class="col-md-2">
-          <h2>Tables
+          <h2>TABLES
             <button type="button" ng-click="createTable()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
           </h2>
-          <div class="list-group"><a href="#" ng-repeat="t in tables" ng-click="changeTable(t)" class="list-group-item">{{ t.getName() }}</a></div>
+          <h3 ng-hide="tables.length != 0">No table</h3>
+          <div ng-show="tables.length != 0" class="list-group"><a href="#" ng-repeat="t in tables" ng-click="changeTable(t)" class="list-group-item">{{ t.getName() }}</a></div>
         </div>
-        <div id="table-detail" ng-controller="TableDetailCtrl" class="col-md-6">
+        <div id="table-detail" ng-controller="TableDetailCtrl" class="col-md-7">
           <h2>{{ table.getName() }}</h2>
-          <table class="table table-bordered table-condensed table-hover">
+          <h3 ng-hide="(table != null) &amp;&amp; !table.isEmpty()">No data</h3>
+          <table ng-show="(table != null) &amp;&amp; !table.isEmpty()" class="table table-bordered table-condensed table-hover">
             <tr>
               <th>Row Key</th>
               <th ng-repeat="c in table.getFullCQs()">{{ c }}</th>
@@ -30,9 +32,12 @@
             </tr>
           </table>
         </div>
-        <div id="operations" ng-controller="OperationCtrl" class="col-md-4">
-          <h2>OPERATIONS</h2>
-          <div class="list-group"><a href="#" ng-click="showOperationDialog(o)" ng-repeat="o in operations" ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning'}[o.getType()]" class="list-group-item">{{ o.getTitle() }}</a></div>
+        <div id="operations" ng-controller="OperationCtrl" class="col-md-3">
+          <h2>OPERATIONS
+            <button type="button" ng-click="createOperation()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+          </h2>
+          <h3 ng-hide="operations.length != 0">No operation</h3>
+          <div ng-show="operations.length != 0" class="list-group"><a href="#" ng-click="showOperationDialog(o)" ng-repeat="o in operations" ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning'}[o.getType()]" class="list-group-item">{{ o.getTitle() }}</a></div>
         </div>
       </div>
     </div>
