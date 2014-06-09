@@ -117,6 +117,10 @@ app.factory("Table", function() {
     }
   };
 
+  Table.prototype.isEmpty = function(){
+    return (this.rowkeys.length === 0);
+  };
+
   Table.create = function(table){
     entities.push(table);
   };

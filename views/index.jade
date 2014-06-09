@@ -12,7 +12,8 @@ block content
           a.list-group-item(href="#", ng-repeat="t in tables", ng-click="changeTable(t)") {{ t.getName() }}
       #table-detail.col-md-7(ng-controller="TableDetailCtrl")
         h2 {{ table.getName() }}
-        table.table.table-bordered.table-condensed.table-hover
+        h3(ng-hide="(table != null) && !table.isEmpty()") No Data
+        table.table.table-bordered.table-condensed.table-hover(ng-show="(table != null) && !table.isEmpty()")
           tr
             th Row Key
             th(ng-repeat="c in table.getFullCQs()") {{ c }}
