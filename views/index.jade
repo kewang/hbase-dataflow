@@ -8,11 +8,12 @@ block content
           | TABLES
           button.btn.btn-default(type="button", ng-click="createTable()")
             span.glyphicon.glyphicon-plus
-        .list-group
+        h3(ng-hide="tables.length != 0") No table
+        .list-group(ng-show="tables.length != 0")
           a.list-group-item(href="#", ng-repeat="t in tables", ng-click="changeTable(t)") {{ t.getName() }}
       #table-detail.col-md-7(ng-controller="TableDetailCtrl")
         h2 {{ table.getName() }}
-        h3(ng-hide="(table != null) && !table.isEmpty()") No Data
+        h3(ng-hide="(table != null) && !table.isEmpty()") No data
         table.table.table-bordered.table-condensed.table-hover(ng-show="(table != null) && !table.isEmpty()")
           tr
             th Row Key
@@ -24,7 +25,8 @@ block content
         h2 OPERATIONS
           button.btn.btn-default(type="button", ng-click="createOperation()")
             span.glyphicon.glyphicon-plus
-        .list-group
+        h3(ng-hide="operations.length != 0") No operation
+        .list-group(ng-show="operations.length != 0")
           a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations", ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning'}[o.getType()]") {{ o.getTitle() }}
   nav.navbar.navbar-default.navbar-fixed-bottom(role="navigation")
     .container
