@@ -5,7 +5,7 @@ block content
     .row
       #tables.col-md-2(ng-controller="TableCtrl")
         h2
-          | Tables
+          | TABLES
           button.btn.btn-default(type="button", ng-click="createTable()")
             span.glyphicon.glyphicon-plus
         .list-group
@@ -21,6 +21,8 @@ block content
             td(ng-repeat="c in r.cqs track by $index") {{ c }}
       #operations.col-md-3(ng-controller="OperationCtrl")
         h2 OPERATIONS
+          button.btn.btn-default(type="button", ng-click="createOperation()")
+            span.glyphicon.glyphicon-plus
         .list-group
           a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations", ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning'}[o.getType()]") {{ o.getTitle() }}
   nav.navbar.navbar-default.navbar-fixed-bottom(role="navigation")
