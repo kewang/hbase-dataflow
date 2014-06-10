@@ -5,3 +5,8 @@ body {
 #table-detail {
   overflow-x: auto;
 }
+
+.dialog .modal-body {
+  max-height: 400px;
+  overflow-y: auto;
+}

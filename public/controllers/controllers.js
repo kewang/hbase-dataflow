@@ -35,10 +35,11 @@ app.controller("RowCtrl", function($scope, $modal, Table, Operation){
   $scope.showRowCtrlDialog = function(){
     switch($scope.rowCommand){
     case "create":
-      var modalInstance = $modal.open({
+      $modal.open({
         templateUrl: "includes/create_row_dialog",
         controller: "CreateRowDialogCtrl",
         size: "lg",
+        windowClass: "dialog",
         resolve: {
           table: function(){
             return $scope.table;
@@ -48,10 +49,11 @@ app.controller("RowCtrl", function($scope, $modal, Table, Operation){
 
       break;
     case "update":
-      var modalInstance = $modal.open({
+      $modal.open({
         templateUrl: "includes/update_row_dialog",
         controller: "UpdateRowDialogCtrl",
         size: "lg",
+        windowClass: "dialog",
         resolve: {
           table: function(){
             return $scope.table;
@@ -92,10 +94,11 @@ app.controller("RowCtrl", function($scope, $modal, Table, Operation){
   };
 
   $scope.showImportDataDialog = function(){
-    var modalInstance = $modal.open({
+    $modal.open({
       templateUrl: "includes/import_data_dialog",
       controller: "ImportDataDialogCtrl",
-      size: "lg"
+      size: "lg",
+      windowClass: "dialog"
     });
   };
 });
@@ -215,10 +218,11 @@ app.controller("OperationCtrl", function($scope, $modal, Operation){
   $scope.operations = Operation.findAll();
 
   $scope.showOperationDialog = function(operation){
-    var modalInstance = $modal.open({
+    $modal.open({
       templateUrl: "includes/operation_dialog",
       controller: "OperationDialogCtrl",
       size: "lg",
+      windowClass: "dialog",
       resolve: {
         operation: function(){
           return operation;
