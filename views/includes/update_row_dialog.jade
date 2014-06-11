@@ -5,6 +5,8 @@
   form(name="updateRowDialogForm", role="form")
     input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operationTitle", required)
     hr
+    textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operationSummary")
+    hr
     select.form-control(ng-model="form.rowKey", ng-options="r.rowkey for r in table.getRowkeys()")
       option(value="") Please select a row
     hr
