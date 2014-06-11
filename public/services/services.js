@@ -151,7 +151,8 @@ app.factory("Operation", function() {
     CREATE: 0,
     UPDATE: 1,
     GET: 2,
-    SCAN: 3
+    SCAN: 3,
+    OTHER: 4
   };
 
   var entities = [];
@@ -167,6 +168,22 @@ app.factory("Operation", function() {
 
   Operation.prototype.getType = function(){
     return this.type;
+  };
+
+  Operation.prototype.setSummary = function(summary){
+    this.summary = summary;
+  };
+
+  Operation.prototype.setTable = function(table){
+    this.table = table;
+  };
+
+  Operation.prototype.setRowkey = function(rowkey){
+    this.rowkey = rowkey;
+  };
+
+  Operation.prototype.setCQs = function(cqs){
+    this.cqs = cqs;
   };
 
   Operation.create = function(operation){
