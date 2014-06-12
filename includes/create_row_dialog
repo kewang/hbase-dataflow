@@ -7,6 +7,8 @@
   <form name="createRowDialogForm" role="form">
     <input type="text" placeholder="Please Input Operation title" ng-model="form.operationTitle" required="required" class="form-control"/>
     <hr/>
+    <textarea rows="5" placeholder="Please Input Operation summary" ng-model="form.operationSummary" class="form-control"></textarea>
+    <hr/>
     <input type="text" placeholder="Please Input Row Key" ng-model="form.rowKey" required="required" class="form-control"/>
     <hr/>
     <button type="button" ng-click="addCQ()" class="btn btn-default">Add CQ</button>

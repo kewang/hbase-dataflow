@@ -3,7 +3,37 @@
   <button type="button" data-dismiss="modal" aria-hidden="aria-hidden" class="close">&times;</button>
   <h4 class="modal-title">{{ operation.getTitle() }}</h4>
 </div>
-<div class="modal-body"></div>
+<div class="modal-body">
+  <form role="form" class="form-horizontal">
+    <div ng-show="operation.getSummary() != null" class="form-group">
+      <label class="col-md-2 control-label">Summary</label>
+      <div class="col-md-10">
+        <p class="form-control-static">{{ operation.getSummary() }}</p>
+      </div>
+    </div>
+    <hr ng-show="operation.getSummary() != null"/>
+    <div class="form-group">
+      <label class="col-md-2 control-label">Table</label>
+      <div class="col-md-10">
+        <p class="form-control-static">{{ operation.getTable() }}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 control-label">Row Key</label>
+      <div class="col-md-10">
+        <p class="form-control-static">{{ operation.getRowkey() }}</p>
+      </div>
+    </div>
+    <table class="table">
+      <tr>
+        <th ng-repeat="cq in operation.getCQs()">{{ cq.name }}</th>
+      </tr>
+      <tr>
+        <td ng-repeat="cq in operation.getCQs()">{{ cq.value }}</td>
+      </tr>
+    </table>
+  </form>
+</div>
 <div class="modal-footer">
   <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
 </div>
