@@ -2,5 +2,24 @@
   button.close(type="button", data-dismiss="modal", aria-hidden=true) &times;
   h4.modal-title {{ operation.getTitle() }}
 .modal-body
+  form.form-horizontal(role="form")
+    .form-group(ng-show="operation.getSummary() != null")
+      label.col-md-2.control-label Summary
+      .col-md-10
+        p.form-control-static {{ operation.getSummary() }}
+    hr(ng-show="operation.getSummary() != null")
+    .form-group
+      label.col-md-2.control-label Table
+      .col-md-10
+        p.form-control-static {{ operation.getTable() }}
+    .form-group
+      label.col-md-2.control-label Row Key
+      .col-md-10
+        p.form-control-static {{ operation.getRowkey() }}
+    table.table
+      tr
+        th(ng-repeat="cq in operation.getCQs()") {{ cq.name }}
+      tr
+        td(ng-repeat="cq in operation.getCQs()") {{ cq.value }}
 .modal-footer
   button.btn.btn-default(type="button", data-dismiss="modal") Close

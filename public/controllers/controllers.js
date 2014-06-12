@@ -116,14 +116,20 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Op
     // create row key and cq
     $scope.table.createRowkey($scope.form.rowKey);
 
+    var o = new Operation($scope.form.operationTitle, Operation.Type.CREATE);
+
+    o.setSummary($scope.form.operationSummary);
+    o.setTable($scope.table.getName());
+    o.setRowkey($scope.form.rowKey);
+
     for(var i=0;i<$scope.form.cqs.length;i++){
       var name = $scope.form.cqs[i].name;
       var value = $scope.form.cqs[i].value;
 
       $scope.table.createCQ($scope.form.rowKey, name, value);
-    }
 
-    var o = new Operation($scope.form.operationTitle, Operation.Type.CREATE);
+      o.addCQ(name, value);
+    }
 
     Operation.create(o);
 

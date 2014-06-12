@@ -160,6 +160,7 @@ app.factory("Operation", function() {
   function Operation(title, type){
     this.title = title;
     this.type = type;
+    this.cqs = [];
   }
 
   Operation.prototype.getTitle = function(){
@@ -168,6 +169,22 @@ app.factory("Operation", function() {
 
   Operation.prototype.getType = function(){
     return this.type;
+  };
+
+  Operation.prototype.getSummary = function(){
+    return this.summary;
+  };
+
+  Operation.prototype.getTable = function(){
+    return this.table;
+  };
+
+  Operation.prototype.getRowkey = function(){
+    return this.rowkey;
+  };
+
+  Operation.prototype.getCQs = function(){
+    return this.cqs;
   };
 
   Operation.prototype.setSummary = function(summary){
@@ -182,8 +199,11 @@ app.factory("Operation", function() {
     this.rowkey = rowkey;
   };
 
-  Operation.prototype.setCQs = function(cqs){
-    this.cqs = cqs;
+  Operation.prototype.addCQ = function(name, value){
+    this.cqs.push({
+      "name": name,
+      "value": value
+    });
   };
 
   Operation.create = function(operation){
