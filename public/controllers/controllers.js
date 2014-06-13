@@ -149,7 +149,9 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
   $scope.form = {};
 
   $scope.addCQ = function(){
-    $scope.form.rowKey.cqs.push({});
+    $scope.form.rowKey.cqs.push({
+      add: true
+    });
   };
 
   $scope.update = function() {

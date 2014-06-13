@@ -16,7 +16,8 @@
         th Value
       tr(ng-repeat="cq in form.rowKey.cqs")
         td
-          input.form-control(type="text", ng-model="cq.name", required)
+          p.form-control-static(ng-show="!cq.add") {{ cq.name }}
+          input.form-control(type="text", ng-model="cq.name", ng-show="cq.add", required)
         td
           input.form-control(type="text", ng-model="cq.value", required)
 .modal-footer
