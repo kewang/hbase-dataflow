@@ -145,23 +145,40 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
   $scope.table = table;
   $scope.form = {};
 
+  $scope.changeRow = function(){
+    $scope.form.tmprow = angular.copy($scope.form.row);
+  };
+
   $scope.addCQ = function(){
-    $scope.form.rowKey.cqs.push({
-      add: true
+    $scope.form.tmprow.cqs.push({
+      "add": true
     });
   };
 
   $scope.update = function() {
-    $scope.table.removeByRowkey($scope.form.rowKey);
+    for(var i=0;i<$scope.form.tmprow.cqs.length;i++){
+      var newCQ = $scope.form.tmprow.cqs[i];
+      var found = false;
 
-    // create row key and cq
-    $scope.table.createRowkey($scope.form.rowKey.rowkey);
+      for(var j=0;j<$scope.form.row.cqs.length;j++){
+        var oldCQ = $scope.form.row.cqs[j];
 
-    for(var i=0;i<$scope.form.rowKey.cqs.length;i++){
-      var name = $scope.form.rowKey.cqs[i].name;
-      var value = $scope.form.rowKey.cqs[i].value;
+        if(newCQ.name === oldCQ.name){
+          found = true;
 
-      $scope.table.createCQ($scope.form.rowKey.rowkey, name, value);
+          // update CQ
+          if(newCQ.value !== oldCQ.value){
+            $scope.form.row.updateCQ(newCQ.name, newCQ.value);
+          }
+
+          break;
+        }
+      }
+
+      // create CQ
+      if(!found){
+        $scope.form.row.createCQ(newCQ.name, newCQ.value);
+      }
     }
 
     var o = new Operation($scope.form.operationTitle, Operation.Type.UPDATE);
@@ -169,8 +186,7 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
     Operation.create(o);
 
     // clear form field
-    $scope.form.rowKey = {};
-    $scope.form.operationTitle = "";
+    delete $scope.form;
 
     $scope.table.buildFullTable();
 
