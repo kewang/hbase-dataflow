@@ -18,9 +18,9 @@ block content
           tr
             th Row Key
             th(ng-repeat="c in table.getFullCQs()") {{ c }}
-          tr(ng-repeat="r in table.getFullRowkeys()")
-            th {{ r.rowkey }}
-            td(ng-repeat="c in r.cqs track by $index") {{ c }}
+          tr(ng-repeat="k in table.getFullKeys()")
+            th {{ k.key }}
+            td(ng-repeat="v in k.cqs track by $index") {{ v }}
       #operations.col-md-3(ng-controller="OperationCtrl")
         h2 OPERATIONS
           button.btn.btn-default(type="button", ng-click="createOperation()")
