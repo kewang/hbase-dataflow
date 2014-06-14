@@ -6,7 +6,7 @@
     hr
     textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operationSummary")
     hr
-    select.form-control(ng-model="form.rowKey", ng-options="r.rowkey for r in table.getRowkeys()")
+    select.form-control(ng-model="form.row", ng-options="row.getKey() for row in table.getRows()")
       option(value="") Please select a row
     hr
     button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
@@ -14,10 +14,10 @@
       tr
         th CQ name
         th Value
-      tr(ng-repeat="cq in form.rowKey.cqs")
+      tr(ng-repeat="cq in form.row.getCQs()")
         td
           p.form-control-static(ng-show="!cq.add") {{ cq.name }}
-          input.form-control(type="text", ng-model="cq.name", ng-show="cq.add", required)
+          input.form-control(ng-show="cq.add", type="text", ng-model="cq.name", required)
         td
           input.form-control(type="text", ng-model="cq.value", required)
 .modal-footer
