@@ -8,7 +8,7 @@
     <hr/>
     <textarea rows="5" placeholder="Please Input Operation summary" ng-model="form.operationSummary" class="form-control"></textarea>
     <hr/>
-    <input type="text" placeholder="Please Input Row Key" ng-model="form.rowKey" required="required" class="form-control"/>
+    <input type="text" placeholder="Please Input Key" ng-model="form.key" required="required" class="form-control"/>
     <hr/>
     <button type="button" ng-click="addCQ()" class="btn btn-default">Add CQ</button>
     <table class="table table-bordered">

@@ -3,101 +3,87 @@
 var app = angular.module("hbase-dataflow-app.services", []);
 
 // imitate http://www.bennadel.com/blog/2527-defining-instantiatable-classes-in-the-angularjs-dependency-injection-framework.htm
-app.factory("Table", function() {
+app.factory("Table", function(Row) {
   var entities = [];
 
   function Table(name){
     this.name = name;
-    this.rowkeys = [];
+    this.rows = [];
   }
 
   Table.prototype.getName = function(){
     return this.name;
   };
 
-  Table.prototype.createRowkey = function(rowkey) {
-    this.rowkeys.push({
-      "rowkey": rowkey,
-      "cqs": []
-    });
+  Table.prototype.createRow = function(key) {
+    var row = new Row(key);
+
+    this.rows.push(row);
+
+    return row;
   };
 
-  Table.prototype.getRowkeys = function(){
-    return this.rowkeys;
-  };
-
-  Table.prototype.createCQ = function(rowkey, cq, value) {
-    var found;
-
-    for(var i=0;i<this.rowkeys.length;i++){
-      if(this.rowkeys[i].rowkey === rowkey){
-        found = this.rowkeys[i];
-
-        break;
-      }
-    }
-
-    if(found){
-      found.cqs.push({
-        "name": cq,
-        "value": value
-      });
-    }
+  Table.prototype.getRows = function(){
+    return this.rows;
   };
 
   Table.prototype.buildFullTable = function() {
-    var current_rowkeys = [];
-    var current_cqs = [];
+    var all_cqs = [];
+    var all_rows = [];
 
-    for(var i=0;i<this.rowkeys.length;i++){
-      for(var j=0;j<this.rowkeys[i].cqs.length;j++){
-        var cq = this.rowkeys[i].cqs[j];
+    for(var i=0;i<this.rows.length;i++){
+      var cqs = this.rows[i].getCQs();
+
+      for(var j=0;j<cqs.length;j++){
+        var cq = cqs[j];
 
         // not found the same CQ
-        if(current_cqs.indexOf(cq.name) == -1){
-          current_cqs.push(cq.name);
+        if(all_cqs.indexOf(cq.name) === -1){
+          all_cqs.push(cq.name);
         }
       }
     }
 
-    for(var i=0;i<this.rowkeys.length;i++){
-      var cqs = [];
+    for(var i=0;i<this.rows.length;i++){
+      var tmp_cqs = [];
+      var row = this.rows[i];
 
-      for(var j=0;j<current_cqs.length;j++){
+      for(var j=0;j<all_cqs.length;j++){
         var found = false;
+        var cqs = row.getCQs();
 
-        for(var k=0;k<this.rowkeys[i].cqs.length;k++){
-          var cq = this.rowkeys[i].cqs[k];
+        for(var k=0;k<cqs.length;k++){
+          var cq = cqs[k];
 
-          if(current_cqs[j] === cq.name){
-            cqs.push(cq.value);
+          if(all_cqs[j] === cq.name){
+            tmp_cqs.push(cq.value);
 
-            found=true;
+            found = true;
 
             break;
           }
         }
 
         if(!found){
-          cqs.push(null);
+          tmp_cqs.push(null);
         }
       }
 
-      current_rowkeys.push({
-        "rowkey": this.rowkeys[i].rowkey,
-        "cqs": cqs
+      all_rows.push({
+        "key": row.getKey(),
+        "cqs": tmp_cqs
       });
     }
 
-    this.fullRowkeys = current_rowkeys;
-    this.fullCQs = current_cqs;
+    this.fullRowkeys = all_rows;
+    this.fullCQs = all_cqs;
   };
 
-  Table.prototype.setRowkeys = function(rowkeys) {
-    this.rowkeys = rowkeys;
+  Table.prototype.setRowkeys = function(rows) {
+    this.rows = rows;
   };
 
-  Table.prototype.getFullRowkeys = function() {
+  Table.prototype.getFullKeys = function() {
     return this.fullRowkeys;
   };
 
@@ -105,20 +91,16 @@ app.factory("Table", function() {
     return this.fullCQs;
   };
 
-  Table.prototype.removeByRowkey = function(rowkey){
-    for(var i = 0;i<this.rowkeys.length;i++){
-      var r = this.rowkeys[i];
-
-      if(r.rowkey === rowkey.rowkey){
-        this.rowkeys.splice(i, 1);
-
-        break;
+  Table.prototype.removeRow = function(row){
+    for(var i=0;i<this.rows.length;i++){
+      if(this.rows[i] === row){
+        this.rows.splice(i, 1);
       }
     }
   };
 
   Table.prototype.isEmpty = function(){
-    return (this.rowkeys.length === 0);
+    return (this.rows.length === 0);
   };
 
   Table.create = function(table){
@@ -144,6 +126,50 @@ app.factory("Table", function() {
   };
 
   return Table;
+});
+
+app.factory("Row", function() {
+  function Row(key){
+    this.key = key;
+    this.cqs = [];
+  }
+
+  Row.prototype.getKey = function(){
+    return this.key;
+  };
+
+  Row.prototype.getCQs = function(){
+    return this.cqs;
+  };
+
+  Row.prototype.createCQ = function(name, value){
+    this.cqs.push({
+      "name": name,
+      "value": value
+    });
+  };
+
+  Row.prototype.updateCQ = function(name, value){
+    for(var i=0;i<this.cqs.length;i++){
+      if(this.cqs[i].name === name){
+        this.cqs[i].value = value;
+
+        break;
+      }
+    }
+  };
+
+  Row.prototype.removeCQ = function(name){
+    for(var i=0;i<this.cqs.length;i++){
+      if(this.cqs[i].name === name){
+        this.cqs.splice(i, 1);
+
+        break;
+      }
+    }
+  };
+
+  return Row;
 });
 
 app.factory("Operation", function() {

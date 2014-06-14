@@ -8,7 +8,7 @@
     <hr/>
     <textarea rows="5" placeholder="Please Input Operation summary" ng-model="form.operationSummary" class="form-control"></textarea>
     <hr/>
-    <select ng-model="form.rowKey" ng-options="r.rowkey for r in table.getRowkeys()" class="form-control">
+    <select ng-model="form.row" ng-options="row.getKey() for row in table.getRows()" ng-change="changeRow()" class="form-control">
       <option value="">Please select a row</option>
     </select>
     <hr/>
@@ -18,9 +18,10 @@
         <th>CQ name</th>
         <th>Value</th>
       </tr>
-      <tr ng-repeat="cq in form.rowKey.cqs">
+      <tr ng-repeat="cq in form.tmprow.getCQs()">
         <td>
-          <input type="text" ng-model="cq.name" required="required" class="form-control"/>
+          <p ng-show="!cq.add" class="form-control-static">{{ cq.name }}</p>
+          <input ng-show="cq.add" type="text" ng-model="cq.name" required="required" class="form-control"/>
         </td>
         <td>
           <input type="text" ng-model="cq.value" required="required" class="form-control"/>
