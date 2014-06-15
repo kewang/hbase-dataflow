@@ -91,6 +91,16 @@ app.factory("Table", function(Row) {
     for(var i=0;i<this.rows.length;i++){
       if(this.rows[i] === row){
         this.rows.splice(i, 1);
+
+        break;
+      }
+    }
+  };
+
+  Table.prototype.findRowByKey = function(key){
+    for(var i=0;i<this.rows.length;i++){
+      if(this.rows[i].key === key){
+        return this.rows[i];
       }
     }
   };
