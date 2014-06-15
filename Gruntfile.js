@@ -8,7 +8,11 @@ module.exports = function(grunt){
         files: [{
           expand: true,
           cwd: "views/",
-          src: ["**/*.jade", "!layout.jade", "!index.jade"],
+          src: [
+            "**/*.jade",
+            "!layout.jade",
+            "!index.jade"
+          ],
           dest: "build/templates/",
           ext: "",
           extDot: "first"
@@ -27,18 +31,17 @@ module.exports = function(grunt){
         files: [{
           expand: true,
           cwd: "public/",
-          src: ["**/*.js", "**/*.css"],
+          src: [
+            "**/*.js",
+            "**/*.css",
+            "!javascripts/bootstrap/**"
+          ],
           dest: "build/templates/"
-        }]
-      }
-    },
-    "replace": {
-      htm: {
-        src: ["build/templates/controllers/controllers.js"],
-        dest: "build/templates/controllers/",
-        replacements: [{
-          from: /^(\s+templateUrl: "[\w\/]+)(",)$/g,
-          to: "$1.htm$2"
+        }, {
+          expand: true,
+          cwd: "public/",
+          src: ["javascripts/bootstrap/dist/**"],
+          dest: "build/templates/"
         }]
       }
     },
@@ -56,9 +59,7 @@ module.exports = function(grunt){
 
   grunt.loadNpmTasks("grunt-contrib-jade");
   grunt.loadNpmTasks("grunt-contrib-copy");
-  grunt.loadNpmTasks("grunt-text-replace");
   grunt.loadNpmTasks("grunt-gh-pages");
 
-  //grunt.registerTask("default", ["jade", "copy", "replace", "gh-pages"]);
   grunt.registerTask("default", ["jade", "copy", "gh-pages"]);
 };
