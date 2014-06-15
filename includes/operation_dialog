@@ -17,14 +17,14 @@
         <p class="form-control-static">{{ operation.getTable() }}</p>
       </div>
     </div>
-    <div class="form-group">
+    <div ng-show="operation.getType() === 0 || operation.getType() === 1" class="form-group">
       <label class="col-md-2 control-label">Key</label>
       <div class="col-md-10">
         <p class="form-control-static">{{ operation.getKey() }}</p>
       </div>
     </div>
     <h5 ng-show="operation.getCreateCQs().length &gt; 0">Create CQ</h5>
-    <table ng-show="operation.getCreateCQs().length &gt; 0" class="table">
+    <table ng-show="operation.getCreateCQs().length &gt; 0" class="table table-bordered table-condensed">
       <tr>
         <th ng-repeat="cq in operation.getCreateCQs()">{{ cq.name }}</th>
       </tr>
@@ -35,7 +35,7 @@
       </tr>
     </table>
     <h5 ng-show="operation.getUpdateCQs().length &gt; 0">Update CQ</h5>
-    <table ng-show="operation.getUpdateCQs().length &gt; 0" class="table">
+    <table ng-show="operation.getUpdateCQs().length &gt; 0" class="table table-bordered table-condensed">
       <tr>
         <th ng-repeat="cq in operation.getUpdateCQs()">{{ cq.name }}</th>
       </tr>
@@ -46,15 +46,15 @@
         </td>
       </tr>
     </table>
-    <h5 ng-show="operation.getGetCQs().length &gt; 0">Get CQ</h5>
-    <table ng-show="operation.getGetCQs().length &gt; 0" class="table">
+    <h5 ng-show="operation.getRows().length &gt; 0">Get Rows</h5>
+    <table ng-show="operation.getRows().length &gt; 0" class="table table-bordered table-condensed">
       <tr>
-        <th ng-repeat="cq in operation.getGetCQs()">{{ cq.name }}</th>
+        <th>Row Key</th>
+        <th ng-repeat="cq in operation.getCQs()">{{ cq }}</th>
       </tr>
-      <tr>
-        <td ng-repeat="cq in operation.getGetCQs()">
-          <div class="bg-info">{{ cq.value }}</div>
-        </td>
+      <tr ng-repeat="row in operation.getRows()">
+        <th>{{ row.key }}</th>
+        <td ng-repeat="value in row.values">{{ value }}</td>
       </tr>
     </table>
   </form>

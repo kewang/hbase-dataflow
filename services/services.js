@@ -105,6 +105,19 @@ app.factory("Table", function(Row) {
     }
   };
 
+  //from prefix
+  Table.prototype.scanRowsByKey = function(key){
+    var search = [];
+
+    for(var i=0;i<this.rows.length;i++){
+      if(this.rows[i].key.indexOf(key) === 0){
+        search.push(this.rows[i]);
+      }
+    }
+
+    return search;
+  };
+
   Table.prototype.isEmpty = function(){
     return (this.rows.length === 0);
   };
@@ -223,8 +236,12 @@ app.factory("Operation", function() {
     return this.cqs.update;
   };
 
-  Operation.prototype.getGetCQs = function(){
-    return this.cqs.get;
+  Operation.prototype.getRows = function(){
+    return this.rows;
+  };
+
+  Operation.prototype.getCQs = function(){
+    return this.cqs;
   };
 
   Operation.prototype.setSummary = function(summary){
@@ -258,12 +275,14 @@ app.factory("Operation", function() {
     });
   };
 
-  Operation.prototype.getCQ = function(name, value){
-    this.cqs.get = this.cqs.get || [];
+  Operation.prototype.createRow = function(key, cqs, values){
+    this.rows = this.rows || [];
 
-    this.cqs.get.push({
-      "name": name,
-      "value": value
+    this.cqs = cqs;
+
+    this.rows.push({
+      "key": key,
+      "values": values
     });
   };
 

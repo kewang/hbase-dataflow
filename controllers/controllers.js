@@ -239,15 +239,24 @@ app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Opera
 
     o.setSummary($scope.form.operationSummary);
     o.setTable($scope.table.getName());
-    o.setKey($scope.form.row.getKey());
 
-    var cqs = $scope.form.row.getCQs();
+    var fullKeys = angular.copy($scope.table.getFullKeys());
+    var fullCQs = angular.copy($scope.table.getFullCQs());
 
-    for(var i=0;i<cqs.length;i++){
-      var name = cqs[i].name;
-      var value = cqs[i].value;
+    for(var i=0;i<fullKeys.length;i++){
+      var fullKey = fullKeys[i];
 
-      o.getCQ(name, value);
+      if($scope.form.row.getKey() === fullKey.key){
+        // reverse delete, prevent index confused
+        for(var j=fullKey.cqs.length-1;j>=0;j--){
+          if(fullKey.cqs[j] === null){
+            fullCQs.splice(j, 1);
+            fullKey.cqs.splice(j, 1);
+          }
+        }
+
+        o.createRow($scope.form.row.getKey(), fullCQs, fullKey.cqs);
+      }
     }
 
     // clear form field
