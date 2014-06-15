@@ -32,7 +32,7 @@ app.factory("Table", function(Row) {
     var all_rows = [];
 
     for(var i=0;i<this.rows.length;i++){
-      var cqs = this.rows[i].getCQs();
+      var cqs = this.rows[i].cqs;
 
       for(var j=0;j<cqs.length;j++){
         var cq = cqs[j];
@@ -50,7 +50,7 @@ app.factory("Table", function(Row) {
 
       for(var j=0;j<all_cqs.length;j++){
         var found = false;
-        var cqs = row.getCQs();
+        var cqs = row.cqs;
 
         for(var k=0;k<cqs.length;k++){
           var cq = cqs[k];
@@ -70,7 +70,7 @@ app.factory("Table", function(Row) {
       }
 
       all_rows.push({
-        "key": row.getKey(),
+        "key": row.key,
         "cqs": tmp_cqs
       });
     }
@@ -79,7 +79,7 @@ app.factory("Table", function(Row) {
     this.fullCQs = all_cqs;
   };
 
-  Table.prototype.setRowkeys = function(rows) {
+  Table.prototype.setRows = function(rows) {
     this.rows = rows;
   };
 

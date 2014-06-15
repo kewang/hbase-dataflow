@@ -159,6 +159,7 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
     var o = new Operation($scope.form.operationTitle, Operation.Type.UPDATE);
 
     o.setSummary($scope.form.operationSummary);
+    o.setTable($scope.table.getName());
     o.setKey($scope.form.tmprow.getKey());
 
     for(var i=0;i<$scope.form.tmprow.cqs.length;i++){
@@ -216,7 +217,7 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
         for(var i=0;i<root.tables.length;i++){
           var tmpTable = new Table(root.tables[i].name);
 
-          tmpTable.setRowkeys(root.tables[i].rowkeys);
+          tmpTable.setRows(root.tables[i].rows);
           tmpTable.buildFullTable();
 
           $scope.$apply(function(){
