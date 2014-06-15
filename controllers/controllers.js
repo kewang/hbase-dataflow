@@ -119,7 +119,7 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Op
 
     o.setSummary($scope.form.operationSummary);
     o.setTable($scope.table.getName());
-    o.setRowkey($scope.form.rowKey);
+    o.setKey($scope.form.key);
 
     for(var i=0;i<$scope.form.cqs.length;i++){
       var name = $scope.form.cqs[i].name;
@@ -127,7 +127,7 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Op
 
       row.createCQ(name, value);
 
-      o.addCQ(name, value);
+      o.createCQ(name, value);
     }
 
     Operation.create(o);
@@ -156,6 +156,11 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
   };
 
   $scope.update = function() {
+    var o = new Operation($scope.form.operationTitle, Operation.Type.UPDATE);
+
+    o.setSummary($scope.form.operationSummary);
+    o.setKey($scope.form.tmprow.getKey());
+
     for(var i=0;i<$scope.form.tmprow.cqs.length;i++){
       var newCQ = $scope.form.tmprow.cqs[i];
       var found = false;
@@ -168,6 +173,8 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
 
           // update CQ
           if(newCQ.value !== oldCQ.value){
+            o.updateCQ(newCQ.name, oldCQ.value, newCQ.value);
+
             $scope.form.row.updateCQ(newCQ.name, newCQ.value);
           }
 
@@ -177,16 +184,16 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
 
       // create CQ
       if(!found){
+        o.createCQ(newCQ.name, newCQ.value);
+
         $scope.form.row.createCQ(newCQ.name, newCQ.value);
       }
     }
 
-    var o = new Operation($scope.form.operationTitle, Operation.Type.UPDATE);
-
-    Operation.create(o);
-
     // clear form field
     delete $scope.form;
+
+    Operation.create(o);
 
     $scope.table.buildFullTable();
 

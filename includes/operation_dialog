@@ -18,17 +18,27 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-md-2 control-label">Row Key</label>
+      <label class="col-md-2 control-label">Key</label>
       <div class="col-md-10">
-        <p class="form-control-static">{{ operation.getRowkey() }}</p>
+        <p class="form-control-static">{{ operation.getKey() }}</p>
       </div>
     </div>
+    <h5>Create CQ</h5>
     <table class="table">
       <tr>
-        <th ng-repeat="cq in operation.getCQs()">{{ cq.name }}</th>
+        <th ng-repeat="cq in operation.getCreateCQs()">{{ cq.name }}</th>
       </tr>
       <tr>
-        <td ng-repeat="cq in operation.getCQs()">{{ cq.value }}</td>
+        <td ng-repeat="cq in operation.getCreateCQs()">{{ cq.value }}</td>
+      </tr>
+    </table>
+    <h5>Update CQ</h5>
+    <table class="table">
+      <tr>
+        <th ng-repeat="cq in operation.getUpdateCQs()">{{ cq.name }}</th>
+      </tr>
+      <tr>
+        <td ng-repeat="cq in operation.getUpdateCQs()"><span>{{ cq.oldvalue }}</span><span>{{ cq.newvalue }}</span></td>
       </tr>
     </table>
   </form>
