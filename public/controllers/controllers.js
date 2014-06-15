@@ -260,7 +260,17 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
         for(var i=0;i<root.tables.length;i++){
           var tmpTable = new Table(root.tables[i].name);
 
-          tmpTable.setRows(root.tables[i].rows);
+          for(var j=0;j<root.tables[i].rows.length;j++){
+            var row = tmpTable.createRow(root.tables[i].rows[j].key);
+
+            for(var k=0;k<root.tables[i].rows[j].cqs.length;k++){
+              var name = root.tables[i].rows[j].cqs[k].name;
+              var value = root.tables[i].rows[j].cqs[k].value;
+
+              row.createCQ(name, value);
+            }
+          }
+
           tmpTable.buildFullTable();
 
           $scope.$apply(function(){

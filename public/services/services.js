@@ -79,10 +79,6 @@ app.factory("Table", function(Row) {
     this.fullCQs = all_cqs;
   };
 
-  Table.prototype.setRows = function(rows) {
-    this.rows = rows;
-  };
-
   Table.prototype.getFullKeys = function() {
     return this.fullRowkeys;
   };
