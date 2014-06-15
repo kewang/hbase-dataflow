@@ -46,6 +46,17 @@
         </td>
       </tr>
     </table>
+    <h5 ng-show="operation.getGetCQs().length &gt; 0">Get CQ</h5>
+    <table ng-show="operation.getGetCQs().length &gt; 0" class="table">
+      <tr>
+        <th ng-repeat="cq in operation.getGetCQs()">{{ cq.name }}</th>
+      </tr>
+      <tr>
+        <td ng-repeat="cq in operation.getGetCQs()">
+          <div class="bg-info">{{ cq.value }}</div>
+        </td>
+      </tr>
+    </table>
   </form>
 </div>
 <div class="modal-footer">

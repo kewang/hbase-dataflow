@@ -37,7 +37,7 @@
             <button type="button" ng-click="createOperation()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
           </h2>
           <h3 ng-hide="operations.length != 0">No operation</h3>
-          <div ng-show="operations.length != 0" class="list-group"><a href="#" ng-click="showOperationDialog(o)" ng-repeat="o in operations" ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning'}[o.getType()]" class="list-group-item">{{ o.getTitle() }}</a></div>
+          <div ng-show="operations.length != 0" class="list-group"><a href="#" ng-click="showOperationDialog(o)" ng-repeat="o in operations" ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning', 2: 'list-group-item-info'}[o.getType()]" class="list-group-item">{{ o.getTitle() }}</a></div>
         </div>
       </div>
     </div>

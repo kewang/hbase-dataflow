@@ -79,10 +79,6 @@ app.factory("Table", function(Row) {
     this.fullCQs = all_cqs;
   };
 
-  Table.prototype.setRows = function(rows) {
-    this.rows = rows;
-  };
-
   Table.prototype.getFullKeys = function() {
     return this.fullRowkeys;
   };
@@ -217,6 +213,10 @@ app.factory("Operation", function() {
     return this.cqs.update;
   };
 
+  Operation.prototype.getGetCQs = function(){
+    return this.cqs.get;
+  };
+
   Operation.prototype.setSummary = function(summary){
     this.summary = summary;
   };
@@ -245,6 +245,15 @@ app.factory("Operation", function() {
       "name": name,
       "oldvalue": oldvalue,
       "newvalue": newvalue
+    });
+  };
+
+  Operation.prototype.getCQ = function(name, value){
+    this.cqs.get = this.cqs.get || [];
+
+    this.cqs.get.push({
+      "name": name,
+      "value": value
     });
   };
 

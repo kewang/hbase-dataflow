@@ -62,6 +62,20 @@ app.controller("RowCtrl", function($scope, $modal, Table, Operation){
       });
 
       break;
+    case "get":
+      $modal.open({
+        templateUrl: "includes/get_row_dialog",
+        controller: "GetRowDialogCtrl",
+        size: "lg",
+        windowClass: "dialog",
+        resolve: {
+          table: function(){
+            return $scope.table;
+          }
+        }
+      });
+
+      break;
     }
   };
 
@@ -202,6 +216,35 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
   };
 });
 
+app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Operation){
+  $scope.table = table;
+  $scope.form = {};
+
+  $scope.get = function() {
+    var o = new Operation($scope.form.operationTitle, Operation.Type.GET);
+
+    o.setSummary($scope.form.operationSummary);
+    o.setTable($scope.table.getName());
+    o.setKey($scope.form.row.getKey());
+
+    var cqs = $scope.form.row.getCQs();
+
+    for(var i=0;i<cqs.length;i++){
+      var name = cqs[i].name;
+      var value = cqs[i].value;
+
+      o.getCQ(name, value);
+    }
+
+    // clear form field
+    delete $scope.form;
+
+    Operation.create(o);
+
+    $modalInstance.close();
+  };
+});
+
 app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, Operation){
   $scope.tables = Table.findAll();
   $scope.operations = Operation.findAll();
@@ -217,7 +260,17 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
         for(var i=0;i<root.tables.length;i++){
           var tmpTable = new Table(root.tables[i].name);
 
-          tmpTable.setRows(root.tables[i].rows);
+          for(var j=0;j<root.tables[i].rows.length;j++){
+            var row = tmpTable.createRow(root.tables[i].rows[j].key);
+
+            for(var k=0;k<root.tables[i].rows[j].cqs.length;k++){
+              var name = root.tables[i].rows[j].cqs[k].name;
+              var value = root.tables[i].rows[j].cqs[k].value;
+
+              row.createCQ(name, value);
+            }
+          }
+
           tmpTable.buildFullTable();
 
           $scope.$apply(function(){
@@ -251,6 +304,15 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
               var newvalue = operation.cqs.update[j].newvalue;
 
               tmpOperation.updateCQ(name, oldvalue, newvalue);
+            }
+          }
+
+          if(operation.cqs.get){
+            for(var j=0;j<operation.cqs.get.length;j++){
+              var name = operation.cqs.get[j].name;
+              var value = operation.cqs.get[j].value;
+
+              tmpOperation.getCQ(name, value);
             }
           }
 
