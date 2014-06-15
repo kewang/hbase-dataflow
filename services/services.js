@@ -32,7 +32,7 @@ app.factory("Table", function(Row) {
     var all_rows = [];
 
     for(var i=0;i<this.rows.length;i++){
-      var cqs = this.rows[i].getCQs();
+      var cqs = this.rows[i].cqs;
 
       for(var j=0;j<cqs.length;j++){
         var cq = cqs[j];
@@ -50,7 +50,7 @@ app.factory("Table", function(Row) {
 
       for(var j=0;j<all_cqs.length;j++){
         var found = false;
-        var cqs = row.getCQs();
+        var cqs = row.cqs;
 
         for(var k=0;k<cqs.length;k++){
           var cq = cqs[k];
@@ -70,7 +70,7 @@ app.factory("Table", function(Row) {
       }
 
       all_rows.push({
-        "key": row.getKey(),
+        "key": row.key,
         "cqs": tmp_cqs
       });
     }
@@ -79,7 +79,7 @@ app.factory("Table", function(Row) {
     this.fullCQs = all_cqs;
   };
 
-  Table.prototype.setRowkeys = function(rows) {
+  Table.prototype.setRows = function(rows) {
     this.rows = rows;
   };
 
@@ -186,8 +186,7 @@ app.factory("Operation", function() {
   function Operation(title, type){
     this.title = title;
     this.type = type;
-    this.create_cqs = [];
-    this.update_cqs = [];
+    this.cqs = {};
   }
 
   Operation.prototype.getTitle = function(){
@@ -211,11 +210,11 @@ app.factory("Operation", function() {
   };
 
   Operation.prototype.getCreateCQs = function(){
-    return this.create_cqs;
+    return this.cqs.create;
   };
 
   Operation.prototype.getUpdateCQs = function(){
-    return this.update_cqs;
+    return this.cqs.update;
   };
 
   Operation.prototype.setSummary = function(summary){
@@ -231,14 +230,18 @@ app.factory("Operation", function() {
   };
 
   Operation.prototype.createCQ = function(name, value){
-    this.create_cqs.push({
+    this.cqs.create = this.cqs.create || [];
+
+    this.cqs.create.push({
       "name": name,
       "value": value
     });
   };
 
   Operation.prototype.updateCQ = function(name, oldvalue, newvalue){
-    this.update_cqs.push({
+    this.cqs.update = this.cqs.update || [];
+
+    this.cqs.update.push({
       "name": name,
       "oldvalue": oldvalue,
       "newvalue": newvalue
