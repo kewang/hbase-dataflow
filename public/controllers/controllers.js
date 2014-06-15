@@ -119,7 +119,7 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Op
 
     o.setSummary($scope.form.operationSummary);
     o.setTable($scope.table.getName());
-    o.setRowkey($scope.form.rowKey);
+    o.setKey($scope.form.key);
 
     for(var i=0;i<$scope.form.cqs.length;i++){
       var name = $scope.form.cqs[i].name;
@@ -127,7 +127,7 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Op
 
       row.createCQ(name, value);
 
-      o.addCQ(name, value);
+      o.createCQ(name, value);
     }
 
     Operation.create(o);

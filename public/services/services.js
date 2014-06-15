@@ -186,7 +186,7 @@ app.factory("Operation", function() {
   function Operation(title, type){
     this.title = title;
     this.type = type;
-    this.cqs = [];
+    this.create_cqs = [];
   }
 
   Operation.prototype.getTitle = function(){
@@ -205,12 +205,12 @@ app.factory("Operation", function() {
     return this.table;
   };
 
-  Operation.prototype.getRowkey = function(){
-    return this.rowkey;
+  Operation.prototype.getKey = function(){
+    return this.key;
   };
 
-  Operation.prototype.getCQs = function(){
-    return this.cqs;
+  Operation.prototype.getCreateCQs = function(){
+    return this.create_cqs;
   };
 
   Operation.prototype.setSummary = function(summary){
@@ -221,12 +221,12 @@ app.factory("Operation", function() {
     this.table = table;
   };
 
-  Operation.prototype.setRowkey = function(rowkey){
-    this.rowkey = rowkey;
+  Operation.prototype.setKey = function(key){
+    this.key = key;
   };
 
-  Operation.prototype.addCQ = function(name, value){
-    this.cqs.push({
+  Operation.prototype.createCQ = function(name, value){
+    this.create_cqs.push({
       "name": name,
       "value": value
     });
