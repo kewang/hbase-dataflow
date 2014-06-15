@@ -30,5 +30,12 @@
         td(ng-repeat="cq in operation.getUpdateCQs()")
           .bg-danger {{ cq.oldvalue }}
           .bg-success {{ cq.newvalue }}
+    h5(ng-show="operation.getGetCQs().length > 0") Get CQ
+    table.table(ng-show="operation.getGetCQs().length > 0")
+      tr
+        th(ng-repeat="cq in operation.getGetCQs()") {{ cq.name }}
+      tr
+        td(ng-repeat="cq in operation.getGetCQs()")
+          .bg-info {{ cq.value }}
 .modal-footer
   button.btn.btn-default(type="button", data-dismiss="modal") Close

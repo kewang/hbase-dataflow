@@ -217,6 +217,10 @@ app.factory("Operation", function() {
     return this.cqs.update;
   };
 
+  Operation.prototype.getGetCQs = function(){
+    return this.cqs.get;
+  };
+
   Operation.prototype.setSummary = function(summary){
     this.summary = summary;
   };
@@ -245,6 +249,15 @@ app.factory("Operation", function() {
       "name": name,
       "oldvalue": oldvalue,
       "newvalue": newvalue
+    });
+  };
+
+  Operation.prototype.getCQ = function(name, value){
+    this.cqs.get = this.cqs.get || [];
+
+    this.cqs.get.push({
+      "name": name,
+      "value": value
     });
   };
 
