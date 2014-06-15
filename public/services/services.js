@@ -240,6 +240,10 @@ app.factory("Operation", function() {
     return this.rows;
   };
 
+  Operation.prototype.getCQs = function(){
+    return this.cqs;
+  };
+
   Operation.prototype.setSummary = function(summary){
     this.summary = summary;
   };

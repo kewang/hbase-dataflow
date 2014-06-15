@@ -254,9 +254,9 @@ app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Opera
             fullKey.cqs.splice(j, 1);
           }
         }
-      }
 
-      o.createRow($scope.form.row.getKey(), fullCQs, fullKey.cqs);
+        o.createRow($scope.form.row.getKey(), fullCQs, fullKey.cqs);
+      }
     }
 
     // clear form field
