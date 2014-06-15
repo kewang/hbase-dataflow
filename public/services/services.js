@@ -187,6 +187,7 @@ app.factory("Operation", function() {
     this.title = title;
     this.type = type;
     this.create_cqs = [];
+    this.update_cqs = [];
   }
 
   Operation.prototype.getTitle = function(){
@@ -213,6 +214,10 @@ app.factory("Operation", function() {
     return this.create_cqs;
   };
 
+  Operation.prototype.getUpdateCQs = function(){
+    return this.update_cqs;
+  };
+
   Operation.prototype.setSummary = function(summary){
     this.summary = summary;
   };
@@ -229,6 +234,14 @@ app.factory("Operation", function() {
     this.create_cqs.push({
       "name": name,
       "value": value
+    });
+  };
+
+  Operation.prototype.updateCQ = function(name, oldvalue, newvalue){
+    this.update_cqs.push({
+      "name": name,
+      "oldvalue": oldvalue,
+      "newvalue": newvalue
     });
   };
 
