@@ -76,6 +76,20 @@ app.controller("RowCtrl", function($scope, $modal, Table, Operation){
       });
 
       break;
+    case "scan":
+      $modal.open({
+        templateUrl: "includes/scan_row_dialog",
+        controller: "ScanRowDialogCtrl",
+        size: "lg",
+        windowClass: "dialog",
+        resolve: {
+          table: function(){
+            return $scope.table;
+          }
+        }
+      });
+
+      break;
     }
   };
 
@@ -222,6 +236,39 @@ app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Opera
 
   $scope.get = function() {
     var o = new Operation($scope.form.operationTitle, Operation.Type.GET);
+
+    o.setSummary($scope.form.operationSummary);
+    o.setTable($scope.table.getName());
+    o.setKey($scope.form.row.getKey());
+
+    var cqs = $scope.form.row.getCQs();
+
+    for(var i=0;i<cqs.length;i++){
+      var name = cqs[i].name;
+      var value = cqs[i].value;
+
+      o.getCQ(name, value);
+    }
+
+    // clear form field
+    delete $scope.form;
+
+    Operation.create(o);
+
+    $modalInstance.close();
+  };
+});
+
+app.controller("ScanRowDialogCtrl", function($scope, $modalInstance, table, Operation){
+  $scope.table = table;
+  $scope.form = {};
+
+  $scope.changeKey = function(){
+    $scope.form.row = $scope.table.findRowByKey($scope.form.key);
+  };
+
+  $scope.scan = function() {
+    var o = new Operation($scope.form.operationTitle, Operation.Type.SCAN);
 
     o.setSummary($scope.form.operationSummary);
     o.setTable($scope.table.getName());
