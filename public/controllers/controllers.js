@@ -228,7 +228,31 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
 
       if(root.operations){
         for(var i=0;i<root.operations.length;i++){
-          var tmpOperation = new Operation(root.operations[i].title, root.operations[i].type);
+          var operation = root.operations[i];
+          var tmpOperation = new Operation(operation.title, operation.type);
+
+          tmpOperation.setSummary(operation.summary);
+          tmpOperation.setTable(operation.table);
+          tmpOperation.setKey(operation.key);
+
+          if(operation.cqs.create){
+            for(var j=0;j<operation.cqs.create.length;j++){
+              var name = operation.cqs.create[j].name;
+              var value = operation.cqs.create[j].value;
+
+              tmpOperation.createCQ(name, value);
+            }
+          }
+
+          if(operation.cqs.update){
+            for(var j=0;j<operation.cqs.update.length;j++){
+              var name = operation.cqs.update[j].name;
+              var oldvalue = operation.cqs.update[j].oldvalue;
+              var newvalue = operation.cqs.update[j].newvalue;
+
+              tmpOperation.updateCQ(name, oldvalue, newvalue);
+            }
+          }
 
           $scope.$apply(function(){
             $scope.operations.push(tmpOperation);
