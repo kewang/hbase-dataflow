@@ -23,22 +23,27 @@
         <p class="form-control-static">{{ operation.getKey() }}</p>
       </div>
     </div>
-    <h5>Create CQ</h5>
-    <table class="table">
+    <h5 ng-show="operation.getCreateCQs().length &gt; 0">Create CQ</h5>
+    <table ng-show="operation.getCreateCQs().length &gt; 0" class="table">
       <tr>
         <th ng-repeat="cq in operation.getCreateCQs()">{{ cq.name }}</th>
       </tr>
       <tr>
-        <td ng-repeat="cq in operation.getCreateCQs()">{{ cq.value }}</td>
+        <td ng-repeat="cq in operation.getCreateCQs()">
+          <div class="bg-success">{{ cq.value }}</div>
+        </td>
       </tr>
     </table>
-    <h5>Update CQ</h5>
-    <table class="table">
+    <h5 ng-show="operation.getUpdateCQs().length &gt; 0">Update CQ</h5>
+    <table ng-show="operation.getUpdateCQs().length &gt; 0" class="table">
       <tr>
         <th ng-repeat="cq in operation.getUpdateCQs()">{{ cq.name }}</th>
       </tr>
       <tr>
-        <td ng-repeat="cq in operation.getUpdateCQs()"><span>{{ cq.oldvalue }}</span><span>{{ cq.newvalue }}</span></td>
+        <td ng-repeat="cq in operation.getUpdateCQs()">
+          <div class="bg-danger">{{ cq.oldvalue }}</div>
+          <div class="bg-success">{{ cq.newvalue }}</div>
+        </td>
       </tr>
     </table>
   </form>
