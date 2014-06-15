@@ -105,6 +105,19 @@ app.factory("Table", function(Row) {
     }
   };
 
+  //from prefix
+  Table.prototype.scanRowsByKey = function(key){
+    var search = [];
+
+    for(var i=0;i<this.rows.length;i++){
+      if(this.rows[i].key.indexOf(key) === 0){
+        search.push(this.rows[i]);
+      }
+    }
+
+    return search;
+  };
+
   Table.prototype.isEmpty = function(){
     return (this.rows.length === 0);
   };
