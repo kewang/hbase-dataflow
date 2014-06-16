@@ -42,8 +42,6 @@ block content
             option(value="") Please select a command
             option(value="create") Create Row
             option(value="update") Update Row
-            option(value="get") Get Row
-            option(value="scan") Scan Row
         button.btn.btn-primary(type="button", ng-click="showRowCtrlDialog()", ng-disabled="!(table && rowCommand)") Execute
         button.btn.btn-default(type="button", ng-click="exportData()") Export
         button.btn.btn-default(type="button", ng-click="showImportDataDialog()") Import
