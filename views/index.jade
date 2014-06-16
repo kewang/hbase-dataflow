@@ -11,10 +11,24 @@ block content
         h3(ng-hide="tables.length != 0") No table
         .list-group(ng-show="tables.length != 0")
           a.list-group-item(href="#", ng-repeat="t in tables", ng-click="changeTable(t)") {{ t.getName() }}
-      #table-detail.col-md-7(ng-controller="TableDetailCtrl")
+      #table-detail.col-md-7(ng-controller="TableDetailCtrl", ng-show="search === false")
         h2 {{ table.getName() }}
         form.form-inline(ng-show="table != null", role="form")
           input.form-control(type="text", ng-model="key", style="width: 80%")
+          button.btn.btn-primary(type="button", ng-click="scan()") Scan
+          button.btn.btn-primary(type="button", ng-click="get()") Get
+        h3(ng-hide="(table != null) && !table.isEmpty()") No data
+        table.table.table-bordered.table-condensed.table-hover(ng-show="(table != null) && !table.isEmpty()")
+          tr
+            th Row Key
+            th(ng-repeat="c in table.getFullCQs()") {{ c }}
+          tr(ng-repeat="k in table.getFullKeys()")
+            th {{ k.key }}
+            td(ng-repeat="v in k.cqs track by $index") {{ v }}
+      #table-search.col-md-7(ng-controller="TableSearchCtrl", ng-show="search === true")
+        h2 {{ table.getName() }}
+        form.form-inline(ng-show="table != null", role="form")
+          input.form-control(type="text", ng-model="key", style="width: 70%")
           button.btn.btn-primary(type="button", ng-click="scan()") Scan
           button.btn.btn-primary(type="button", ng-click="get()") Get
           button.btn.btn-primary(type="button", ng-click="clear()") Clear

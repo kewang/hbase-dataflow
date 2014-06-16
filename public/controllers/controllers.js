@@ -22,9 +22,37 @@ app.controller("TableCtrl", function($rootScope, $scope, Table){
   };
 });
 
-app.controller("TableDetailCtrl", function($scope){
+app.controller("TableDetailCtrl", function($rootScope, $scope){
+  $scope.search = false;
+
   $scope.$on("changeTable", function(event, table){
     $scope.table = table;
+  });
+
+  $scope.$on("stopSearchTable", function(event){
+    $scope.search = false;
+  });
+
+  $scope.get = function(){
+    $rootScope.$broadcast("startSearchTable", $scope.table);
+
+    $scope.search = true;
+  };
+
+  $scope.scan = function(){
+    $rootScope.$broadcast("startSearchTable", $scope.table);
+
+    $scope.search = true;
+  };
+});
+
+app.controller("TableSearchCtrl", function($rootScope, $scope){
+  $scope.search = false;
+
+  $scope.$on("startSearchTable", function(event, table){
+    $scope.table = table;
+
+    $scope.search = true;
   });
 
   $scope.get = function(){
@@ -36,7 +64,9 @@ app.controller("TableDetailCtrl", function($scope){
   };
 
   $scope.clear = function(){
-    console.log($scope.key);
+    $rootScope.$broadcast("stopSearchTable");
+
+    $scope.search = false;
   };
 });
 
