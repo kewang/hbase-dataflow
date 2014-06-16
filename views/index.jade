@@ -17,6 +17,7 @@ block content
           input.form-control(type="text", ng-model="key", style="width: 80%")
           button.btn.btn-primary(type="button", ng-click="scan()") Scan
           button.btn.btn-primary(type="button", ng-click="get()") Get
+          button.btn.btn-primary(type="button", ng-click="clear()") Clear
         h3(ng-hide="(table != null) && !table.isEmpty()") No data
         table.table.table-bordered.table-condensed.table-hover(ng-show="(table != null) && !table.isEmpty()")
           tr

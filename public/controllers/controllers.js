@@ -26,6 +26,18 @@ app.controller("TableDetailCtrl", function($scope){
   $scope.$on("changeTable", function(event, table){
     $scope.table = table;
   });
+
+  $scope.get = function(){
+    console.log($scope.key);
+  };
+
+  $scope.scan = function(){
+    console.log($scope.key);
+  };
+
+  $scope.clear = function(){
+    console.log($scope.key);
+  };
 });
 
 app.controller("RowCtrl", function($scope, $modal, Table, Operation){
