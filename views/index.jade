@@ -13,6 +13,10 @@ block content
           a.list-group-item(href="#", ng-repeat="t in tables", ng-click="changeTable(t)") {{ t.getName() }}
       #table-detail.col-md-7(ng-controller="TableDetailCtrl")
         h2 {{ table.getName() }}
+        form.form-inline(ng-show="table != null", role="form")
+          input.form-control(type="text", ng-model="key", style="width: 80%")
+          button.btn.btn-primary(type="button", ng-click="scan()") Scan
+          button.btn.btn-primary(type="button", ng-click="get()") Get
         h3(ng-hide="(table != null) && !table.isEmpty()") No data
         table.table.table-bordered.table-condensed.table-hover(ng-show="(table != null) && !table.isEmpty()")
           tr
