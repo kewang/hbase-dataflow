@@ -197,6 +197,10 @@ app.controller("RowCtrl", function($scope, $modal, Table, Operation){
       windowClass: "dialog"
     });
   };
+
+  $scope.importSample = function(){
+    console.log("sample");
+  };
 });
 
 app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Operation){
