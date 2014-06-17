@@ -17,6 +17,7 @@ block content
           input.form-control(type="text", ng-model="key", style="width: 80%")
           button.btn.btn-primary(type="button", ng-click="scan()") Scan
           button.btn.btn-primary(type="button", ng-click="get()") Get
+        hr
         h3(ng-hide="(table != null) && !table.isEmpty()") No data
         table.table.table-bordered.table-condensed.table-hover(ng-show="(table != null) && !table.isEmpty()")
           tr
@@ -33,6 +34,7 @@ block content
           button.btn.btn-primary(type="button", ng-click="get(key)") Get
           button.btn.btn-primary(type="button", ng-click="clear()") Clear
           button.btn.btn-primary(type="button", ng-click="addToOperation()") Add to Operation
+        hr
         h3(ng-hide="(searchtable != null) && !searchtable.isEmpty()") No data
         table.table.table-bordered.table-condensed.table-hover(ng-show="(searchtable != null) && !searchtable.isEmpty()")
           tr
