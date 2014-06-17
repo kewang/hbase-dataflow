@@ -22,10 +22,82 @@ app.controller("TableCtrl", function($rootScope, $scope, Table){
   };
 });
 
-app.controller("TableDetailCtrl", function($scope){
+app.controller("TableDetailCtrl", function($rootScope, $scope){
+  $scope.search = false;
+
   $scope.$on("changeTable", function(event, table){
     $scope.table = table;
   });
+
+  $scope.$on("stopSearchTable", function(event){
+    $scope.search = false;
+  });
+
+  $scope.get = function(){
+    $rootScope.$broadcast("startSearchTable", $scope.table, {
+      "mode": "get",
+      "key": $scope.key
+    });
+
+    $scope.key = null;
+
+    $scope.search = true;
+  };
+
+  $scope.scan = function(){
+    $rootScope.$broadcast("startSearchTable", $scope.table, {
+      "mode": "scan",
+      "key": $scope.key
+    });
+
+    $scope.key = null;
+
+    $scope.search = true;
+  };
+});
+
+app.controller("TableSearchCtrl", function($rootScope, $scope){
+  $scope.search = false;
+
+  $scope.$on("startSearchTable", function(event, table, options){
+    $scope.originaltable = table;
+
+    $scope.key = options.key;
+
+    if(options.mode === "get"){
+      $scope.get(options.key);
+    }else if(options.mode === "scan"){
+      $scope.scan(options);
+    }
+
+    $scope.search = true;
+  });
+
+  $scope.get = function(key){
+    $scope.searchtable = angular.copy($scope.originaltable);
+
+    var rows = $scope.searchtable.getRows();
+
+    for(var i=rows.length-1;i>=0;i--){
+      if(rows[i].key !== key){
+        rows.splice(i, 1);
+      }
+    }
+
+    $scope.searchtable.buildFullTable();
+  };
+
+  $scope.scan = function(options){
+    console.log(options);
+  };
+
+  $scope.clear = function(){
+    $rootScope.$broadcast("stopSearchTable");
+
+    $scope.key = null;
+
+    $scope.search = false;
+  };
 });
 
 app.controller("RowCtrl", function($scope, $modal, Table, Operation){

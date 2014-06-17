@@ -18,8 +18,13 @@
           <h3 ng-hide="tables.length != 0">No table</h3>
           <div ng-show="tables.length != 0" class="list-group"><a href="#" ng-repeat="t in tables" ng-click="changeTable(t)" class="list-group-item">{{ t.getName() }}</a></div>
         </div>
-        <div id="table-detail" ng-controller="TableDetailCtrl" class="col-md-7">
+        <div id="table-detail" ng-controller="TableDetailCtrl" ng-show="search === false" class="col-md-7">
           <h2>{{ table.getName() }}</h2>
+          <form ng-show="table != null" role="form" class="form-inline">
+            <input type="text" ng-model="key" style="width: 80%" class="form-control">
+            <button type="button" ng-click="scan()" class="btn btn-primary">Scan</button>
+            <button type="button" ng-click="get()" class="btn btn-primary">Get</button>
+          </form>
           <h3 ng-hide="(table != null) &amp;&amp; !table.isEmpty()">No data</h3>
           <table ng-show="(table != null) &amp;&amp; !table.isEmpty()" class="table table-bordered table-condensed table-hover">
             <tr>
@@ -27,6 +32,26 @@
               <th ng-repeat="c in table.getFullCQs()">{{ c }}</th>
             </tr>
             <tr ng-repeat="k in table.getFullKeys()">
+              <th>{{ k.key }}</th>
+              <td ng-repeat="v in k.cqs track by $index">{{ v }}</td>
+            </tr>
+          </table>
+        </div>
+        <div id="table-search" ng-controller="TableSearchCtrl" ng-show="search === true" class="col-md-7">
+          <h2>{{ searchtable.getName() }}</h2>
+          <form ng-show="searchtable != null" role="form" class="form-inline">
+            <input type="text" ng-model="key" style="width: 70%" class="form-control">
+            <button type="button" ng-click="scan({'key': key})" class="btn btn-primary">Scan</button>
+            <button type="button" ng-click="get(key)" class="btn btn-primary">Get</button>
+            <button type="button" ng-click="clear()" class="btn btn-primary">Clear</button>
+          </form>
+          <h3 ng-hide="(searchtable != null) &amp;&amp; !searchtable.isEmpty()">No data</h3>
+          <table ng-show="(searchtable != null) &amp;&amp; !searchtable.isEmpty()" class="table table-bordered table-condensed table-hover">
+            <tr>
+              <th>Row Key</th>
+              <th ng-repeat="c in searchtable.getFullCQs()">{{ c }}</th>
+            </tr>
+            <tr ng-repeat="k in searchtable.getFullKeys()">
               <th>{{ k.key }}</th>
               <td ng-repeat="v in k.cqs track by $index">{{ v }}</td>
             </tr>
@@ -52,8 +77,6 @@
               <option value="">Please select a command</option>
               <option value="create">Create Row</option>
               <option value="update">Update Row</option>
-              <option value="get">Get Row</option>
-              <option value="scan">Scan Row</option>
             </select>
           </div>
           <button type="button" ng-click="showRowCtrlDialog()" ng-disabled="!(table &amp;&amp; rowCommand)" class="btn btn-primary">Execute</button>
