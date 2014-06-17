@@ -6,15 +6,13 @@
     hr
     textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operationSummary")
     hr
-    table.table.table-bordered
+    table.table.table-bordered.table-condensed
       tr
-        th CQ name
-        th Value
-      tr(ng-repeat="cq in form.row.getCQs()")
-        td
-          .form-control-static {{ cq.name }}
-        td
-          .form-control-static {{ cq.value }}
+        th Row Key
+        th(ng-repeat="c in table.getFullCQs()") {{ c }}
+      tr(ng-repeat="k in table.getFullKeys()")
+        th {{ k.key }}
+        td(ng-repeat="v in k.cqs track by $index") {{ v }}
 .modal-footer
   button.btn.btn-default(type="button", data-dismiss="modal") Close
   button.btn.btn-primary(type="button", ng-click="get()", ng-disabled="!getRowDialogForm.$valid") Get

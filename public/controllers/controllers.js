@@ -56,7 +56,7 @@ app.controller("TableDetailCtrl", function($rootScope, $scope){
   };
 });
 
-app.controller("TableSearchCtrl", function($rootScope, $scope){
+app.controller("TableSearchCtrl", function($rootScope, $scope, $modal){
   $scope.search = false;
 
   $scope.$on("startSearchTable", function(event, table, options){
@@ -314,7 +314,7 @@ app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Opera
     for(var i=0;i<fullKeys.length;i++){
       var fullKey = fullKeys[i];
 
-      o.createRow($scope.form.row.getKey(), fullCQs, fullKey.cqs);
+      o.createRow(fullKey.key, fullCQs, fullKey.cqs);
     }
 
     // clear form field
