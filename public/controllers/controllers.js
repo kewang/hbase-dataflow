@@ -108,6 +108,20 @@ app.controller("TableSearchCtrl", function($rootScope, $scope){
 
     $scope.search = false;
   };
+
+  $scope.addToOperation = function(){
+    $modal.open({
+      templateUrl: "includes/get_row_dialog",
+      controller: "GetRowDialogCtrl",
+      size: "lg",
+      windowClass: "dialog",
+      resolve: {
+        table: function(){
+          return $scope.searchtable;
+        }
+      }
+    });
+  };
 });
 
 app.controller("RowCtrl", function($scope, $modal, Table, Operation){
@@ -300,17 +314,7 @@ app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Opera
     for(var i=0;i<fullKeys.length;i++){
       var fullKey = fullKeys[i];
 
-      if($scope.form.row.getKey() === fullKey.key){
-        // reverse delete, prevent index confused
-        for(var j=fullKey.cqs.length-1;j>=0;j--){
-          if(fullKey.cqs[j] === null){
-            fullCQs.splice(j, 1);
-            fullKey.cqs.splice(j, 1);
-          }
-        }
-
-        o.createRow($scope.form.row.getKey(), fullCQs, fullKey.cqs);
-      }
+      o.createRow($scope.form.row.getKey(), fullCQs, fullKey.cqs);
     }
 
     // clear form field

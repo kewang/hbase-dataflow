@@ -6,9 +6,6 @@
     hr
     textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operationSummary")
     hr
-    select.form-control(ng-model="form.row", ng-options="row.getKey() for row in table.getRows()")
-      option(value="") Please select a row
-    hr
     table.table.table-bordered
       tr
         th CQ name
