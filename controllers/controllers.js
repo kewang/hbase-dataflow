@@ -56,7 +56,7 @@ app.controller("TableDetailCtrl", function($rootScope, $scope){
   };
 });
 
-app.controller("TableSearchCtrl", function($rootScope, $scope){
+app.controller("TableSearchCtrl", function($rootScope, $scope, $modal){
   $scope.search = false;
 
   $scope.$on("startSearchTable", function(event, table, options){
@@ -88,7 +88,17 @@ app.controller("TableSearchCtrl", function($rootScope, $scope){
   };
 
   $scope.scan = function(options){
-    console.log(options);
+    $scope.searchtable = angular.copy($scope.originaltable);
+
+    var rows = $scope.searchtable.getRows();
+
+    for(var i=rows.length-1;i>=0;i--){
+      if(rows[i].key.indexOf(options.key) !== 0){
+        rows.splice(i, 1);
+      }
+    }
+
+    $scope.searchtable.buildFullTable();
   };
 
   $scope.clear = function(){
@@ -97,6 +107,20 @@ app.controller("TableSearchCtrl", function($rootScope, $scope){
     $scope.key = null;
 
     $scope.search = false;
+  };
+
+  $scope.addToOperation = function(){
+    $modal.open({
+      templateUrl: "includes/get_row_dialog",
+      controller: "GetRowDialogCtrl",
+      size: "lg",
+      windowClass: "dialog",
+      resolve: {
+        table: function(){
+          return $scope.searchtable;
+        }
+      }
+    });
   };
 });
 
@@ -124,34 +148,6 @@ app.controller("RowCtrl", function($scope, $modal, Table, Operation){
       $modal.open({
         templateUrl: "includes/update_row_dialog",
         controller: "UpdateRowDialogCtrl",
-        size: "lg",
-        windowClass: "dialog",
-        resolve: {
-          table: function(){
-            return $scope.table;
-          }
-        }
-      });
-
-      break;
-    case "get":
-      $modal.open({
-        templateUrl: "includes/get_row_dialog",
-        controller: "GetRowDialogCtrl",
-        size: "lg",
-        windowClass: "dialog",
-        resolve: {
-          table: function(){
-            return $scope.table;
-          }
-        }
-      });
-
-      break;
-    case "scan":
-      $modal.open({
-        templateUrl: "includes/scan_row_dialog",
-        controller: "ScanRowDialogCtrl",
         size: "lg",
         windowClass: "dialog",
         resolve: {
@@ -318,50 +314,7 @@ app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Opera
     for(var i=0;i<fullKeys.length;i++){
       var fullKey = fullKeys[i];
 
-      if($scope.form.row.getKey() === fullKey.key){
-        // reverse delete, prevent index confused
-        for(var j=fullKey.cqs.length-1;j>=0;j--){
-          if(fullKey.cqs[j] === null){
-            fullCQs.splice(j, 1);
-            fullKey.cqs.splice(j, 1);
-          }
-        }
-
-        o.createRow($scope.form.row.getKey(), fullCQs, fullKey.cqs);
-      }
-    }
-
-    // clear form field
-    delete $scope.form;
-
-    Operation.create(o);
-
-    $modalInstance.close();
-  };
-});
-
-app.controller("ScanRowDialogCtrl", function($scope, $modalInstance, table, Operation){
-  $scope.table = table;
-  $scope.form = {};
-
-  $scope.changeKey = function(){
-    $scope.form.row = $scope.table.findRowByKey($scope.form.key);
-  };
-
-  $scope.scan = function() {
-    var o = new Operation($scope.form.operationTitle, Operation.Type.SCAN);
-
-    o.setSummary($scope.form.operationSummary);
-    o.setTable($scope.table.getName());
-    o.setKey($scope.form.row.getKey());
-
-    var cqs = $scope.form.row.getCQs();
-
-    for(var i=0;i<cqs.length;i++){
-      var name = cqs[i].name;
-      var value = cqs[i].value;
-
-      o.getCQ(name, value);
+      o.createRow(fullKey.key, fullCQs, fullKey.cqs);
     }
 
     // clear form field
@@ -414,34 +367,52 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
 
           tmpOperation.setSummary(operation.summary);
           tmpOperation.setTable(operation.table);
-          tmpOperation.setKey(operation.key);
 
-          if(operation.cqs.create){
-            for(var j=0;j<operation.cqs.create.length;j++){
-              var name = operation.cqs.create[j].name;
-              var value = operation.cqs.create[j].value;
+          switch(operation.type){
+          case Operation.Type.CREATE:
+            tmpOperation.setKey(operation.key);
 
-              tmpOperation.createCQ(name, value);
+            if(operation.cqs.create){
+              for(var j=0;j<operation.cqs.create.length;j++){
+                var name = operation.cqs.create[j].name;
+                var value = operation.cqs.create[j].value;
+
+                tmpOperation.createCQ(name, value);
+              }
             }
-          }
 
-          if(operation.cqs.update){
-            for(var j=0;j<operation.cqs.update.length;j++){
-              var name = operation.cqs.update[j].name;
-              var oldvalue = operation.cqs.update[j].oldvalue;
-              var newvalue = operation.cqs.update[j].newvalue;
+            break;
+          case Operation.Type.UPDATE:
+            tmpOperation.setKey(operation.key);
 
-              tmpOperation.updateCQ(name, oldvalue, newvalue);
+            if(operation.cqs.create){
+              for(var j=0;j<operation.cqs.create.length;j++){
+                var name = operation.cqs.create[j].name;
+                var value = operation.cqs.create[j].value;
+
+                tmpOperation.createCQ(name, value);
+              }
             }
-          }
 
-          if(operation.cqs.get){
-            for(var j=0;j<operation.cqs.get.length;j++){
-              var name = operation.cqs.get[j].name;
-              var value = operation.cqs.get[j].value;
+            if(operation.cqs.update){
+              for(var j=0;j<operation.cqs.update.length;j++){
+                var name = operation.cqs.update[j].name;
+                var oldvalue = operation.cqs.update[j].oldvalue;
+                var newvalue = operation.cqs.update[j].newvalue;
 
-              tmpOperation.getCQ(name, value);
+                tmpOperation.updateCQ(name, oldvalue, newvalue);
+              }
             }
+
+            break;
+          case Operation.Type.GET:
+            for(var j=0;j<operation.rows.length;j++){
+              var row = operation.rows[j];
+
+              tmpOperation.createRow(row.key, operation.cqs, row.values);
+            }
+
+            break;
           }
 
           $scope.$apply(function(){
