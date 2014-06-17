@@ -34,7 +34,9 @@ app.controller("TableDetailCtrl", function($rootScope, $scope){
   });
 
   $scope.get = function(){
-    $rootScope.$broadcast("startSearchTable", $scope.table, {
+    var table = angular.copy($scope.table);
+
+    $rootScope.$broadcast("startSearchTable", table, {
       "mode": "get",
       "key": $scope.key
     });
@@ -45,7 +47,9 @@ app.controller("TableDetailCtrl", function($rootScope, $scope){
   };
 
   $scope.scan = function(){
-    $rootScope.$broadcast("startSearchTable", $scope.table, {
+    var table = angular.copy($scope.table);
+
+    $rootScope.$broadcast("startSearchTable", table, {
       "mode": "scan",
       "key": $scope.key
     });
@@ -61,6 +65,8 @@ app.controller("TableSearchCtrl", function($rootScope, $scope){
 
   $scope.$on("startSearchTable", function(event, table, options){
     $scope.table = table;
+
+    $scope.key = options.key;
 
     if(options.mode === "get"){
       $scope.get(options.key);

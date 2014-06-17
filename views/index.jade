@@ -29,7 +29,7 @@ block content
         h2 {{ table.getName() }}
         form.form-inline(ng-show="table != null", role="form")
           input.form-control(type="text", ng-model="key", style="width: 70%")
-          button.btn.btn-primary(type="button", ng-click="scan(key)") Scan
+          button.btn.btn-primary(type="button", ng-click="scan({'key': key})") Scan
           button.btn.btn-primary(type="button", ng-click="get(key)") Get
           button.btn.btn-primary(type="button", ng-click="clear()") Clear
         h3(ng-hide="(table != null) && !table.isEmpty()") No data
