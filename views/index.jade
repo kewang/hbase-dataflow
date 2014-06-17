@@ -26,18 +26,18 @@ block content
             th {{ k.key }}
             td(ng-repeat="v in k.cqs track by $index") {{ v }}
       #table-search.col-md-7(ng-controller="TableSearchCtrl", ng-show="search === true")
-        h2 {{ table.getName() }}
-        form.form-inline(ng-show="table != null", role="form")
+        h2 {{ searchtable.getName() }}
+        form.form-inline(ng-show="searchtable != null", role="form")
           input.form-control(type="text", ng-model="key", style="width: 70%")
           button.btn.btn-primary(type="button", ng-click="scan({'key': key})") Scan
           button.btn.btn-primary(type="button", ng-click="get(key)") Get
           button.btn.btn-primary(type="button", ng-click="clear()") Clear
-        h3(ng-hide="(table != null) && !table.isEmpty()") No data
-        table.table.table-bordered.table-condensed.table-hover(ng-show="(table != null) && !table.isEmpty()")
+        h3(ng-hide="(searchtable != null) && !searchtable.isEmpty()") No data
+        table.table.table-bordered.table-condensed.table-hover(ng-show="(searchtable != null) && !searchtable.isEmpty()")
           tr
             th Row Key
-            th(ng-repeat="c in table.getFullCQs()") {{ c }}
-          tr(ng-repeat="k in table.getFullKeys()")
+            th(ng-repeat="c in searchtable.getFullCQs()") {{ c }}
+          tr(ng-repeat="k in searchtable.getFullKeys()")
             th {{ k.key }}
             td(ng-repeat="v in k.cqs track by $index") {{ v }}
       #operations.col-md-3(ng-controller="OperationCtrl")
