@@ -28,10 +28,11 @@ block content
       #table-search.col-md-7(ng-controller="TableSearchCtrl", ng-show="search === true")
         h2 {{ searchtable.getName() }}
         form.form-inline(ng-show="searchtable != null", role="form")
-          input.form-control(type="text", ng-model="key", style="width: 70%")
+          input.form-control(type="text", ng-model="key", style="width: 50%")
           button.btn.btn-primary(type="button", ng-click="scan({'key': key})") Scan
           button.btn.btn-primary(type="button", ng-click="get(key)") Get
           button.btn.btn-primary(type="button", ng-click="clear()") Clear
+          button.btn.btn-primary(type="button", ng-click="addToOperation()") Add to Operation
         h3(ng-hide="(searchtable != null) && !searchtable.isEmpty()") No data
         table.table.table-bordered.table-condensed.table-hover(ng-show="(searchtable != null) && !searchtable.isEmpty()")
           tr
