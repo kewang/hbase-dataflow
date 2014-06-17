@@ -196,8 +196,7 @@ app.factory("Operation", function() {
     CREATE: 0,
     UPDATE: 1,
     GET: 2,
-    SCAN: 3,
-    OTHER: 4
+    OTHER: 3
   };
 
   var entities = [];

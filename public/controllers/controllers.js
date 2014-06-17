@@ -367,34 +367,52 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
 
           tmpOperation.setSummary(operation.summary);
           tmpOperation.setTable(operation.table);
-          tmpOperation.setKey(operation.key);
 
-          if(operation.cqs.create){
-            for(var j=0;j<operation.cqs.create.length;j++){
-              var name = operation.cqs.create[j].name;
-              var value = operation.cqs.create[j].value;
+          switch(operation.type){
+          case Operation.Type.CREATE:
+            tmpOperation.setKey(operation.key);
 
-              tmpOperation.createCQ(name, value);
+            if(operation.cqs.create){
+              for(var j=0;j<operation.cqs.create.length;j++){
+                var name = operation.cqs.create[j].name;
+                var value = operation.cqs.create[j].value;
+
+                tmpOperation.createCQ(name, value);
+              }
             }
-          }
 
-          if(operation.cqs.update){
-            for(var j=0;j<operation.cqs.update.length;j++){
-              var name = operation.cqs.update[j].name;
-              var oldvalue = operation.cqs.update[j].oldvalue;
-              var newvalue = operation.cqs.update[j].newvalue;
+            break;
+          case Operation.Type.UPDATE:
+            tmpOperation.setKey(operation.key);
 
-              tmpOperation.updateCQ(name, oldvalue, newvalue);
+            if(operation.cqs.create){
+              for(var j=0;j<operation.cqs.create.length;j++){
+                var name = operation.cqs.create[j].name;
+                var value = operation.cqs.create[j].value;
+
+                tmpOperation.createCQ(name, value);
+              }
             }
-          }
 
-          if(operation.cqs.get){
-            for(var j=0;j<operation.cqs.get.length;j++){
-              var name = operation.cqs.get[j].name;
-              var value = operation.cqs.get[j].value;
+            if(operation.cqs.update){
+              for(var j=0;j<operation.cqs.update.length;j++){
+                var name = operation.cqs.update[j].name;
+                var oldvalue = operation.cqs.update[j].oldvalue;
+                var newvalue = operation.cqs.update[j].newvalue;
 
-              tmpOperation.getCQ(name, value);
+                tmpOperation.updateCQ(name, oldvalue, newvalue);
+              }
             }
+
+            break;
+          case Operation.Type.GET:
+            for(var j=0;j<operation.rows.length;j++){
+              var row = operation.rows[j];
+
+              tmpOperation.createRow(row.key, operation.cqs, row.values);
+            }
+
+            break;
           }
 
           $scope.$apply(function(){
