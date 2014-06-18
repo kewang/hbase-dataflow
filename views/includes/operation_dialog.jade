@@ -7,7 +7,7 @@
       .col-md-10
         p.form-control-static {{ operation.getSummary() }}
     hr(ng-show="operation.getSummary() != null")
-    .form-group
+    .form-group(ng-show="operation.getType() !== 3")
       label.col-md-2.control-label Table
       .col-md-10
         p.form-control-static {{ operation.getTable() }}
