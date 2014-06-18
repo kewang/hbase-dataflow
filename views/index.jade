@@ -52,15 +52,17 @@ block content
           a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations", ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning', 2: 'list-group-item-info'}[o.getType()]") {{ o.getTitle() }}
   nav.navbar.navbar-default.navbar-fixed-bottom(role="navigation")
     .container
-      form.form-inline(ng-controller="RowCtrl", role="form")
+      form.navbar-form(ng-controller="RowCtrl", role="form")
         .form-group
           select.form-control(ng-model="table", ng-options="t.getName() for t in tables")
-            option(value="") Please select a table
+            option(value="") Select a table
           select.form-control(ng-model="rowCommand")
-            option(value="") Please select a command
+            option(value="") Select a command
             option(value="create") Create Row
             option(value="update") Update Row
-        button.btn.btn-primary(type="button", ng-click="showRowCtrlDialog()", ng-disabled="!(table && rowCommand)") Execute
-        button.btn.btn-default(type="button", ng-click="exportData()") Export
-        button.btn.btn-default(type="button", ng-click="showImportDataDialog()") Import
-        button.btn.btn-default(type="button", ng-click="importSample()") Import sample
+        button.btn.btn-primary.navbar-btn(type="button", ng-click="showRowCtrlDialog()", ng-disabled="!(table && rowCommand)") Execute
+        .navbar-right
+          p.navbar-text System
+          button.btn.btn-default.navbar-btn(type="button", ng-click="exportData()") Export
+          button.btn.btn-default.navbar-btn(type="button", ng-click="showImportDataDialog()") Import
+          button.btn.btn-default.navbar-btn(type="button", ng-click="importSample()") Import sample
