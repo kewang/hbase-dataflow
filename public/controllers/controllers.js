@@ -435,6 +435,15 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
 app.controller("OperationCtrl", function($scope, $modal, Operation){
   $scope.operations = Operation.findAll();
 
+  $scope.createOtherOperation = function(){
+    $modal.open({
+      templateUrl: "includes/other_dialog",
+      controller: "OtherDialogCtrl",
+      size: "lg",
+      windowClass: "dialog"
+    });
+  };
+
   $scope.showOperationDialog = function(operation){
     $modal.open({
       templateUrl: "includes/operation_dialog",
@@ -447,6 +456,20 @@ app.controller("OperationCtrl", function($scope, $modal, Operation){
         }
       }
     });
+  };
+});
+
+app.controller("OtherDialogCtrl", function($scope, $modalInstance, Operation){
+  $scope.form = {};
+
+  $scope.other = function(){
+    var o = new Operation($scope.form.operationTitle, Operation.Type.OTHER);
+
+    o.setSummary($scope.form.operationSummary);
+
+    Operation.create(o);
+
+    $modalInstance.close();
   };
 });
 

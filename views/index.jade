@@ -45,11 +45,11 @@ block content
             td(ng-repeat="v in k.cqs track by $index") {{ v }}
       #operations.col-md-3(ng-controller="OperationCtrl")
         h2 OPERATIONS
-          button.btn.btn-default(type="button", ng-click="createOperation()")
+          button.btn.btn-default(type="button", ng-click="createOtherOperation()")
             span.glyphicon.glyphicon-plus
         h3(ng-hide="operations.length != 0") No operation
         .list-group(ng-show="operations.length != 0")
-          a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations", ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning', 2: 'list-group-item-info', 3: 'list-group-item-info'}[o.getType()]") {{ o.getTitle() }}
+          a.list-group-item(href="#", ng-click="showOperationDialog(o)", ng-repeat="o in operations", ng-class="{0: 'list-group-item-success', 1: 'list-group-item-warning', 2: 'list-group-item-info'}[o.getType()]") {{ o.getTitle() }}
   nav.navbar.navbar-default.navbar-fixed-bottom(role="navigation")
     .container
       form.form-inline(ng-controller="RowCtrl", role="form")
