@@ -370,10 +370,10 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
           var tmpOperation = new Operation(operation.title, operation.type);
 
           tmpOperation.setSummary(operation.summary);
-          tmpOperation.setTable(operation.table);
 
           switch(operation.type){
           case Operation.Type.CREATE:
+            tmpOperation.setTable(operation.table);
             tmpOperation.setKey(operation.key);
 
             if(operation.cqs.create){
@@ -387,6 +387,7 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
 
             break;
           case Operation.Type.UPDATE:
+            tmpOperation.setTable(operation.table);
             tmpOperation.setKey(operation.key);
 
             if(operation.cqs.create){
@@ -410,12 +411,17 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
 
             break;
           case Operation.Type.GET:
+            tmpOperation.setTable(operation.table);
+
             for(var j=0;j<operation.rows.length;j++){
               var row = operation.rows[j];
 
               tmpOperation.createRow(row.key, operation.cqs, row.values);
             }
 
+            break;
+          case Operation.Type.OTHER:
+            // noop
             break;
           }
 
