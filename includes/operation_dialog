@@ -11,7 +11,7 @@
       </div>
     </div>
     <hr ng-show="operation.getSummary() != null"/>
-    <div class="form-group">
+    <div ng-show="operation.getType() !== 3" class="form-group">
       <label class="col-md-2 control-label">Table</label>
       <div class="col-md-10">
         <p class="form-control-static">{{ operation.getTable() }}</p>
