@@ -160,6 +160,12 @@ app.controller("RowCtrl", function($scope, $modal, Table, Operation){
       break;
     }
   };
+});
+
+app.controller("SystemCtrl", function($scope, $modal){
+  $scope.clear = function(){
+    console.log("clear");
+  };
 
   $scope.exportData = function() {
     var MIMETYPE = "application/json";
