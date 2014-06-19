@@ -144,6 +144,10 @@ app.factory("Table", function(Row) {
     return found;
   };
 
+  Table.clear = function(){
+    entities = [];
+  };
+
   return Table;
 });
 
@@ -291,6 +295,10 @@ app.factory("Operation", function() {
 
   Operation.findAll = function(){
     return entities;
+  };
+
+  Operation.clear = function(){
+    entities = [];
   };
 
   return Operation;

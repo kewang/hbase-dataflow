@@ -20,6 +20,10 @@ app.controller("TableCtrl", function($rootScope, $scope, Table){
   $scope.changeTable = function(table){
     $rootScope.$broadcast("changeTable", table);
   };
+
+  $scope.$on("clearAllData", function(event){
+    $scope.tables = Table.findAll();
+  });
 });
 
 app.controller("TableDetailCtrl", function($rootScope, $scope){
@@ -54,6 +58,10 @@ app.controller("TableDetailCtrl", function($rootScope, $scope){
 
     $scope.search = true;
   };
+
+  $scope.$on("clearAllData", function(event){
+    $scope.table = null;
+  });
 });
 
 app.controller("TableSearchCtrl", function($rootScope, $scope, $modal){
@@ -71,6 +79,10 @@ app.controller("TableSearchCtrl", function($rootScope, $scope, $modal){
     }
 
     $scope.search = true;
+  });
+
+  $scope.$on("clearAllData", function(event){
+    $scope.searchtable = null;
   });
 
   $scope.get = function(key){
@@ -124,9 +136,8 @@ app.controller("TableSearchCtrl", function($rootScope, $scope, $modal){
   };
 });
 
-app.controller("RowCtrl", function($scope, $modal, Table, Operation){
+app.controller("RowCtrl", function($scope, $modal, Table){
   $scope.tables = Table.findAll();
-  $scope.operations = Operation.findAll();
 
   $scope.showRowCtrlDialog = function(){
     switch($scope.rowCommand){
@@ -159,6 +170,22 @@ app.controller("RowCtrl", function($scope, $modal, Table, Operation){
 
       break;
     }
+  };
+
+  $scope.$on("clearAllData", function(event){
+    $scope.tables = Table.findAll();
+  });
+});
+
+app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation){
+  $scope.tables = Table.findAll();
+  $scope.operations = Operation.findAll();
+
+  $scope.clear = function(){
+    Table.clear();
+    Operation.clear();
+
+    $rootScope.$broadcast("clearAllData");
   };
 
   $scope.exportData = function() {
@@ -440,6 +467,10 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
 
 app.controller("OperationCtrl", function($scope, $modal, Operation){
   $scope.operations = Operation.findAll();
+
+  $scope.$on("clearAllData", function(event){
+    $scope.operations = Operation.findAll();
+  });
 
   $scope.createOtherOperation = function(){
     $modal.open({
