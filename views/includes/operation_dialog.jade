@@ -39,4 +39,4 @@
         th {{ row.key }}
         td(ng-repeat="value in row.values track by $index") {{ value }}
 .modal-footer
-  button.btn.btn-default(type="button", data-dismiss="modal") Close
+  button.btn.btn-default(type="button", ng-click="close()") Close

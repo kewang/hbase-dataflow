@@ -19,5 +19,5 @@
         td
           input.form-control(type="text", ng-model="cq.value", required)
 .modal-footer
-  button.btn.btn-default(type="button", data-dismiss="modal") Close
+  button.btn.btn-default(type="button", ng-click="close()") Close
   button.btn.btn-primary(type="button", ng-click="create()", ng-disabled="!createRowDialogForm.$valid") Create

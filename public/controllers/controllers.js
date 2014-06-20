@@ -353,6 +353,10 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Op
 
     $modalInstance.close();
   };
+
+  $scope.close = function() {
+    $modalInstance.dismiss();
+  };
 });
 
 app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Operation){
@@ -414,6 +418,10 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
 
     $modalInstance.close();
   };
+
+  $scope.close = function() {
+    $modalInstance.dismiss();
+  };
 });
 
 app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Operation){
@@ -441,6 +449,10 @@ app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Opera
     Operation.create(o);
 
     $modalInstance.close();
+  };
+
+  $scope.close = function() {
+    $modalInstance.dismiss();
   };
 });
 
@@ -550,6 +562,10 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
 
     reader.readAsText(file);
   };
+
+  $scope.close = function() {
+    $modalInstance.dismiss();
+  };
 });
 
 app.controller("OperationCtrl", function($scope, $modal, Operation){
@@ -595,8 +611,16 @@ app.controller("OtherDialogCtrl", function($scope, $modalInstance, Operation){
 
     $modalInstance.close();
   };
+
+  $scope.close = function() {
+    $modalInstance.dismiss();
+  };
 });
 
 app.controller("OperationDialogCtrl", function($scope, $modalInstance, operation){
   $scope.operation = operation;
+
+  $scope.close = function(){
+    $modalInstance.dismiss();
+  };
 });

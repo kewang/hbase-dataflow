@@ -14,5 +14,5 @@
         th {{ k.key }}
         td(ng-repeat="v in k.cqs track by $index") {{ v }}
 .modal-footer
-  button.btn.btn-default(type="button", data-dismiss="modal") Close
+  button.btn.btn-default(type="button", ng-click="close()") Close
   button.btn.btn-primary(type="button", ng-click="get()", ng-disabled="!getRowDialogForm.$valid") Get

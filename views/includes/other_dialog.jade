@@ -6,5 +6,5 @@
     hr
     textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operationSummary")
 .modal-footer
-  button.btn.btn-default(type="button", data-dismiss="modal") Close
+  button.btn.btn-default(type="button", ng-click="close()") Close
   button.btn.btn-primary(type="button", ng-click="other()", ng-disabled="!otherDialogForm.$valid") Other
