@@ -177,7 +177,7 @@ app.controller("RowCtrl", function($scope, $modal, Table){
   });
 });
 
-app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation){
+app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation, Sample){
   $scope.tables = Table.findAll();
   $scope.operations = Operation.findAll();
 
@@ -226,7 +226,94 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
   };
 
   $scope.importSample = function(){
-    console.log("sample");
+    var root = Sample.SAMPLE1;
+
+    // XXX: SHOULD remove duplicate code
+    if(root.tables){
+      for(var i=0;i<root.tables.length;i++){
+        var tmpTable = new Table(root.tables[i].name);
+
+        for(var j=0;j<root.tables[i].rows.length;j++){
+          var row = tmpTable.createRow(root.tables[i].rows[j].key);
+
+          for(var k=0;k<root.tables[i].rows[j].cqs.length;k++){
+            var name = root.tables[i].rows[j].cqs[k].name;
+            var value = root.tables[i].rows[j].cqs[k].value;
+
+            row.createCQ(name, value);
+          }
+        }
+
+        tmpTable.buildFullTable();
+
+        $scope.tables.push(tmpTable);
+      }
+    }
+
+    if(root.operations){
+      for(var i=0;i<root.operations.length;i++){
+        var operation = root.operations[i];
+        var tmpOperation = new Operation(operation.title, operation.type);
+
+        tmpOperation.setSummary(operation.summary);
+
+        switch(operation.type){
+        case Operation.Type.CREATE:
+          tmpOperation.setTable(operation.table);
+          tmpOperation.setKey(operation.key);
+
+          if(operation.cqs.create){
+            for(var j=0;j<operation.cqs.create.length;j++){
+              var name = operation.cqs.create[j].name;
+              var value = operation.cqs.create[j].value;
+
+              tmpOperation.createCQ(name, value);
+            }
+          }
+
+          break;
+        case Operation.Type.UPDATE:
+          tmpOperation.setTable(operation.table);
+          tmpOperation.setKey(operation.key);
+
+          if(operation.cqs.create){
+            for(var j=0;j<operation.cqs.create.length;j++){
+              var name = operation.cqs.create[j].name;
+              var value = operation.cqs.create[j].value;
+
+              tmpOperation.createCQ(name, value);
+            }
+          }
+
+          if(operation.cqs.update){
+            for(var j=0;j<operation.cqs.update.length;j++){
+              var name = operation.cqs.update[j].name;
+              var oldvalue = operation.cqs.update[j].oldvalue;
+              var newvalue = operation.cqs.update[j].newvalue;
+
+              tmpOperation.updateCQ(name, oldvalue, newvalue);
+            }
+          }
+
+          break;
+        case Operation.Type.GET:
+          tmpOperation.setTable(operation.table);
+
+          for(var j=0;j<operation.rows.length;j++){
+            var row = operation.rows[j];
+
+            tmpOperation.createRow(row.key, operation.cqs, row.values);
+          }
+
+          break;
+        case Operation.Type.OTHER:
+          // noop
+          break;
+        }
+
+        $scope.operations.push(tmpOperation);
+      }
+    }
   };
 });
 
