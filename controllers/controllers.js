@@ -177,7 +177,7 @@ app.controller("RowCtrl", function($scope, $modal, Table){
   });
 });
 
-app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation, Sample){
+app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation, Sample, ImportService){
   $scope.tables = Table.findAll();
   $scope.operations = Operation.findAll();
 
@@ -229,184 +229,30 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
   };
 
   $scope.importSample1 = function(){
-    var root = Sample.SAMPLE1;
+    var result = ImportService.import(Sample.SAMPLE1);
 
-    // XXX: SHOULD remove duplicate code
-    if(root.tables){
-      for(var i=0;i<root.tables.length;i++){
-        var tmpTable = new Table(root.tables[i].name);
+    $scope.clear();
 
-        for(var j=0;j<root.tables[i].rows.length;j++){
-          var row = tmpTable.createRow(root.tables[i].rows[j].key);
-
-          for(var k=0;k<root.tables[i].rows[j].cqs.length;k++){
-            var name = root.tables[i].rows[j].cqs[k].name;
-            var value = root.tables[i].rows[j].cqs[k].value;
-
-            row.createCQ(name, value);
-          }
-        }
-
-        tmpTable.buildFullTable();
-
-        $scope.tables.push(tmpTable);
-      }
+    for(var i=0;i<result.tables.length;i++){
+      $scope.tables.push(result.tables[i]);
     }
 
-    if(root.operations){
-      for(var i=0;i<root.operations.length;i++){
-        var operation = root.operations[i];
-        var tmpOperation = new Operation(operation.title, operation.type);
-
-        tmpOperation.setSummary(operation.summary);
-
-        switch(operation.type){
-        case Operation.Type.CREATE:
-          tmpOperation.setTable(operation.table);
-          tmpOperation.setKey(operation.key);
-
-          if(operation.cqs.create){
-            for(var j=0;j<operation.cqs.create.length;j++){
-              var name = operation.cqs.create[j].name;
-              var value = operation.cqs.create[j].value;
-
-              tmpOperation.createCQ(name, value);
-            }
-          }
-
-          break;
-        case Operation.Type.UPDATE:
-          tmpOperation.setTable(operation.table);
-          tmpOperation.setKey(operation.key);
-
-          if(operation.cqs.create){
-            for(var j=0;j<operation.cqs.create.length;j++){
-              var name = operation.cqs.create[j].name;
-              var value = operation.cqs.create[j].value;
-
-              tmpOperation.createCQ(name, value);
-            }
-          }
-
-          if(operation.cqs.update){
-            for(var j=0;j<operation.cqs.update.length;j++){
-              var name = operation.cqs.update[j].name;
-              var oldvalue = operation.cqs.update[j].oldvalue;
-              var newvalue = operation.cqs.update[j].newvalue;
-
-              tmpOperation.updateCQ(name, oldvalue, newvalue);
-            }
-          }
-
-          break;
-        case Operation.Type.GET:
-          tmpOperation.setTable(operation.table);
-
-          for(var j=0;j<operation.rows.length;j++){
-            var row = operation.rows[j];
-
-            tmpOperation.createRow(row.key, operation.cqs, row.values);
-          }
-
-          break;
-        case Operation.Type.OTHER:
-          // noop
-          break;
-        }
-
-        $scope.operations.push(tmpOperation);
-      }
+    for(var i=0;i<result.operations.length;i++){
+      $scope.operations.push(result.operations[i]);
     }
   };
 
   $scope.importSample2 = function(){
-    var root = Sample.SAMPLE2;
+    var result = ImportService.import(Sample.SAMPLE2);
 
-    // XXX: SHOULD remove duplicate code
-    if(root.tables){
-      for(var i=0;i<root.tables.length;i++){
-        var tmpTable = new Table(root.tables[i].name);
+    $scope.clear();
 
-        for(var j=0;j<root.tables[i].rows.length;j++){
-          var row = tmpTable.createRow(root.tables[i].rows[j].key);
-
-          for(var k=0;k<root.tables[i].rows[j].cqs.length;k++){
-            var name = root.tables[i].rows[j].cqs[k].name;
-            var value = root.tables[i].rows[j].cqs[k].value;
-
-            row.createCQ(name, value);
-          }
-        }
-
-        tmpTable.buildFullTable();
-
-        $scope.tables.push(tmpTable);
-      }
+    for(var i=0;i<result.tables.length;i++){
+      $scope.tables.push(result.tables[i]);
     }
 
-    if(root.operations){
-      for(var i=0;i<root.operations.length;i++){
-        var operation = root.operations[i];
-        var tmpOperation = new Operation(operation.title, operation.type);
-
-        tmpOperation.setSummary(operation.summary);
-
-        switch(operation.type){
-        case Operation.Type.CREATE:
-          tmpOperation.setTable(operation.table);
-          tmpOperation.setKey(operation.key);
-
-          if(operation.cqs.create){
-            for(var j=0;j<operation.cqs.create.length;j++){
-              var name = operation.cqs.create[j].name;
-              var value = operation.cqs.create[j].value;
-
-              tmpOperation.createCQ(name, value);
-            }
-          }
-
-          break;
-        case Operation.Type.UPDATE:
-          tmpOperation.setTable(operation.table);
-          tmpOperation.setKey(operation.key);
-
-          if(operation.cqs.create){
-            for(var j=0;j<operation.cqs.create.length;j++){
-              var name = operation.cqs.create[j].name;
-              var value = operation.cqs.create[j].value;
-
-              tmpOperation.createCQ(name, value);
-            }
-          }
-
-          if(operation.cqs.update){
-            for(var j=0;j<operation.cqs.update.length;j++){
-              var name = operation.cqs.update[j].name;
-              var oldvalue = operation.cqs.update[j].oldvalue;
-              var newvalue = operation.cqs.update[j].newvalue;
-
-              tmpOperation.updateCQ(name, oldvalue, newvalue);
-            }
-          }
-
-          break;
-        case Operation.Type.GET:
-          tmpOperation.setTable(operation.table);
-
-          for(var j=0;j<operation.rows.length;j++){
-            var row = operation.rows[j];
-
-            tmpOperation.createRow(row.key, operation.cqs, row.values);
-          }
-
-          break;
-        case Operation.Type.OTHER:
-          // noop
-          break;
-        }
-
-        $scope.operations.push(tmpOperation);
-      }
+    for(var i=0;i<result.operations.length;i++){
+      $scope.operations.push(result.operations[i]);
     }
   };
 });
@@ -550,7 +396,7 @@ app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Opera
   };
 });
 
-app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, Operation){
+app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, Operation, ImportService){
   $scope.tables = Table.findAll();
   $scope.operations = Operation.findAll();
 
@@ -559,96 +405,15 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
     var reader = new FileReader();
 
     reader.onloadend = function(e) {
-      var root = JSON.parse(e.target.result);
+      var data = JSON.parse(e.target.result);
+      var result = ImportService.import(data);
 
-      if(root.tables){
-        for(var i=0;i<root.tables.length;i++){
-          var tmpTable = new Table(root.tables[i].name);
-
-          for(var j=0;j<root.tables[i].rows.length;j++){
-            var row = tmpTable.createRow(root.tables[i].rows[j].key);
-
-            for(var k=0;k<root.tables[i].rows[j].cqs.length;k++){
-              var name = root.tables[i].rows[j].cqs[k].name;
-              var value = root.tables[i].rows[j].cqs[k].value;
-
-              row.createCQ(name, value);
-            }
-          }
-
-          tmpTable.buildFullTable();
-
-          $scope.$apply(function(){
-            $scope.tables.push(tmpTable);
-          });
-        }
+      for(var i=0;i<result.tables.length;i++){
+        $scope.tables.push(result.tables[i]);
       }
 
-      if(root.operations){
-        for(var i=0;i<root.operations.length;i++){
-          var operation = root.operations[i];
-          var tmpOperation = new Operation(operation.title, operation.type);
-
-          tmpOperation.setSummary(operation.summary);
-
-          switch(operation.type){
-          case Operation.Type.CREATE:
-            tmpOperation.setTable(operation.table);
-            tmpOperation.setKey(operation.key);
-
-            if(operation.cqs.create){
-              for(var j=0;j<operation.cqs.create.length;j++){
-                var name = operation.cqs.create[j].name;
-                var value = operation.cqs.create[j].value;
-
-                tmpOperation.createCQ(name, value);
-              }
-            }
-
-            break;
-          case Operation.Type.UPDATE:
-            tmpOperation.setTable(operation.table);
-            tmpOperation.setKey(operation.key);
-
-            if(operation.cqs.create){
-              for(var j=0;j<operation.cqs.create.length;j++){
-                var name = operation.cqs.create[j].name;
-                var value = operation.cqs.create[j].value;
-
-                tmpOperation.createCQ(name, value);
-              }
-            }
-
-            if(operation.cqs.update){
-              for(var j=0;j<operation.cqs.update.length;j++){
-                var name = operation.cqs.update[j].name;
-                var oldvalue = operation.cqs.update[j].oldvalue;
-                var newvalue = operation.cqs.update[j].newvalue;
-
-                tmpOperation.updateCQ(name, oldvalue, newvalue);
-              }
-            }
-
-            break;
-          case Operation.Type.GET:
-            tmpOperation.setTable(operation.table);
-
-            for(var j=0;j<operation.rows.length;j++){
-              var row = operation.rows[j];
-
-              tmpOperation.createRow(row.key, operation.cqs, row.values);
-            }
-
-            break;
-          case Operation.Type.OTHER:
-            // noop
-            break;
-          }
-
-          $scope.$apply(function(){
-            $scope.operations.push(tmpOperation);
-          });
-        }
+      for(var i=0;i<result.operations.length;i++){
+        $scope.operations.push(result.operations[i]);
       }
 
       $modalInstance.close();
