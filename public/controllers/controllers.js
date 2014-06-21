@@ -185,6 +185,9 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
     Table.clear();
     Operation.clear();
 
+    $scope.tables = Table.findAll();
+    $scope.operations = Operation.findAll();
+
     $rootScope.$broadcast("clearAllData");
   };
 
