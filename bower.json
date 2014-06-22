@@ -5,6 +5,6 @@
     "bootstrap": "latest",
     "angular": "latest",
     "angular-bootstrap": "latest",
-    "jspdf": "latest"
+    "pdfmake": "latest"
   }
 }
