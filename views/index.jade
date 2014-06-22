@@ -61,10 +61,32 @@ block content
             option(value="create") Create Row
             option(value="update") Update Row
         button.btn.btn-primary.navbar-btn(type="button", ng-click="showRowCtrlDialog()", ng-disabled="!(table && rowCommand)") Execute
-        .navbar-right(ng-controller="SystemCtrl")
-          p.navbar-text System
-          button.btn.btn-default.navbar-btn(type="button", ng-click="clear()") Clear
-          button.btn.btn-default.navbar-btn(type="button", ng-click="exportData()") Export
-          button.btn.btn-default.navbar-btn(type="button", ng-click="showImportDataDialog()") Import
-          button.btn.btn-default.navbar-btn(type="button", ng-click="importSample1()") Import sample 1
-          button.btn.btn-default.navbar-btn(type="button", ng-click="importSample2()") Import sample 2
+        ul.nav.navbar-nav.navbar-right(ng-controller="SystemCtrl")
+          li
+            span.navbar-text System
+          li
+            a(href="#", ng-click="clear()") Clear
+          li.dropdown
+            a.dropdown-toggle(href="#", data-toggle="dropdown")
+              | Export
+              b.caret
+            ul.dropdown-menu
+              li
+                a(href="#", ng-click="exportData()") to JSON
+              li.divider
+              li
+                a(href="#") to PDF
+              li
+                a(href="#") to PNG
+          li.dropdown
+            a.dropdown-toggle(href="#", data-toggle="dropdown")
+              | Import
+              b.caret
+            ul.dropdown-menu
+              li
+                a(href="#", ng-click="showImportDataDialog()") from JSON
+              li.divider
+              li
+                a(href="#", ng-click="importSample1()") from Sample 1
+              li
+                a(href="#", ng-click="importSample2()") from Sample 2
