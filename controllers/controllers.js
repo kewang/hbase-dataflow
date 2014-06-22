@@ -228,22 +228,19 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
     });
   };
 
-  $scope.importSample1 = function(){
-    var result = ImportService.import(Sample.SAMPLE1);
+  $scope.importSample = function(index){
+    var result;
 
-    $scope.clear();
+    switch(index){
+    case 1:
+      result = ImportService.import(Sample.SAMPLE1);
 
-    for(var i=0;i<result.tables.length;i++){
-      $scope.tables.push(result.tables[i]);
+      break;
+    case 2:
+      result = ImportService.import(Sample.SAMPLE2);
+
+      break;
     }
-
-    for(var i=0;i<result.operations.length;i++){
-      $scope.operations.push(result.operations[i]);
-    }
-  };
-
-  $scope.importSample2 = function(){
-    var result = ImportService.import(Sample.SAMPLE2);
 
     $scope.clear();
 
