@@ -1,0 +1,11 @@
+
+<table class="table table-bordered table-condensed table-hover">
+  <tr>
+    <th>Row Key</th>
+    <th ng-repeat="c in table.getFullCQs()">{{ c }}</th>
+  </tr>
+  <tr ng-repeat="k in table.getFullKeys()">
+    <th>{{ k.key }}</th>
+    <td ng-repeat="v in k.cqs track by $index">{{ v }}</td>
+  </tr>
+</table>
