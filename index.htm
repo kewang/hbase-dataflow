@@ -21,9 +21,10 @@
         <div id="table-detail" ng-controller="TableDetailCtrl" ng-show="search === false" class="col-md-7">
           <h2>{{ table.getName() }}</h2>
           <form ng-show="table != null" role="form" class="form-inline">
-            <input type="text" ng-model="key" style="width: 80%" class="form-control">
+            <input type="text" ng-model="key" style="width: 70%" class="form-control">
             <button type="button" ng-click="scan()" ng-disabled="!key" class="btn btn-primary">Scan</button>
             <button type="button" ng-click="get()" ng-disabled="!key" class="btn btn-primary">Get</button>
+            <button type="button" ng-click="filter()" ng-disabled="!key" class="btn btn-primary">Filter</button>
           </form>
           <hr>
           <h3 ng-hide="(table != null) &amp;&amp; !table.isEmpty()">No data</h3>
@@ -32,9 +33,10 @@
         <div id="table-search" ng-controller="TableSearchCtrl" ng-show="search === true" class="col-md-7">
           <h2>{{ searchtable.getName() }}</h2>
           <form ng-show="searchtable != null" role="form" class="form-inline">
-            <input type="text" ng-model="key" style="width: 50%" class="form-control">
+            <input type="text" ng-model="key" style="width: 40%" class="form-control">
             <button type="button" ng-click="scan({'key': key})" ng-disabled="!key" class="btn btn-primary">Scan</button>
             <button type="button" ng-click="get(key)" ng-disabled="!key" class="btn btn-primary">Get</button>
+            <button type="button" ng-click="filter(key)" ng-disabled="!key" class="btn btn-primary">Filter</button>
             <button type="button" ng-click="clear()" class="btn btn-primary">Clear</button>
             <button type="button" ng-click="addToOperation()" class="btn btn-primary">Add to Operation</button>
           </form>
