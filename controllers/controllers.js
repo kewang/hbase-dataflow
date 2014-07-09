@@ -146,6 +146,10 @@ app.controller("TableSearchCtrl", function($rootScope, $scope, $modal){
 app.controller("RowCtrl", function($scope, $modal, Table){
   $scope.tables = Table.findAll();
 
+  $scope.$on("changeTable", function(event, table){
+    $scope.table = table;
+  });
+
   $scope.showRowCtrlDialog = function(){
     switch($scope.rowCommand){
     case "create":
