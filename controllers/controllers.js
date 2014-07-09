@@ -18,6 +18,7 @@ app.controller("TableCtrl", function($rootScope, $scope, Table){
   };
 
   $scope.changeTable = function(table){
+    $rootScope.$broadcast("stopSearchTable");
     $rootScope.$broadcast("changeTable", table);
   };
 
@@ -83,6 +84,12 @@ app.controller("TableSearchCtrl", function($rootScope, $scope, $modal){
 
   $scope.$on("clearAllData", function(event){
     $scope.searchtable = null;
+  });
+
+  $scope.$on("stopSearchTable", function(event){
+    $scope.key = null;
+
+    $scope.search = false;
   });
 
   $scope.get = function(key){
