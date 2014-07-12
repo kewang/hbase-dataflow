@@ -195,7 +195,23 @@ app.factory("Row", function() {
   return Row;
 });
 
-app.factory("Operation", function() {
+app.factory("Column", function(){
+  function Column(name){
+    this.name = name;
+    this.timestamps = [];
+  }
+
+  Column.prototype.getName = function(){
+    return this.name;
+  };
+
+  Column.prototype.setValue = function(value){
+  };
+
+  return Column;
+});
+
+app.factory("Operation", function(){
   Operation.Type = {
     CREATE: 0,
     UPDATE: 1,
