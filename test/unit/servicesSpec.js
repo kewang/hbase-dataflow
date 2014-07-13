@@ -1,13 +1,17 @@
 describe("Services", function(){
-	var service;
+	var Column;
 
-	beforeEach(module("hbase-dataflow-app.services"));
+	beforeEach(function(){
+		module("hbase-dataflow-app.services")
 
-	describe("Column", function(){
-		it("xxx", inject(function(Column){
-			var c = new Column("aaa");
+		inject(function(_Column_){
+			Column = _Column_;
+		});
+	});
 
-			expect(c.getName()).toEqual("aaa");
-		}));
+	it("should to instantiate Column", function(){
+		var a = new Column("bbb");
+
+		expect(a.getName()).toBe("bbb");
 	});
 });
