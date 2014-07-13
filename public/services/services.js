@@ -196,9 +196,17 @@ app.factory("Row", function() {
 });
 
 app.factory("Column", function(){
-  function Column(name){
+  Column.VERSIONS = 3;
+
+  function Column(name, versions){
     this.name = name;
     this.timestamps = [];
+
+    var v = versions || Column.VERSIONS;
+
+    for(var i=0;i<v;i++){
+      this.timestamps.push(null);
+    }
   }
 
   Column.prototype.getName = function(){
@@ -206,7 +214,20 @@ app.factory("Column", function(){
   };
 
   Column.prototype.setValue = function(value){
+    for(var i=0;i<this.timestamps.length;i++){
+      if(this.timestamps[i] === null){
+        this.timestamps[i] = value;
+
+        break;
+      }
+    }
   };
+
+  Column.prototype.getValue = function(){
+    for(var i=0;i<this.timestamps.length;i++){
+      
+    }
+  }
 
   return Column;
 });

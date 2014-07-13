@@ -1,3 +1,5 @@
+// refs. http://www.benlesh.com/2013/06/angular-js-unit-testing-services.html
+
 describe("Services", function(){
 	var Column;
 
@@ -11,6 +13,8 @@ describe("Services", function(){
 
 	it("should to instantiate Column", function(){
 		var a = new Column("bbb");
+
+		a.setValue("hello");
 
 		expect(a.getName()).toBe("bbb");
 	});
