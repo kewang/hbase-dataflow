@@ -255,6 +255,10 @@ app.factory("Column", function() {
     }
   };
 
+  Column.prototype.getValues = function() {
+    return this.values;
+  };
+
   return Column;
 });
 
