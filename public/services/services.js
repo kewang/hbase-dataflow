@@ -255,6 +255,8 @@ app.factory("Column", function() {
           return this.values[i].value;
         }
       }
+
+      return null;
     } else {
       return this.values[0].value;
     }

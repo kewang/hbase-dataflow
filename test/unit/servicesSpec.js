@@ -14,11 +14,11 @@ describe("Services", function() {
 	it("should to instantiate Column", function() {
 		var a = new Column("bbb");
 
-		a.setValue("hello", 1000);
+		a.setValue("hello");
 
 		expect(a.getValue()).toBe("hello");
 
-		a.setValue("world", 500);
+		a.setValue("world");
 
 		expect(a.getValue()).toBe("world");
 
