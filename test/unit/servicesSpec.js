@@ -15,6 +15,7 @@ describe("Services", function(){
 		var a = new Column("bbb");
 
 		a.setValue("hello");
+		a.setValue("world");
 
 		expect(a.getName()).toBe("bbb");
 	});

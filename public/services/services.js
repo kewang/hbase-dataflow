@@ -200,12 +200,15 @@ app.factory("Column", function(){
 
   function Column(name, versions){
     this.name = name;
-    this.timestamps = [];
+    this.values = [];
 
     var v = versions || Column.VERSIONS;
 
     for(var i=0;i<v;i++){
-      this.timestamps.push(null);
+      this.values.push({
+        timestamp: null,
+        value: null
+      });
     }
   }
 
@@ -213,18 +216,47 @@ app.factory("Column", function(){
     return this.name;
   };
 
-  Column.prototype.setValue = function(value){
-    for(var i=0;i<this.timestamps.length;i++){
-      if(this.timestamps[i] === null){
-        this.timestamps[i] = value;
+  Column.prototype.setValue = function(value, timestamp){
+    var t = timestamp || Date.now();
+
+/*
+    this.values[0].timestamp=0;
+    this.values[0].value="0";
+    this.values[1].timestamp=1;
+    this.values[1].value="1";
+*/
+
+    console.log("0===1: " + (this.values[0] === this.values[1]));
+    console.log("values: " + JSON.stringify(this.values));
+
+    for(var i=0;i<this.values.length;i++){
+      if(this.values[i].timestamp === null){
+        var shift = false;
+
+        // shift old object
+        for(var j=i-1;j>=0;j--){
+          shift = true;
+
+          this.values[j+1] = this.values[j];
+        }
+
+        if(shift){
+          this.values[i-1].timestamp = t;
+          this.values[i-1].value = value;
+        }else{
+          this.values[i].timestamp = t;
+          this.values[i].value = value;
+        }
 
         break;
       }
     }
+
+    console.log("4: this.values: "+ JSON.stringify(this.values));
   };
 
   Column.prototype.getValue = function(){
-    for(var i=0;i<this.timestamps.length;i++){
+    for(var i=0;i<this.values.length;i++){
       
     }
   }
