@@ -219,28 +219,16 @@ app.factory("Column", function() {
   Column.prototype.setValue = function(value, timestamp) {
     var t = timestamp || Date.now();
 
-    for (var i = 0; i < this.values.length; i++) {
-      if (this.values[i].timestamp === null) {
-        var shift = false;
-
-        // shift old object
-        for (var j = i - 1; j >= 0; j--) {
-          shift = true;
-
-          this.values[j + 1] = angular.copy(this.values[j]);
+    for (var i = this.values.length - 1; i >= 0; i--) {
+      if (this.values[i].timestamp !== null) {
+        if (i !== this.values.length - 1) {
+          this.values[i + 1] = angular.copy(this.values[i]);
         }
-
-        if (shift) {
-          this.values[i - 1].timestamp = t;
-          this.values[i - 1].value = value;
-        } else {
-          this.values[i].timestamp = t;
-          this.values[i].value = value;
-        }
-
-        break;
       }
     }
+
+    this.values[0].timestamp = t;
+    this.values[0].value = value;
   };
 
   Column.prototype.getValue = function(timestamp) {

@@ -22,6 +22,14 @@ describe("Services", function() {
 
 		expect(a.getValue()).toBe("world");
 
+		a.setValue("kewang");
+
+		expect(a.getValue()).toBe("kewang");
+
+		a.setValue("hahaha");
+
+		expect(a.getValue()).toBe("hahaha");
+
 		console.log(a.getValues());
 
 		expect(a.getName()).toBe("bbb");
