@@ -4,9 +4,6 @@ describe("Services", function() {
   var Column;
   var Family;
 
-  var testColumn;
-  var testFamily;
-
   beforeEach(function() {
     module("hbase-dataflow-app.services");
 
@@ -17,7 +14,7 @@ describe("Services", function() {
   });
 
   it("should to instantiate Column", function() {
-    var testColumn = new Column("bbb");
+    var testColumn = new Column("testColumn");
 
     testColumn.setValue("hello");
 
@@ -35,6 +32,22 @@ describe("Services", function() {
 
     expect(testColumn.getValue()).toBe("hahaha");
 
-    expect(testColumn.getName()).toBe("bbb");
+    expect(testColumn.getName()).toBe("testColumn");
+  });
+
+  it("should to instantiate Family", function() {
+    var testFamily = new Family("testFamily");
+    var testColumn1 = new Column("testColumn1");
+    var testColumn2 = new Column("testColumn2");
+
+    testColumn1.setValue("hello");
+    testColumn2.setValue("world");
+
+    testFamily.addColumn(testColumn1);
+    testFamily.addColumn(testColumn2);
+
+    expect(testFamily.getName()).toBe("testFamily");
+    expect(testFamily.getColumns()[0]).toBe(testColumn1);
+    expect(testFamily.getColumns()[1]).toBe(testColumn2);
   });
 });
