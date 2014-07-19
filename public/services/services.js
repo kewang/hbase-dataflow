@@ -166,6 +166,16 @@ app.factory("Row", function() {
     return this.families;
   };
 
+  Row.prototype.findFamilyByName = function(name) {
+    for (var i = 0; i < this.families.length; i++) {
+      if (this.families[i].getName() === name) {
+        return this.families[i];
+      }
+    }
+
+    return null;
+  };
+
   Row.prototype.getKey = function() {
     return this.key;
   };
@@ -220,6 +230,16 @@ app.factory('Family', function() {
 
   Family.prototype.getName = function() {
     return this.name;
+  };
+
+  Family.prototype.findColumnByName = function(name) {
+    for (var i = 0; i < this.columns.length; i++) {
+      if (this.columns[i].getName() === name) {
+        return this.columns[i];
+      }
+    }
+
+    return null;
   };
 
   return Family;

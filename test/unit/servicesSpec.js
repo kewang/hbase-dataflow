@@ -49,5 +49,7 @@ describe("Services", function() {
     expect(testFamily.getName()).toBe("testFamily");
     expect(testFamily.getColumns()[0]).toBe(testColumn1);
     expect(testFamily.getColumns()[1]).toBe(testColumn2);
+    expect(testFamily.findColumnByName("testColumn1")).toBe(testColumn1);
+    expect(testFamily.findColumnByName("testColumn3")).toBe(null);
   });
 });
