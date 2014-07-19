@@ -195,6 +195,17 @@ app.factory("Row", function() {
   return Row;
 });
 
+app.factory('Family', function(Column) {
+  function Family(name) {
+    this.name = name;
+    this.columns = [];
+  }
+
+  Family.prototype.addColumn = function() {
+    
+  };
+});
+
 app.factory("Column", function() {
   Column.VERSIONS = 3;
 

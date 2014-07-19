@@ -30,8 +30,6 @@ describe("Services", function() {
 
 		expect(a.getValue()).toBe("hahaha");
 
-		console.log(a.getValues());
-
 		expect(a.getName()).toBe("bbb");
 	});
 });
