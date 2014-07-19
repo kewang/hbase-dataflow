@@ -155,7 +155,16 @@ app.factory("Row", function() {
   function Row(key) {
     this.key = key;
     this.cqs = [];
+    this.families = [];
   }
+
+  Row.prototype.addFamily = function(family) {
+    this.families.push(family);
+  };
+
+  Row.prototype.getFamilies = function() {
+    return this.families;
+  };
 
   Row.prototype.getKey = function() {
     return this.key;
