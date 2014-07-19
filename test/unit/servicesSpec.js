@@ -1,35 +1,40 @@
 // refs. http://www.benlesh.com/2013/06/angular-js-unit-testing-services.html
 
 describe("Services", function() {
-	var Column;
+  var Column;
+  var Family;
 
-	beforeEach(function() {
-		module("hbase-dataflow-app.services");
+  var testColumn;
+  var testFamily;
 
-		inject(function(_Column_) {
-			Column = _Column_;
-		});
-	});
+  beforeEach(function() {
+    module("hbase-dataflow-app.services");
 
-	it("should to instantiate Column", function() {
-		var a = new Column("bbb");
+    inject(function(_Family_, _Column_) {
+      Family = _Family_;
+      Column = _Column_;
+    });
+  });
 
-		a.setValue("hello");
+  it("should to instantiate Column", function() {
+    var testColumn = new Column("bbb");
 
-		expect(a.getValue()).toBe("hello");
+    testColumn.setValue("hello");
 
-		a.setValue("world");
+    expect(testColumn.getValue()).toBe("hello");
 
-		expect(a.getValue()).toBe("world");
+    testColumn.setValue("world");
 
-		a.setValue("kewang");
+    expect(testColumn.getValue()).toBe("world");
 
-		expect(a.getValue()).toBe("kewang");
+    testColumn.setValue("kewang");
 
-		a.setValue("hahaha");
+    expect(testColumn.getValue()).toBe("kewang");
 
-		expect(a.getValue()).toBe("hahaha");
+    testColumn.setValue("hahaha");
 
-		expect(a.getName()).toBe("bbb");
-	});
+    expect(testColumn.getValue()).toBe("hahaha");
+
+    expect(testColumn.getName()).toBe("bbb");
+  });
 });

@@ -195,15 +195,25 @@ app.factory("Row", function() {
   return Row;
 });
 
-app.factory('Family', function(Column) {
+app.factory('Family', function() {
   function Family(name) {
     this.name = name;
     this.columns = [];
   }
 
-  Family.prototype.addColumn = function() {
-    
+  Family.prototype.addColumn = function(column) {
+    this.columns.push(column);
   };
+
+  Family.prototype.getColumns = function() {
+    return this.columns;
+  };
+
+  Family.prototype.getName = function() {
+    return this.name;
+  };
+
+  return Family;
 });
 
 app.factory("Column", function() {
