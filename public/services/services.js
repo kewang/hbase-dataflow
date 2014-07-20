@@ -170,6 +170,8 @@ app.factory("Row", function(Family, Column, Value) {
 
         if (column === null) {
           column = new Column(str[1]);
+
+          this.families[i].addColumn(column);
         }
 
         column.setValue(value);
@@ -193,34 +195,7 @@ app.factory("Row", function(Family, Column, Value) {
   };
 
   Row.prototype.getColumns = function() {
-    var returnColumns = [];
-
-    for (var i = 0; i < this.families.length; i++) {
-      var family = this.families[i];
-      var columns = family.getColumns();
-
-      for (var j = 0; j < columns.length; j++) {
-        var name = columns[j].getName();
-        var value = columns[j].getValue();
-
-        returnColumns.push({
-          "name": family.getName() + ":" + name,
-          "value": value.getValue(),
-          "timestamp": value.getTimestamp(),
-          "getName": function() {
-            return family.getName() + ":" + name;
-          },
-          "getValue": function() {
-            return value.getValue();
-          },
-          "getTimestamp": function() {
-            return value.getTimestamp();
-          }
-        });
-      }
-    }
-
-    return returnColumns;
+    return this.families;
   };
 
   Row.prototype.findColumnByName = function(name) {
