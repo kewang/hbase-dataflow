@@ -161,24 +161,31 @@ app.factory("Row", function(Family, Column, Value) {
   Row.prototype.addColumn = function(name, value, timestamp) {
     var str = name.split(":");
     var family = new Family(str[0]);
-    var column = new Column(str[1]);
-    var value = new Value(value, timestamp);
-
-    column.setValue(value);
-
-    var foundFamily = false;
+    var found = false;
 
     for (var i = 0; i < this.families.length; i++) {
       if (this.families[i].getName() === family.getName()) {
-        foundFamily = true;
+        var column = this.families[i].findColumnByName(str[1]);
+        var value = new Value(value, timestamp);
 
-        this.families[i].addColumn(column);
+        if (column === null) {
+          column = new Column(str[1]);
+        }
+
+        column.setValue(value);
+
+        found = true;
 
         break;
       }
     }
 
-    if (!foundFamily) {
+    if (!found) {
+      var column = new Column(str[1]);
+      var value = new Value(value, timestamp);
+
+      column.setValue(value);
+
       family.addColumn(column);
 
       this.families.push(family);
@@ -220,7 +227,7 @@ app.factory("Row", function(Family, Column, Value) {
     var columns = this.getColumns();
 
     for (var i = 0; i < columns.length; i++) {
-      if (columns[i].name === name) {
+      if (columns[i].getName() === name) {
         return columns[i];
       }
     }

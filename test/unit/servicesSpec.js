@@ -82,7 +82,12 @@ describe("Services", function() {
     var testRow = new Row("testRow");
 
     testRow.addColumn("testFamily:testColumn", "hello");
+    testRow.addColumn("testFamily:testColumn", "world");
+    // testRow.addColumn("testFamily2:testColumn3", "kewang", 20000);
+    // testRow.addColumn("testFamily2:testColumn4", "hahaha", 30000);
+    // testRow.addColumn("testFamily2:testColumn4", "xdxdxd", 40000);
 
     console.log(toJSON(testRow.getColumns()));
+    console.log(toJSON(testRow.findColumnByName("testFamily:testColumn")));
   });
 });
