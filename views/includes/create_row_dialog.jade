@@ -8,14 +8,14 @@
         input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operationTitle", required)
       .form-group.col-md-12
         textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operationSummary")
+
+    fieldset
+      legend Row
       .form-group.col-md-12
         .col-md-6
           input.form-control(type="text", placeholder="Please Input Family", ng-model="form.family")
         .col-md-6
           input.form-control(type="text", placeholder="Please Input Key", ng-model="form.key", required)
-
-    fieldset
-      legend Detail
       .form-group.col-md-12
         button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
       .col-md-12
