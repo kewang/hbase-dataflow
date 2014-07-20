@@ -151,33 +151,42 @@ app.factory("Table", function(Row) {
   return Table;
 });
 
-app.factory("Row", function() {
+app.factory("Row", function(Family, Column, Value) {
   function Row(key) {
     this.key = key;
     this.cqs = [];
     this.families = [];
   }
 
-  Row.prototype.addFamily = function(family) {
-    this.families.push(family);
-  };
+  Row.prototype.addColumn = function(name, value, timestamp) {
+    var str = name.split(":");
+    var family = new Family(str[0]);
+    var column = new Column(str[1]);
+    var value = new Value(value, timestamp);
 
-  Row.prototype.getFamilies = function() {
-    return this.families;
-  };
+    column.setValue(value);
 
-  Row.prototype.findFamilyByName = function(name) {
+    var foundFamily = false;
+
     for (var i = 0; i < this.families.length; i++) {
-      if (this.families[i].getName() === name) {
-        return this.families[i];
+      if (this.families[i].getName() === family.getName()) {
+        foundFamily = true;
+
+        this.families[i].addColumn(column);
+
+        break;
       }
     }
 
-    return null;
+    if (!foundFamily) {
+      family.addColumn(column);
+
+      this.families.push(family);
+    }
   };
 
   Row.prototype.getColumns = function() {
-    var out_columns = [];
+    var returnColumns = [];
 
     for (var i = 0; i < this.families.length; i++) {
       var family = this.families[i];
@@ -187,15 +196,36 @@ app.factory("Row", function() {
         var name = columns[j].getName();
         var value = columns[j].getValue();
 
-        out_columns.push({
+        returnColumns.push({
           "name": family.getName() + ":" + name,
           "value": value.getValue(),
-          "timestamp": value.getTimestamp()
+          "timestamp": value.getTimestamp(),
+          "getName": function() {
+            return family.getName() + ":" + name;
+          },
+          "getValue": function() {
+            return value.getValue();
+          },
+          "getTimestamp": function() {
+            return value.getTimestamp();
+          }
         });
       }
     }
 
-    return out_columns;
+    return returnColumns;
+  };
+
+  Row.prototype.findColumnByName = function(name) {
+    var columns = this.getColumns();
+
+    for (var i = 0; i < columns.length; i++) {
+      if (columns[i].name === name) {
+        return columns[i];
+      }
+    }
+
+    return null;
   };
 
   Row.prototype.getKey = function() {

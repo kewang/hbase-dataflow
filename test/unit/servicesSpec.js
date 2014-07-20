@@ -17,6 +17,10 @@ describe("Services", function() {
     });
   });
 
+  function toJSON(obj) {
+    return JSON.stringify(obj, null, 2);
+  }
+
   it("should to instantiate Value", function() {
     var testValue = new Value("hello");
 
@@ -68,35 +72,17 @@ describe("Services", function() {
     testFamily.addColumn(testColumn2);
 
     expect(testFamily.getName()).toBe("testFamily");
-
     expect(testFamily.getColumns()[0]).toBe(testColumn1);
-
     expect(testFamily.getColumns()[1]).toBe(testColumn2);
-
     expect(testFamily.findColumnByName("testColumn1")).toBe(testColumn1);
-
     expect(testFamily.findColumnByName("testColumn3")).toBe(null);
   });
 
   it("should to instantiate Row", function() {
     var testRow = new Row("testRow");
-    var testFamily = new Family("testFamily");
-    var testColumn1 = new Column("testColumn1");
-    var testColumn2 = new Column("testColumn2");
-    var testValue = new Value("hello");
 
-    testColumn1.setValue(testValue);
+    testRow.addColumn("testFamily:testColumn", "hello");
 
-    testValue = new Value("world");
-
-    testColumn2.setValue(testValue);
-
-    testFamily.addColumn(testColumn1);
-    testFamily.addColumn(testColumn2);
-
-    testRow.addFamily(testFamily);
-
-    console.log(JSON.stringify(testRow.getFamilies(), null, 2));
-    console.log(JSON.stringify(testRow.getColumns(), null, 2));
+    console.log(toJSON(testRow.getColumns()));
   });
 });
