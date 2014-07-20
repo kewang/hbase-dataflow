@@ -323,13 +323,13 @@ app.factory("Column", function() {
     if (timestamp) {
       for (var i = 0; i < this.values.length; i++) {
         if (this.values[i].timestamp === timestamp) {
-          return this.values[i];
+          return this.values[i].value;
         }
       }
 
       return null;
     } else {
-      return this.values[0];
+      return this.values[0].value;
     }
   };
 
@@ -338,6 +338,15 @@ app.factory("Column", function() {
   };
 
   return Column;
+});
+
+app.factory("Value", function() {
+  function Value(value, timestamp) {
+    this.value = value;
+    this.timestamp = timestamp || Date.now();
+  }
+
+  return Value;
 });
 
 app.factory("Operation", function() {
