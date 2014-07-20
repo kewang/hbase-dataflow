@@ -49,8 +49,6 @@ describe("Services", function() {
 
     expect(testColumn.getValue().getValue()).toBe("hahaha");
 
-    console.log(testColumn.getValues());
-
     expect(testColumn.getName()).toBe("testColumn");
   });
 
@@ -58,17 +56,25 @@ describe("Services", function() {
     var testFamily = new Family("testFamily");
     var testColumn1 = new Column("testColumn1");
     var testColumn2 = new Column("testColumn2");
+    var testValue = new Value("hello");
 
-    testColumn1.setValue("hello");
-    testColumn2.setValue("world");
+    testColumn1.setValue(testValue);
+
+    testValue = new Value("world");
+
+    testColumn2.setValue(testValue);
 
     testFamily.addColumn(testColumn1);
     testFamily.addColumn(testColumn2);
 
     expect(testFamily.getName()).toBe("testFamily");
+
     expect(testFamily.getColumns()[0]).toBe(testColumn1);
+
     expect(testFamily.getColumns()[1]).toBe(testColumn2);
+
     expect(testFamily.findColumnByName("testColumn1")).toBe(testColumn1);
+
     expect(testFamily.findColumnByName("testColumn3")).toBe(null);
   });
 
@@ -77,9 +83,13 @@ describe("Services", function() {
     var testFamily = new Family("testFamily");
     var testColumn1 = new Column("testColumn1");
     var testColumn2 = new Column("testColumn2");
+    var testValue = new Value("hello");
 
-    testColumn1.setValue("hello");
-    testColumn2.setValue("world");
+    testColumn1.setValue(testValue);
+
+    testValue = new Value("world");
+
+    testColumn2.setValue(testValue);
 
     testFamily.addColumn(testColumn1);
     testFamily.addColumn(testColumn2);

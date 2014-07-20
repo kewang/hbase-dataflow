@@ -188,8 +188,9 @@ app.factory("Row", function() {
         var value = columns[j].getValue();
 
         out_columns.push({
-          "name": name,
-          "value": value
+          "name": family.getName() + ":" + name,
+          "value": value.getValue(),
+          "timestamp": value.getTimestamp()
         });
       }
     }
