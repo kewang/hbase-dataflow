@@ -176,6 +176,27 @@ app.factory("Row", function() {
     return null;
   };
 
+  Row.prototype.getColumns = function() {
+    var out_columns = [];
+
+    for (var i = 0; i < this.families.length; i++) {
+      var family = this.families[i];
+      var columns = family.getColumns();
+
+      for (var j = 0; j < columns.length; j++) {
+        var name = columns[j].getName();
+        var value = columns[j].getValue();
+
+        out_columns.push({
+          "name": name,
+          "value": value
+        });
+      }
+    }
+
+    return out_columns;
+  };
+
   Row.prototype.getKey = function() {
     return this.key;
   };
@@ -302,13 +323,13 @@ app.factory("Column", function() {
     if (timestamp) {
       for (var i = 0; i < this.values.length; i++) {
         if (this.values[i].timestamp === timestamp) {
-          return this.values[i].value;
+          return this.values[i];
         }
       }
 
       return null;
     } else {
-      return this.values[0].value;
+      return this.values[0];
     }
   };
 
