@@ -4,35 +4,52 @@ describe("Services", function() {
   var Row;
   var Family;
   var Column;
+  var Value;
 
   beforeEach(function() {
     module("hbase-dataflow-app.services");
 
-    inject(function(_Row_, _Family_, _Column_) {
+    inject(function(_Row_, _Family_, _Column_, _Value_) {
       Row = _Row_;
       Family = _Family_;
       Column = _Column_;
+      Value = _Value_;
     });
+  });
+
+  it("should to instantiate Value", function() {
+    var testValue = new Value("hello");
+
+    expect(testValue.getValue()).toBe("hello");
   });
 
   it("should to instantiate Column", function() {
     var testColumn = new Column("testColumn");
+    var testValue = new Value("hello");
 
-    testColumn.setValue("hello");
+    testColumn.setValue(testValue);
 
-    expect(testColumn.getValue()).toBe("hello");
+    expect(testColumn.getValue().getValue()).toBe("hello");
 
-    testColumn.setValue("world");
+    testValue = new Value("world");
 
-    expect(testColumn.getValue()).toBe("world");
+    testColumn.setValue(testValue);
 
-    testColumn.setValue("kewang");
+    expect(testColumn.getValue().getValue()).toBe("world");
 
-    expect(testColumn.getValue()).toBe("kewang");
+    testValue = new Value("kewang");
 
-    testColumn.setValue("hahaha");
+    testColumn.setValue(testValue);
 
-    expect(testColumn.getValue()).toBe("hahaha");
+    expect(testColumn.getValue().getValue()).toBe("kewang");
+
+    testValue = new Value("hahaha");
+
+    testColumn.setValue(testValue);
+
+    expect(testColumn.getValue().getValue()).toBe("hahaha");
+
+    console.log(testColumn.getValues());
 
     expect(testColumn.getName()).toBe("testColumn");
   });

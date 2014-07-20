@@ -266,20 +266,16 @@ app.factory('Family', function() {
   return Family;
 });
 
-app.factory("Column", function() {
+app.factory("Column", function(Value) {
   Column.VERSIONS = 3;
 
   function Column(name, versions) {
     this.name = name;
     this.values = [];
+    this.versions = versions || Column.VERSIONS;
 
-    var v = versions || Column.VERSIONS;
-
-    for (var i = 0; i < v; i++) {
-      this.values.push({
-        timestamp: null,
-        value: null
-      });
+    for (var i = 0; i < this.versions; i++) {
+      this.values.push(null);
     }
   }
 
@@ -287,26 +283,25 @@ app.factory("Column", function() {
     return this.name;
   };
 
-  Column.prototype.setValue = function(value, timestamp) {
-    var t = timestamp || Date.now();
+  Column.prototype.setValue = function(value) {
     var set = false;
 
     for (var i = this.values.length - 1; i >= 0; i--) {
-      if (this.values[i].timestamp !== null) {
+      if (this.values[i] !== null) {
         if (i !== this.values.length - 1) {
-          if (this.values[i].timestamp > t) {
+          if (this.values[i].getTimestamp() > value.getTimestamp()) {
             set = true;
 
-            this.values[i + 1].timestamp = t;
-            this.values[i + 1].value = value;
+            this.values[i + 1] = value;
           } else {
-            this.values[i + 1] = angular.copy(this.values[i]);
+            var copyValue = new Value(this.values[i].getValue(), this.values[i].getTimestamp());
+
+            this.values[i + 1] = copyValue;
 
             if (i === 0) {
               set = true;
 
-              this.values[0].timestamp = t;
-              this.values[0].value = value;
+              this.values[0] = value;
             }
           }
         }
@@ -314,22 +309,21 @@ app.factory("Column", function() {
     }
 
     if (!set) {
-      this.values[0].timestamp = t;
-      this.values[0].value = value;
+      this.values[0] = value;
     }
   };
 
   Column.prototype.getValue = function(timestamp) {
     if (timestamp) {
       for (var i = 0; i < this.values.length; i++) {
-        if (this.values[i].timestamp === timestamp) {
-          return this.values[i].value;
+        if (this.values[i].getTimestamp() === timestamp) {
+          return this.values[i];
         }
       }
 
       return null;
     } else {
-      return this.values[0].value;
+      return this.values[0];
     }
   };
 
@@ -345,6 +339,14 @@ app.factory("Value", function() {
     this.value = value;
     this.timestamp = timestamp || Date.now();
   }
+
+  Value.prototype.getValue = function() {
+    return this.value;
+  };
+
+  Value.prototype.getTimestamp = function() {
+    return this.timestamp;
+  };
 
   return Value;
 });
