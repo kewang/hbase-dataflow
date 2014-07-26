@@ -201,11 +201,24 @@ app.factory("Row", function(Family, Column, Value) {
   };
 
   Row.prototype.findColumnByName = function(name) {
-    var columns = this.getColumns();
+    var families = this.getColumns();
+    var str = name.split(":");
+    var familyString = str[0];
+    var columnString = str[1];
 
-    for (var i = 0; i < columns.length; i++) {
-      if (columns[i].getName() === name) {
-        return columns[i];
+    for (var i = 0; i < families.length; i++) {
+      var family = families[i];
+
+      if (family.getName() === familyString) {
+        var columns = family.getColumns();
+
+        for (var j = 0; j < columns.length; j++) {
+          var column = columns[j];
+
+          if (column.getName() === columnString) {
+            return column;
+          }
+        }
       }
     }
 
