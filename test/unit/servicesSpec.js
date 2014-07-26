@@ -81,13 +81,13 @@ describe("Services", function() {
   it("should to instantiate Row", function() {
     var testRow = new Row("testRow");
 
-    testRow.addColumn("testFamily:testColumn", "hello");
-    testRow.addColumn("testFamily:testColumn", "world");
-    testRow.addColumn("testFamily2:testColumn3", "kewang");
-    testRow.addColumn("testFamily2:testColumn4", "hahaha", 50000);
-    testRow.addColumn("testFamily2:testColumn4", "xdxdxd", 40000);
-    testRow.addColumn("testFamily2:testColumn4", "asdfasfsafd", 99999);
-    testRow.addColumn("testFamily2:testColumn4", "mitake", 100000);
+    testRow.addColumn("testFamily:testColumn", "hello")
+      .addColumn("testFamily:testColumn", "world")
+      .addColumn("testFamily2:testColumn3", "kewang")
+      .addColumn("testFamily2:testColumn4", "hahaha", 50000)
+      .addColumn("testFamily2:testColumn4", "xdxdxd", 40000)
+      .addColumn("testFamily2:testColumn4", "asdfasfsafd", 99999)
+      .addColumn("testFamily2:testColumn4", "mitake", 100000);
 
     console.log(toJSON(testRow.getColumns()));
     console.log(toJSON(testRow.findColumnByName("testFamily:testColumn")));

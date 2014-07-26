@@ -192,6 +192,8 @@ app.factory("Row", function(Family, Column, Value) {
 
       this.families.push(family);
     }
+
+    return this;
   };
 
   Row.prototype.getColumns = function() {
