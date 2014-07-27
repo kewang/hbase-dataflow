@@ -89,7 +89,7 @@ describe("Services", function() {
       .addColumn("testFamily2:testColumn4", "asdfasfsafd", 99999)
       .addColumn("testFamily2:testColumn4", "mitake", 100000);
 
-    console.log(toJSON(testRow.getColumns()));
-    console.log(toJSON(testRow.findColumnByName("testFamily:testColumn")));
+    expect(testRow.findColumnByName("testFamily:testColumn")).not.toBe(null);
+    expect(testRow.findColumnByName("testFamily:testColumnNotFound")).toBe(null);
   });
 });
