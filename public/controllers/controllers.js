@@ -277,9 +277,9 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Op
   $scope.create = function() {
     // create row key and cq
     var row = $scope.table.createRow($scope.form.key);
-    var o = new Operation($scope.form.operationTitle, Operation.Type.CREATE);
+    var o = new Operation($scope.form.operation.title, Operation.Type.CREATE);
 
-    o.setSummary($scope.form.operationSummary);
+    o.setSummary($scope.form.operation.summary);
     o.setTable($scope.table.getName());
     o.setKey($scope.form.key);
 
