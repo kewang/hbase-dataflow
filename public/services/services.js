@@ -164,6 +164,7 @@ app.factory("Row", function(Family, Column, Value) {
     var found = false;
 
     for (var i = 0; i < this.families.length; i++) {
+      // append to exist family
       if (this.families[i].getName() === family.getName()) {
         var column = this.families[i].findColumnByName(str[1]);
         var value = new Value(value, timestamp);
@@ -182,6 +183,7 @@ app.factory("Row", function(Family, Column, Value) {
       }
     }
 
+    // add new family & column
     if (!found) {
       var column = new Column(str[1]);
       var value = new Value(value, timestamp);
