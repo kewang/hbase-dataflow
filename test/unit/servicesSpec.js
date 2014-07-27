@@ -1,6 +1,7 @@
 // refs. http://www.benlesh.com/2013/06/angular-js-unit-testing-services.html
 
 describe("Services", function() {
+  var Table;
   var Row;
   var Family;
   var Column;
@@ -9,7 +10,8 @@ describe("Services", function() {
   beforeEach(function() {
     module("hbase-dataflow-app.services");
 
-    inject(function(_Row_, _Family_, _Column_, _Value_) {
+    inject(function(_Table_, _Row_, _Family_, _Column_, _Value_) {
+      Table = _Table_;
       Row = _Row_;
       Family = _Family_;
       Column = _Column_;
@@ -79,9 +81,8 @@ describe("Services", function() {
   });
 
   it("should to instantiate Row", function() {
-    var testRow = new Row("testRow");
-
-    testRow.addColumn("testFamily:testColumn", "hello")
+    var testRow = new Row("testRow")
+      .addColumn("testFamily:testColumn", "hello")
       .addColumn("testFamily:testColumn", "world")
       .addColumn("testFamily2:testColumn3", "kewang")
       .addColumn("testFamily2:testColumn4", "hahaha", 50000)
@@ -97,5 +98,37 @@ describe("Services", function() {
     expect(testRow.findColumnValueByName("testFamily:testColumn").getValue()).toBe("world");
     expect(testRow.findColumnValueByName("testFamily2:testColumn4").getValue()).toBe("mitake");
     expect(testRow.findColumnValueByName("testFamily2:testColumn4", 50000).getValue()).toBe("hahaha");
+  });
+
+  it("should to instantiate Table", function() {
+    var testRow = new Row("testRow")
+      .addColumn("testFamily:testColumn", "hello")
+      .addColumn("testFamily:testColumn", "world")
+      .addColumn("testFamily2:testColumn3", "kewang")
+      .addColumn("testFamily2:testColumn4", "hahaha", 50000)
+      .addColumn("testFamily2:testColumn4", "xdxdxd", 40000)
+      .addColumn("testFamily2:testColumn4", "asdfasfsafd", 99999)
+      .addColumn("testFamily2:testColumn4", "mitake", 100000);
+
+    var testTable = new Table("testTable");
+
+    testTable.addRow(testRow);
+
+    expect(testTable.getName()).toBe("testTable");
+    expect(testTable.getRows()).not.toBe(null);
+    expect(testTable.findRowByKey("testRow")).toBe(testRow);
+
+    testRow = new Row("testRow2")
+      .addColumn("testFamily:testColumn", "hello")
+      .addColumn("testFamily:testColumn", "world")
+      .addColumn("testFamily2:testColumn3", "kewang")
+      .addColumn("testFamily2:testColumn4", "hahaha", 50000)
+      .addColumn("testFamily2:testColumn4", "xdxdxd", 40000)
+      .addColumn("testFamily2:testColumn4", "asdfasfsafd", 99999)
+      .addColumn("testFamily2:testColumn4", "mitake", 100000);
+
+    testTable.addRow(testRow);
+
+    expect(testTable.scanRowsByKey("testRow")).not.toBe(null);
   });
 });

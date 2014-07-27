@@ -11,6 +11,13 @@ app.factory("Table", function(Row) {
     this.rows = [];
   }
 
+  // FIXME: current not ordered
+  Table.prototype.addRow = function(row) {
+    this.rows.push(row);
+
+    return this;
+  };
+
   Table.prototype.getName = function() {
     return this.name;
   };
@@ -99,23 +106,25 @@ app.factory("Table", function(Row) {
 
   Table.prototype.findRowByKey = function(key) {
     for (var i = 0; i < this.rows.length; i++) {
-      if (this.rows[i].key === key) {
+      if (this.rows[i].getKey() === key) {
         return this.rows[i];
       }
     }
+
+    return null;
   };
 
   //from prefix
   Table.prototype.scanRowsByKey = function(key) {
-    var search = [];
+    var found = [];
 
     for (var i = 0; i < this.rows.length; i++) {
-      if (this.rows[i].key.indexOf(key) === 0) {
-        search.push(this.rows[i]);
+      if (this.rows[i].getKey().indexOf(key) === 0) {
+        found.push(this.rows[i]);
       }
     }
 
-    return search;
+    return found;
   };
 
   Table.prototype.isEmpty = function() {
@@ -156,6 +165,8 @@ app.factory("Row", function(Family, Column, Value) {
     this.key = key;
     this.cqs = [];
     this.families = [];
+
+    return this;
   }
 
   Row.prototype.addColumn = function(name, value, timestamp) {
