@@ -93,5 +93,9 @@ describe("Services", function() {
     expect(testRow.findColumnByName("testFamily:testColumn")).not.toBe(null);
     expect(testRow.findColumnByName("testFamily:testColumn").getValue().getValue()).toBe("world");
     expect(testRow.findColumnByName("testFamily:testColumnNotFound")).toBe(null);
+    expect(testRow.findColumnValueByName("testFamily:testColumnNotFound")).toBe(null);
+    expect(testRow.findColumnValueByName("testFamily:testColumn").getValue()).toBe("world");
+    expect(testRow.findColumnValueByName("testFamily2:testColumn4").getValue()).toBe("mitake");
+    expect(testRow.findColumnValueByName("testFamily2:testColumn4", 50000).getValue()).toBe("hahaha");
   });
 });

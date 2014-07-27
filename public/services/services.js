@@ -227,6 +227,12 @@ app.factory("Row", function(Family, Column, Value) {
     return null;
   };
 
+  Row.prototype.findColumnValueByName = function(name, timestamp) {
+    var column = this.findColumnByName(name);
+
+    return column && column.getValue(timestamp);
+  };
+
   Row.prototype.getKey = function() {
     return this.key;
   };
