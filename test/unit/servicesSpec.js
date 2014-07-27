@@ -89,6 +89,7 @@ describe("Services", function() {
       .addColumn("testFamily2:testColumn4", "asdfasfsafd", 99999)
       .addColumn("testFamily2:testColumn4", "mitake", 100000);
 
+    expect(testRow.getKey()).toBe("testRow");
     expect(testRow.findColumnByName("testFamily:testColumn")).not.toBe(null);
     expect(testRow.findColumnByName("testFamily:testColumn").getValue().getValue()).toBe("world");
     expect(testRow.findColumnByName("testFamily:testColumnNotFound")).toBe(null);
