@@ -221,6 +221,8 @@ app.factory("Row", function(Family, Column, Value) {
             return column;
           }
         }
+
+        return null;
       }
     }
 
