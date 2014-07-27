@@ -169,6 +169,12 @@ app.factory("Row", function(Family, Column, Value) {
     return this;
   }
 
+  Row.prototype.setKey = function(key) {
+    this.key = key;
+
+    return this;
+  };
+
   Row.prototype.addColumn = function(name, value, timestamp) {
     var str = name.split(":");
     var family = new Family(str[0]);
