@@ -271,24 +271,28 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Ro
   $scope.table = table;
   $scope.form = {};
   $scope.form.cqs = [];
-  $scope.row = new Row();
-
-  console.log($scope.row);
+  $scope.form.columns = [];
 
   $scope.addColumn = function() {
-
-  };
-
-  $scope.setKey = function(key) {
-    console.log($scope.row.getKey());
-
-    $scope.row.setKey(key);
-
-    console.log($scope.row.getKey());
+    $scope.form.columns.push({});
   };
 
   $scope.addCQ = function() {
     $scope.form.cqs.push({});
+  };
+
+  $scope.createnew = function() {
+    var row = new Row($scope.form.key);
+
+    for (var i = 0; i < $scope.form.columns.length; i++) {
+      var column = $scope.form.columns[i];
+
+      row.addColumn(column.name, column.value);
+    }
+
+    table.addRow(row);
+
+    //TODO: rest operation
   };
 
   $scope.create = function() {
