@@ -292,7 +292,17 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Ro
 
     table.addRow(row);
 
-    //TODO: rest operation
+    var operation = new Operation($scope.form.operation.title, Operation.Type.CREATE);
+
+    operation.setSummary($scope.form.operation.summary);
+    operation.setTable($scope.table.getName());
+    operation.setKey($scope.form.key);
+
+    Operation.create(operation);
+
+    delete $scope.form;
+
+    $modalInstance.close();
   };
 
   $scope.create = function() {
