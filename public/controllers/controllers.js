@@ -267,8 +267,7 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
   };
 });
 
-app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Row, Operation) {
-  $scope.table = table;
+app.controller("CreateRowDialogCtrl", function($rootScope, $scope, $modalInstance, table, Row, Operation) {
   $scope.form = {};
   $scope.form.cqs = [];
   $scope.form.columns = [];
@@ -295,12 +294,14 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Ro
     var operation = new Operation($scope.form.operation.title, Operation.Type.CREATE);
 
     operation.setSummary($scope.form.operation.summary);
-    operation.setTable($scope.table.getName());
+    operation.setTable(table.getName());
     operation.setKey($scope.form.key);
 
     Operation.create(operation);
 
     delete $scope.form;
+
+    $rootScope.$broadcast("changeTable", table);
 
     $modalInstance.close();
   };
