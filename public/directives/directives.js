@@ -10,7 +10,9 @@ app.directive('hbaseTable', function() {
       table: "="
     },
     link: function(scope, elem, attrs) {
-      console.log(scope.table);
+      scope.$watch(attrs.table, function(value) {
+        console.log(value);
+      }, true);
     }
   };
 });

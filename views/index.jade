@@ -11,6 +11,7 @@ block content
         h3(ng-hide="tables.length != 0") No table
         .list-group(ng-show="tables.length != 0")
           a.list-group-item(href="#", ng-repeat="t in tables", ng-click="changeTable(t)") {{ t.getName() }}
+
       #table-detail.col-md-7(ng-controller="TableDetailCtrl", ng-show="search === false")
         h2 {{ table.getName() }}
         form.form-inline(ng-show="table != null", role="form")
@@ -21,6 +22,7 @@ block content
         hr
         h3(ng-hide="(table != null) && !table.isEmpty()") No data
         hbase-table(ng-show="(table != null) && !table.isEmpty()", table="table")
+
       #table-search.col-md-7(ng-controller="TableSearchCtrl", ng-show="search === true")
         h2 {{ searchtable.getName() }}
         form.form-inline(ng-show="searchtable != null", role="form")
@@ -39,6 +41,7 @@ block content
           tr(ng-repeat="k in searchtable.getFullKeys()")
             th {{ k.key }}
             td(ng-repeat="v in k.cqs track by $index") {{ v }}
+
       #operations.col-md-3(ng-controller="OperationCtrl")
         h2 OPERATIONS
           button.btn.btn-default(type="button", ng-click="createOtherOperation()")
