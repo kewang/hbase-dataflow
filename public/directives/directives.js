@@ -12,7 +12,9 @@ app.directive('hbaseTable', function() {
     link: function(scope, elem, attrs) {
       // deep watch attrs.table
       scope.$watch(attrs.table, function(table) {
-        console.log(table);
+        var rows = table.getRows();
+
+        columns = rows[0].getColumns();
       }, true);
     }
   };
