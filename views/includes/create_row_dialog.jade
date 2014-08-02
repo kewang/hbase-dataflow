@@ -10,7 +10,7 @@
         textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operation.summary")
 
     fieldset
-      legend RowNew
+      legend Row
       .form-group.col-md-12
         input.form-control(type="text", placeholder="Please Input Key", ng-model="form.key", required)
       .form-group.col-md-12
@@ -26,23 +26,6 @@
             td
               input.form-control(type="text", ng-model="column.value", required)
 
-    fieldset
-      legend Row
-      .form-group.col-md-12
-        input.form-control(type="text", placeholder="Please Input Key", ng-model="form.key", required)
-      .form-group.col-md-12
-        button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
-      .col-md-12
-        table.table.table-bordered
-          tr
-            th CQ name
-            th Value
-          tr(ng-repeat="cq in form.cqs")
-            td
-              input.form-control(type="text", ng-model="cq.name", required)
-            td
-              input.form-control(type="text", ng-model="cq.value", required)
 .modal-footer
   button.btn.btn-default(type="button", ng-click="close()") Close
   button.btn.btn-primary(type="button", ng-click="create()", ng-disabled="!createRowDialogForm.$valid") Create
-  button.btn.btn-primary(type="button", ng-click="createnew()", ng-disabled="!createRowDialogForm.$valid") CreateNew

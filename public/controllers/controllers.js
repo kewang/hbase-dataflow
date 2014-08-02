@@ -269,18 +269,13 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
 
 app.controller("CreateRowDialogCtrl", function($rootScope, $scope, $modalInstance, table, Row, Operation) {
   $scope.form = {};
-  $scope.form.cqs = [];
   $scope.form.columns = [];
 
   $scope.addColumn = function() {
     $scope.form.columns.push({});
   };
 
-  $scope.addCQ = function() {
-    $scope.form.cqs.push({});
-  };
-
-  $scope.createnew = function() {
+  $scope.create = function() {
     var row = new Row($scope.form.key);
 
     for (var i = 0; i < $scope.form.columns.length; i++) {
@@ -302,34 +297,6 @@ app.controller("CreateRowDialogCtrl", function($rootScope, $scope, $modalInstanc
     delete $scope.form;
 
     $rootScope.$broadcast("changeTable", table);
-
-    $modalInstance.close();
-  };
-
-  $scope.create = function() {
-    // create row key and cq
-    var row = $scope.table.createRow($scope.form.key);
-    var o = new Operation($scope.form.operation.title, Operation.Type.CREATE);
-
-    o.setSummary($scope.form.operation.summary);
-    o.setTable($scope.table.getName());
-    o.setKey($scope.form.key);
-
-    for (var i = 0; i < $scope.form.cqs.length; i++) {
-      var name = $scope.form.cqs[i].name;
-      var value = $scope.form.cqs[i].value;
-
-      row.createCQ(name, value);
-
-      o.createCQ(name, value);
-    }
-
-    Operation.create(o);
-
-    // clear form field
-    delete $scope.form;
-
-    $scope.table.buildFullTable();
 
     $modalInstance.close();
   };
