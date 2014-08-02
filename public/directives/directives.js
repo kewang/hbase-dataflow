@@ -16,7 +16,25 @@ app.directive('hbaseTable', function() {
           var rows = table.getRows();
 
           if (rows.length) {
-            scope.columns = rows[0].getColumns();
+            scope.columns = [];
+
+            for (var i = 0; i < rows.length; i++) {
+              var families = rows[i].getColumns();
+
+              for (var j = 0; j < families.length; j++) {
+                var family = families[j];
+                var columns = family.getColumns();
+
+                for (var k = 0; k < columns.length; k++) {
+                  // copy a virtual variable
+                  var column = angular.copy(columns[k]);
+
+                  column.setName(family.getName() + ":" + column.getName());
+
+                  scope.columns.push(column);
+                }
+              }
+            }
           }
         }
       }, true);

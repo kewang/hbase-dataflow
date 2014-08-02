@@ -334,6 +334,10 @@ app.factory("Column", function(Value) {
     }
   }
 
+  Column.prototype.setName = function(name) {
+    this.name = name;
+  };
+
   Column.prototype.getName = function() {
     return this.name;
   };
