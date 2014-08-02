@@ -93,17 +93,15 @@ app.controller("TableSearchCtrl", function($rootScope, $scope, $modal) {
   });
 
   $scope.get = function(key) {
-    $scope.searchtable = angular.copy($scope.originaltable);
+    $scope.searchtable = $scope.originaltable;
 
-    var rows = $scope.searchtable.getRows();
+    // var rows = table.getRows();
 
-    for (var i = rows.length - 1; i >= 0; i--) {
-      if (rows[i].key !== key) {
-        rows.splice(i, 1);
-      }
-    }
-
-    $scope.searchtable.buildFullTable();
+    // for (var i = rows.length - 1; i >= 0; i--) {
+    //   if (rows[i].getKey() !== key) {
+    //     rows.splice(i, 1);
+    //   }
+    // }
   };
 
   $scope.scan = function(options) {

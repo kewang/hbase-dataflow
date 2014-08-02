@@ -24,7 +24,7 @@ block content
         hbase-table(ng-show="(table != null) && !table.isEmpty()", table="table")
 
       #table-search.col-md-7(ng-controller="TableSearchCtrl", ng-show="search === true")
-        h2 {{ searchtable.getName() }}
+        h2 Search {{ searchtable.getName() }}
         form.form-inline(ng-show="searchtable != null", role="form")
           input.form-control(type="text", ng-model="key", style="width: 40%")
           button.btn.btn-primary(type="button", ng-click="scan({'key': key})", ng-disabled="!key") Scan
@@ -34,7 +34,7 @@ block content
           button.btn.btn-primary(type="button", ng-click="addToOperation()") Add to Operation
         hr
         h3(ng-hide="(searchtable != null) && !searchtable.isEmpty()") No data
-        hbase-table(ng-show="(searchtable != null) && !searchtable.isEmpty()", table="table")
+        hbase-table(ng-show="(searchtable != null) && !searchtable.isEmpty()", table="searchtable")
 
       #operations.col-md-3(ng-controller="OperationCtrl")
         h2 OPERATIONS
