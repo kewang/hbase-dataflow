@@ -12,6 +12,20 @@ app.directive('hbaseTable', function() {
     link: function(scope, elem, attrs) {
       // deep watch attrs.table
       scope.$watch(attrs.table, function(table) {
+        function isTheSameColumn(columns, column) {
+          var found = false;
+
+          for (var i = 0; i < columns.length; i++) {
+            if (columns[i].getName() === column.getName()) {
+              found = true;
+
+              break;
+            }
+          }
+
+          return found;
+        }
+
         if (table) {
           var rows = table.getRows();
 
@@ -34,7 +48,11 @@ app.directive('hbaseTable', function() {
 
                   column.setName(family.getName() + ":" + column.getName());
 
-                  scope.columns.push(column);
+                  var theSameColumn = isTheSameColumn(scope.columns, column);
+
+                  if (!theSameColumn) {
+                    scope.columns.push(column);
+                  }
 
                   values.push(column.getValue());
                 }
