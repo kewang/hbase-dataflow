@@ -16,7 +16,7 @@ app.directive('hbaseTable', function() {
           var rows = table.getRows();
 
           if (rows.length) {
-
+            scope.columns = rows[0].getColumns();
           }
         }
       }, true);
