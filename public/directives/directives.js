@@ -17,9 +17,12 @@ app.directive('hbaseTable', function() {
 
           if (rows.length) {
             scope.columns = [];
+            scope.rows = [];
 
             for (var i = 0; i < rows.length; i++) {
-              var families = rows[i].getColumns();
+              var row = rows[i];
+              var families = row.getColumns();
+              var values = [];
 
               for (var j = 0; j < families.length; j++) {
                 var family = families[j];
@@ -32,8 +35,15 @@ app.directive('hbaseTable', function() {
                   column.setName(family.getName() + ":" + column.getName());
 
                   scope.columns.push(column);
+
+                  values.push(column.getValue());
                 }
               }
+
+              scope.rows.push({
+                key: row.getKey(),
+                values: values
+              });
             }
           }
         }

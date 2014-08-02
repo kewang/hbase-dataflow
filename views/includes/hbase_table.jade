@@ -2,6 +2,6 @@ table.table.table-bordered.table-condensed.table-hover
   tr
     th Row Key
     th(ng-repeat="column in columns") {{ column.getName() }}
-  //- tr(ng-repeat="row in table.rows")
-  //-   th {{ row.getKey() }}
-  //-   td(ng-repeat="v in k.cqs track by $index") {{ v }}
+  tr(ng-repeat="row in rows")
+    th {{ row.key }}
+    td(ng-repeat="value in row.values") {{ value.getValue() }}
