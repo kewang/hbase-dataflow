@@ -34,13 +34,7 @@ block content
           button.btn.btn-primary(type="button", ng-click="addToOperation()") Add to Operation
         hr
         h3(ng-hide="(searchtable != null) && !searchtable.isEmpty()") No data
-        table.table.table-bordered.table-condensed.table-hover(ng-show="(searchtable != null) && !searchtable.isEmpty()")
-          tr
-            th Row Key
-            th(ng-repeat="c in searchtable.getFullCQs()") {{ c }}
-          tr(ng-repeat="k in searchtable.getFullKeys()")
-            th {{ k.key }}
-            td(ng-repeat="v in k.cqs track by $index") {{ v }}
+        hbase-table(ng-show="(searchtable != null) && !searchtable.isEmpty()", table="table")
 
       #operations.col-md-3(ng-controller="OperationCtrl")
         h2 OPERATIONS
