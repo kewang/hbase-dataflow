@@ -27,12 +27,12 @@ app.directive('hbaseTable', function() {
         }
 
         function traversingFamily(families, inColumns, callback) {
-          for (var j = 0; j < families.length; j++) {
-            var family = families[j];
+          for (var i = 0; i < families.length; i++) {
+            var family = families[i];
             var columns = family.getColumns();
 
-            for (var k = 0; k < columns.length; k++) {
-              var column = angular.copy(columns[k]);
+            for (var j = 0; j < columns.length; j++) {
+              var column = angular.copy(columns[j]);
 
               column.setName(family.getName() + ":" + column.getName());
 
@@ -84,7 +84,7 @@ app.directive('hbaseTable', function() {
 
               traversingFamily(families, scope.columns, function(index, column) {
                 for (var j = 0; j < scope.columns.length; j++) {
-                  if (j === index) {
+                  if (index === j) {
                     values[j] = values[j] && column.getValue();
                   } else {
                     values[j] = values[j] || null;
