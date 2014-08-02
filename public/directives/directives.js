@@ -26,31 +26,35 @@ app.directive('hbaseTable', function() {
           return found;
         }
 
+        function traversingFamily(families, inColumns, callback) {
+          for (var j = 0; j < families.length; j++) {
+            var family = families[j];
+            var columns = family.getColumns();
+
+            for (var k = 0; k < columns.length; k++) {
+              var column = angular.copy(columns[k]);
+
+              column.setName(family.getName() + ":" + column.getName());
+
+              var index = findColumnIndex(inColumns, column);
+
+              callback(index, column);
+            }
+          }
+        }
+
         function buildColumns(rows) {
           var returnColumns = [];
 
           for (var i = 0; i < rows.length; i++) {
             var row = rows[i];
             var families = row.getColumns();
-            var values = [];
 
-            for (var j = 0; j < families.length; j++) {
-              var family = families[j];
-              var columns = family.getColumns();
-
-              for (var k = 0; k < columns.length; k++) {
-                // copy a virtual variable
-                var column = angular.copy(columns[k]);
-
-                column.setName(family.getName() + ":" + column.getName());
-
-                var columnIndex = findColumnIndex(returnColumns, column);
-
-                if (columnIndex === -1) {
-                  returnColumns.push(column);
-                }
+            traversingFamily(families, returnColumns, function(index, column) {
+              if (index === -1) {
+                returnColumns.push(column);
               }
-            }
+            });
           }
 
           return returnColumns;
@@ -70,9 +74,7 @@ app.directive('hbaseTable', function() {
           var rows = table.getRows();
 
           if (rows.length) {
-            scope.columns = [];
             scope.rows = [];
-
             scope.columns = buildColumns(rows);
 
             for (var i = 0; i < rows.length; i++) {
@@ -80,26 +82,15 @@ app.directive('hbaseTable', function() {
               var families = row.getColumns();
               var values = createFixedLengthArray(scope.columns.length);
 
-              for (var j = 0; j < families.length; j++) {
-                var family = families[j];
-                var columns = family.getColumns();
-
-                for (var k = 0; k < columns.length; k++) {
-                  var column = angular.copy(columns[k]);
-
-                  column.setName(family.getName() + ":" + column.getName());
-
-                  var columnIndex = findColumnIndex(scope.columns, column);
-
-                  for (var l = 0; l < scope.columns.length; l++) {
-                    if (l === columnIndex) {
-                      values[l] = values[l] && column.getValue();
-                    } else {
-                      values[l] = values[l] || null;
-                    }
+              traversingFamily(families, scope.columns, function(index, column) {
+                for (var j = 0; j < scope.columns.length; j++) {
+                  if (j === index) {
+                    values[j] = values[j] && column.getValue();
+                  } else {
+                    values[j] = values[j] || null;
                   }
                 }
-              }
+              });
 
               scope.rows.push({
                 key: row.getKey(),
