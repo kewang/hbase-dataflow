@@ -268,6 +268,7 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
 });
 
 app.controller("CreateRowDialogCtrl", function($rootScope, $scope, $modalInstance, table, Row, Operation) {
+  $scope.table = table;
   $scope.form = {};
   $scope.form.columns = [];
 
