@@ -2,43 +2,43 @@
 
 var app = angular.module("hbase-dataflow-app", ["hbase-dataflow-app.services", "ui.bootstrap"]);
 
-app.controller("TableCtrl", function($rootScope, $scope, Table){
+app.controller("TableCtrl", function($rootScope, $scope, Table) {
   $scope.tables = Table.findAll();
 
   $scope.createTable = function() {
     var name = prompt("Create a new table");
 
-    if(name){
+    if (name) {
       var t = new Table(name);
 
       Table.create(t);
-    }else{
+    } else {
       alert("Please input a table name");
     }
   };
 
-  $scope.changeTable = function(table){
+  $scope.changeTable = function(table) {
     $rootScope.$broadcast("stopSearchTable");
     $rootScope.$broadcast("changeTable", table);
   };
 
-  $scope.$on("clearAllData", function(event){
+  $scope.$on("clearAllData", function(event) {
     $scope.tables = Table.findAll();
   });
 });
 
-app.controller("TableDetailCtrl", function($rootScope, $scope){
+app.controller("TableDetailCtrl", function($rootScope, $scope) {
   $scope.search = false;
 
-  $scope.$on("changeTable", function(event, table){
+  $scope.$on("changeTable", function(event, table) {
     $scope.table = table;
   });
 
-  $scope.$on("stopSearchTable", function(event){
+  $scope.$on("stopSearchTable", function(event) {
     $scope.search = false;
   });
 
-  $scope.get = function(){
+  $scope.get = function() {
     $rootScope.$broadcast("startSearchTable", $scope.table, {
       "mode": "get",
       "key": $scope.key
@@ -49,7 +49,7 @@ app.controller("TableDetailCtrl", function($rootScope, $scope){
     $scope.search = true;
   };
 
-  $scope.scan = function(){
+  $scope.scan = function() {
     $rootScope.$broadcast("startSearchTable", $scope.table, {
       "mode": "scan",
       "key": $scope.key
@@ -60,67 +60,63 @@ app.controller("TableDetailCtrl", function($rootScope, $scope){
     $scope.search = true;
   };
 
-  $scope.$on("clearAllData", function(event){
+  $scope.$on("clearAllData", function(event) {
     $scope.table = null;
   });
 });
 
-app.controller("TableSearchCtrl", function($rootScope, $scope, $modal){
+app.controller("TableSearchCtrl", function($rootScope, $scope, $modal) {
   $scope.search = false;
 
-  $scope.$on("startSearchTable", function(event, table, options){
+  $scope.$on("startSearchTable", function(event, table, options) {
     $scope.originaltable = table;
 
     $scope.key = options.key;
 
-    if(options.mode === "get"){
+    if (options.mode === "get") {
       $scope.get(options.key);
-    }else if(options.mode === "scan"){
+    } else if (options.mode === "scan") {
       $scope.scan(options);
     }
 
     $scope.search = true;
   });
 
-  $scope.$on("clearAllData", function(event){
-    $scope.searchtable = null;
+  $scope.$on("clearAllData", function(event) {
+    $scope.table = null;
   });
 
-  $scope.$on("stopSearchTable", function(event){
+  $scope.$on("stopSearchTable", function(event) {
     $scope.key = null;
 
     $scope.search = false;
   });
 
-  $scope.get = function(key){
-    $scope.searchtable = angular.copy($scope.originaltable);
+  $scope.get = function(key) {
+    $scope.table = angular.copy($scope.originaltable);
 
-    var rows = $scope.searchtable.getRows();
+    var rows = $scope.table.getRows();
 
-    for(var i=rows.length-1;i>=0;i--){
-      if(rows[i].key !== key){
+    for (var i = rows.length - 1; i >= 0; i--) {
+      if (rows[i].getKey() !== key) {
         rows.splice(i, 1);
       }
     }
-
-    $scope.searchtable.buildFullTable();
   };
 
-  $scope.scan = function(options){
-    $scope.searchtable = angular.copy($scope.originaltable);
+  $scope.scan = function(options) {
+    $scope.table = angular.copy($scope.originaltable);
 
-    var rows = $scope.searchtable.getRows();
+    var rows = $scope.table.getRows();
 
-    for(var i=rows.length-1;i>=0;i--){
-      if(rows[i].key.indexOf(options.key) !== 0){
+    for (var i = rows.length - 1; i >= 0; i--) {
+      if (rows[i].key.indexOf(options.key) !== 0) {
         rows.splice(i, 1);
       }
     }
-
-    $scope.searchtable.buildFullTable();
   };
 
-  $scope.clear = function(){
+  $scope.clear = function() {
     $rootScope.$broadcast("stopSearchTable");
 
     $scope.key = null;
@@ -128,71 +124,71 @@ app.controller("TableSearchCtrl", function($rootScope, $scope, $modal){
     $scope.search = false;
   };
 
-  $scope.addToOperation = function(){
+  $scope.addToOperation = function() {
     $modal.open({
       templateUrl: "includes/get_row_dialog",
       controller: "GetRowDialogCtrl",
       size: "lg",
       windowClass: "dialog",
       resolve: {
-        table: function(){
-          return $scope.searchtable;
+        table: function() {
+          return $scope.table;
         }
       }
     });
   };
 });
 
-app.controller("RowCtrl", function($scope, $modal, Table){
+app.controller("RowCtrl", function($scope, $modal, Table) {
   $scope.tables = Table.findAll();
 
-  $scope.$on("changeTable", function(event, table){
+  $scope.$on("changeTable", function(event, table) {
     $scope.table = table;
   });
 
-  $scope.showRowCtrlDialog = function(){
-    switch($scope.rowCommand){
-    case "create":
-      $modal.open({
-        templateUrl: "includes/create_row_dialog",
-        controller: "CreateRowDialogCtrl",
-        size: "lg",
-        windowClass: "dialog",
-        resolve: {
-          table: function(){
-            return $scope.table;
+  $scope.showRowCtrlDialog = function() {
+    switch ($scope.rowCommand) {
+      case "create":
+        $modal.open({
+          templateUrl: "includes/create_row_dialog",
+          controller: "CreateRowDialogCtrl",
+          size: "lg",
+          windowClass: "dialog",
+          resolve: {
+            table: function() {
+              return $scope.table;
+            }
           }
-        }
-      });
+        });
 
-      break;
-    case "update":
-      $modal.open({
-        templateUrl: "includes/update_row_dialog",
-        controller: "UpdateRowDialogCtrl",
-        size: "lg",
-        windowClass: "dialog",
-        resolve: {
-          table: function(){
-            return $scope.table;
+        break;
+      case "update":
+        $modal.open({
+          templateUrl: "includes/update_row_dialog",
+          controller: "UpdateRowDialogCtrl",
+          size: "lg",
+          windowClass: "dialog",
+          resolve: {
+            table: function() {
+              return $scope.table;
+            }
           }
-        }
-      });
+        });
 
-      break;
+        break;
     }
   };
 
-  $scope.$on("clearAllData", function(event){
+  $scope.$on("clearAllData", function(event) {
     $scope.tables = Table.findAll();
   });
 });
 
-app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation, Sample, ImportService){
+app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation, Sample, ImportService) {
   $scope.tables = Table.findAll();
   $scope.operations = Operation.findAll();
 
-  $scope.clear = function(){
+  $scope.clear = function() {
     Table.clear();
     Operation.clear();
 
@@ -206,7 +202,7 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
     var MIMETYPE = "application/json";
     var tmpTables = angular.copy($scope.tables);
 
-    for(var i=0;i<tmpTables.length;i++){
+    for (var i = 0; i < tmpTables.length; i++) {
       var table = tmpTables[i];
 
       delete table.fullRowkeys;
@@ -218,7 +214,9 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
     root.tables = tmpTables;
     root.operations = angular.copy($scope.operations);
 
-    var blob = new Blob([JSON.stringify(root)], {type: MIMETYPE});
+    var blob = new Blob([JSON.stringify(root)], {
+      type: MIMETYPE
+    });
     var a = document.createElement("a");
 
     window.URL = window.webkitURL || window.URL;
@@ -230,7 +228,7 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
     a.click();
   };
 
-  $scope.showImportDataDialog = function(){
+  $scope.showImportDataDialog = function() {
     $modal.open({
       templateUrl: "includes/import_data_dialog",
       controller: "ImportDataDialogCtrl",
@@ -239,65 +237,63 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
     });
   };
 
-  $scope.importSample = function(index){
+  $scope.importSample = function(index) {
     var result;
 
-    switch(index){
-    case 1:
-      result = ImportService.import(Sample.SAMPLE1);
+    switch (index) {
+      case 1:
+        result = ImportService.import(Sample.SAMPLE1);
 
-      break;
-    case 2:
-      result = ImportService.import(Sample.SAMPLE2);
+        break;
+      case 2:
+        result = ImportService.import(Sample.SAMPLE2);
 
-      break;
+        break;
     }
 
     $scope.clear();
 
-    for(var i=0;i<result.tables.length;i++){
+    for (var i = 0; i < result.tables.length; i++) {
       $scope.tables.push(result.tables[i]);
     }
 
-    for(var i=0;i<result.operations.length;i++){
+    for (var i = 0; i < result.operations.length; i++) {
       $scope.operations.push(result.operations[i]);
     }
   };
 });
 
-app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Operation){
+app.controller("CreateRowDialogCtrl", function($rootScope, $scope, $modalInstance, table, Row, Operation) {
   $scope.table = table;
   $scope.form = {};
-  $scope.form.cqs = [];
+  $scope.form.columns = [];
 
-  $scope.addCQ = function(){
-    $scope.form.cqs.push({});
+  $scope.addColumn = function() {
+    $scope.form.columns.push({});
   };
 
   $scope.create = function() {
-    // create row key and cq
-    var row = $scope.table.createRow($scope.form.key);
-    var o = new Operation($scope.form.operationTitle, Operation.Type.CREATE);
+    var row = new Row($scope.form.key);
 
-    o.setSummary($scope.form.operationSummary);
-    o.setTable($scope.table.getName());
-    o.setKey($scope.form.key);
+    for (var i = 0; i < $scope.form.columns.length; i++) {
+      var column = $scope.form.columns[i];
 
-    for(var i=0;i<$scope.form.cqs.length;i++){
-      var name = $scope.form.cqs[i].name;
-      var value = $scope.form.cqs[i].value;
-
-      row.createCQ(name, value);
-
-      o.createCQ(name, value);
+      row.addColumn(column.name, column.value);
     }
 
-    Operation.create(o);
+    table.addRow(row);
 
-    // clear form field
+    var operation = new Operation($scope.form.operation.title, Operation.Type.CREATE);
+
+    operation.setSummary($scope.form.operation.summary);
+    operation.setTable(table.getName());
+    operation.setKey($scope.form.key);
+
+    Operation.create(operation);
+
     delete $scope.form;
 
-    $scope.table.buildFullTable();
+    $rootScope.$broadcast("changeTable", table);
 
     $modalInstance.close();
   };
@@ -307,15 +303,15 @@ app.controller("CreateRowDialogCtrl", function($scope, $modalInstance, table, Op
   };
 });
 
-app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Operation){
+app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Operation) {
   $scope.table = table;
   $scope.form = {};
 
-  $scope.changeRow = function(){
+  $scope.changeRow = function() {
     $scope.form.tmprow = angular.copy($scope.form.row);
   };
 
-  $scope.addCQ = function(){
+  $scope.addCQ = function() {
     $scope.form.tmprow.cqs.push({
       "add": true
     });
@@ -328,18 +324,18 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
     o.setTable($scope.table.getName());
     o.setKey($scope.form.tmprow.getKey());
 
-    for(var i=0;i<$scope.form.tmprow.cqs.length;i++){
+    for (var i = 0; i < $scope.form.tmprow.cqs.length; i++) {
       var newCQ = $scope.form.tmprow.cqs[i];
       var found = false;
 
-      for(var j=0;j<$scope.form.row.cqs.length;j++){
+      for (var j = 0; j < $scope.form.row.cqs.length; j++) {
         var oldCQ = $scope.form.row.cqs[j];
 
-        if(newCQ.name === oldCQ.name){
+        if (newCQ.name === oldCQ.name) {
           found = true;
 
           // update CQ
-          if(newCQ.value !== oldCQ.value){
+          if (newCQ.value !== oldCQ.value) {
             o.updateCQ(newCQ.name, oldCQ.value, newCQ.value);
 
             $scope.form.row.updateCQ(newCQ.name, newCQ.value);
@@ -350,7 +346,7 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
       }
 
       // create CQ
-      if(!found){
+      if (!found) {
         o.createCQ(newCQ.name, newCQ.value);
 
         $scope.form.row.createCQ(newCQ.name, newCQ.value);
@@ -372,7 +368,7 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
   };
 });
 
-app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Operation){
+app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Operation) {
   $scope.table = table;
   $scope.form = {};
 
@@ -385,7 +381,7 @@ app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Opera
     var fullKeys = angular.copy($scope.table.getFullKeys());
     var fullCQs = angular.copy($scope.table.getFullCQs());
 
-    for(var i=0;i<fullKeys.length;i++){
+    for (var i = 0; i < fullKeys.length; i++) {
       var fullKey = fullKeys[i];
 
       o.createRow(fullKey.key, fullCQs, fullKey.cqs);
@@ -404,7 +400,7 @@ app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Opera
   };
 });
 
-app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, Operation, ImportService){
+app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, Operation, ImportService) {
   $scope.tables = Table.findAll();
   $scope.operations = Operation.findAll();
 
@@ -416,11 +412,11 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
       var data = JSON.parse(e.target.result);
       var result = ImportService.import(data);
 
-      for(var i=0;i<result.tables.length;i++){
+      for (var i = 0; i < result.tables.length; i++) {
         $scope.tables.push(result.tables[i]);
       }
 
-      for(var i=0;i<result.operations.length;i++){
+      for (var i = 0; i < result.operations.length; i++) {
         $scope.operations.push(result.operations[i]);
       }
 
@@ -435,14 +431,14 @@ app.controller("ImportDataDialogCtrl", function($scope, $modalInstance, Table, O
   };
 });
 
-app.controller("OperationCtrl", function($scope, $modal, Operation){
+app.controller("OperationCtrl", function($scope, $modal, Operation) {
   $scope.operations = Operation.findAll();
 
-  $scope.$on("clearAllData", function(event){
+  $scope.$on("clearAllData", function(event) {
     $scope.operations = Operation.findAll();
   });
 
-  $scope.createOtherOperation = function(){
+  $scope.createOtherOperation = function() {
     $modal.open({
       templateUrl: "includes/other_dialog",
       controller: "OtherDialogCtrl",
@@ -451,14 +447,14 @@ app.controller("OperationCtrl", function($scope, $modal, Operation){
     });
   };
 
-  $scope.showOperationDialog = function(operation){
+  $scope.showOperationDialog = function(operation) {
     $modal.open({
       templateUrl: "includes/operation_dialog",
       controller: "OperationDialogCtrl",
       size: "lg",
       windowClass: "dialog",
       resolve: {
-        operation: function(){
+        operation: function() {
           return operation;
         }
       }
@@ -466,10 +462,10 @@ app.controller("OperationCtrl", function($scope, $modal, Operation){
   };
 });
 
-app.controller("OtherDialogCtrl", function($scope, $modalInstance, Operation){
+app.controller("OtherDialogCtrl", function($scope, $modalInstance, Operation) {
   $scope.form = {};
 
-  $scope.other = function(){
+  $scope.other = function() {
     var o = new Operation($scope.form.operationTitle, Operation.Type.OTHER);
 
     o.setSummary($scope.form.operationSummary);
@@ -484,10 +480,10 @@ app.controller("OtherDialogCtrl", function($scope, $modalInstance, Operation){
   };
 });
 
-app.controller("OperationDialogCtrl", function($scope, $modalInstance, operation){
+app.controller("OperationDialogCtrl", function($scope, $modalInstance, operation) {
   $scope.operation = operation;
 
-  $scope.close = function(){
+  $scope.close = function() {
     $modalInstance.dismiss();
   };
 });
