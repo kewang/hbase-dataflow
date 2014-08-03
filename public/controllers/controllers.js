@@ -83,7 +83,7 @@ app.controller("TableSearchCtrl", function($rootScope, $scope, $modal) {
   });
 
   $scope.$on("clearAllData", function(event) {
-    $scope.searchtable = null;
+    $scope.table = null;
   });
 
   $scope.$on("stopSearchTable", function(event) {
@@ -93,29 +93,27 @@ app.controller("TableSearchCtrl", function($rootScope, $scope, $modal) {
   });
 
   $scope.get = function(key) {
-    $scope.searchtable = $scope.originaltable;
+    $scope.table = angular.copy($scope.originaltable);
 
-    // var rows = table.getRows();
+    var rows = $scope.table.getRows();
 
-    // for (var i = rows.length - 1; i >= 0; i--) {
-    //   if (rows[i].getKey() !== key) {
-    //     rows.splice(i, 1);
-    //   }
-    // }
+    for (var i = rows.length - 1; i >= 0; i--) {
+      if (rows[i].getKey() !== key) {
+        rows.splice(i, 1);
+      }
+    }
   };
 
   $scope.scan = function(options) {
-    $scope.searchtable = angular.copy($scope.originaltable);
+    $scope.table = angular.copy($scope.originaltable);
 
-    var rows = $scope.searchtable.getRows();
+    var rows = $scope.table.getRows();
 
     for (var i = rows.length - 1; i >= 0; i--) {
       if (rows[i].key.indexOf(options.key) !== 0) {
         rows.splice(i, 1);
       }
     }
-
-    $scope.searchtable.buildFullTable();
   };
 
   $scope.clear = function() {
@@ -134,7 +132,7 @@ app.controller("TableSearchCtrl", function($rootScope, $scope, $modal) {
       windowClass: "dialog",
       resolve: {
         table: function() {
-          return $scope.searchtable;
+          return $scope.table;
         }
       }
     });
