@@ -4,40 +4,27 @@
 </div>
 <div class="modal-body">
   <form name="createRowDialogForm" role="form">
-    <fieldset>
-      <legend>Operation</legend>
-      <div class="form-group col-md-12">
-        <input type="text" placeholder="Please Input Operation title" ng-model="form.operation.title" required="required" class="form-control"/>
-      </div>
-      <div class="form-group col-md-12">
-        <textarea rows="5" placeholder="Please Input Operation summary" ng-model="form.operation.summary" class="form-control"></textarea>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>Row</legend>
-      <div class="form-group col-md-12">
-        <input type="text" placeholder="Please Input Key" ng-model="form.key" required="required" class="form-control"/>
-      </div>
-      <div class="form-group col-md-12">
-        <button type="button" ng-click="addColumn()" class="btn btn-default">Add Column</button>
-      </div>
-      <div class="col-md-12">
-        <table class="table table-bordered">
-          <tr>
-            <th>Column Name</th>
-            <th>Column Value</th>
-          </tr>
-          <tr ng-repeat="column in form.columns">
-            <td>
-              <input type="text" ng-model="column.name" required="required" class="form-control"/>
-            </td>
-            <td>
-              <input type="text" ng-model="column.value" required="required" class="form-control"/>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </fieldset>
+    <input type="text" placeholder="Please Input Operation title" ng-model="form.operationTitle" required="required" class="form-control"/>
+    <hr/>
+    <textarea rows="5" placeholder="Please Input Operation summary" ng-model="form.operationSummary" class="form-control"></textarea>
+    <hr/>
+    <input type="text" placeholder="Please Input Key" ng-model="form.key" required="required" class="form-control"/>
+    <hr/>
+    <button type="button" ng-click="addCQ()" class="btn btn-default">Add CQ</button>
+    <table class="table table-bordered">
+      <tr>
+        <th>CQ name</th>
+        <th>Value</th>
+      </tr>
+      <tr ng-repeat="cq in form.cqs">
+        <td>
+          <input type="text" ng-model="cq.name" required="required" class="form-control"/>
+        </td>
+        <td>
+          <input type="text" ng-model="cq.value" required="required" class="form-control"/>
+        </td>
+      </tr>
+    </table>
   </form>
 </div>
 <div class="modal-footer">

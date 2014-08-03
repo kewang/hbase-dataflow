@@ -2,10 +2,10 @@
 <table class="table table-bordered table-condensed table-hover">
   <tr>
     <th>Row Key</th>
-    <th ng-repeat="column in columns">{{ column.getName() }}</th>
+    <th ng-repeat="c in table.getFullCQs()">{{ c }}</th>
   </tr>
-  <tr ng-repeat="row in rows">
-    <th>{{ row.key }}</th>
-    <td ng-repeat="value in row.values track by $index">{{ value.getValue() }}</td>
+  <tr ng-repeat="k in table.getFullKeys()">
+    <th>{{ k.key }}</th>
+    <td ng-repeat="v in k.cqs track by $index">{{ v }}</td>
   </tr>
 </table>
