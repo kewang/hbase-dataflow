@@ -2,24 +2,32 @@
   h4.modal-title Update {{ table.getName() }}
 .modal-body
   form(name="updateRowDialogForm", role="form")
-    input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operationTitle", required)
-    hr
-    textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operationSummary")
-    hr
-    select.form-control(ng-model="form.row", ng-options="row.getKey() for row in table.getRows()", ng-change="changeRow()")
-      option(value="") Please select a row
-    hr
-    button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
-    table.table.table-bordered
-      tr
-        th CQ name
-        th Value
-      tr(ng-repeat="cq in form.tmprow.getCQs()")
-        td
-          p.form-control-static(ng-show="!cq.add") {{ cq.name }}
-          input.form-control(ng-show="cq.add", type="text", ng-model="cq.name", required)
-        td
-          input.form-control(type="text", ng-model="cq.value", required)
+    fieldset
+      legend Operation
+      .form-group.col-md-12
+        input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operation.title", required)
+      .form-group.col-md-12
+        textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operation.summary")
+
+    fieldset
+      legend Row
+      .form-group.col-md-12
+        select.form-control(ng-model="form.row", ng-options="row.getKey() for row in table.getRows()", ng-change="changeRow()")
+          option(value="") Please select a row
+      .form-group.col-md-12
+        button.btn.btn-default(type="button", ng-click="addColumn()") Add Column
+      .col-md-12
+        table.table.table-bordered
+          tr
+            th Column Name
+            th Column Value
+          tr(ng-repeat="column in form.columns")
+            td
+              p.form-control-static(ng-show="!column.new") {{ column.name }}
+              input.form-control(ng-show="column.new", type="text", ng-model="column.name", required)
+            td
+              input.form-control(type="text", ng-model="column.value", required)
+
 .modal-footer
   button.btn.btn-default(type="button", ng-click="close()") Close
   button.btn.btn-primary(type="button", ng-click="update()", ng-disabled="!updateRowDialogForm.$valid") Update

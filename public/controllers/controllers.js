@@ -308,12 +308,28 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
   $scope.form = {};
 
   $scope.changeRow = function() {
-    $scope.form.tmprow = angular.copy($scope.form.row);
+    $scope.form.columns = [];
+
+    var families = $scope.form.row.getColumns();
+
+    for (var i = 0; i < families.length; i++) {
+      var family = families[i];
+      var columns = family.getColumns();
+
+      for (var j = 0; j < columns.length; j++) {
+        var column = columns[j];
+
+        $scope.form.columns.push({
+          name: family.getName() + ":" + column.getName(),
+          value: column.getValue().getValue()
+        });
+      }
+    }
   };
 
-  $scope.addCQ = function() {
-    $scope.form.tmprow.cqs.push({
-      "add": true
+  $scope.addColumn = function() {
+    $scope.form.columns.push({
+      "new": true
     });
   };
 
