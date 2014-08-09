@@ -34,66 +34,6 @@ app.factory("Table", function(Row) {
     return this.rows;
   };
 
-  Table.prototype.buildFullTable = function() {
-    var all_cqs = [];
-    var all_rows = [];
-
-    for (var i = 0; i < this.rows.length; i++) {
-      var cqs = this.rows[i].cqs;
-
-      for (var j = 0; j < cqs.length; j++) {
-        var cq = cqs[j];
-
-        // not found the same CQ
-        if (all_cqs.indexOf(cq.name) === -1) {
-          all_cqs.push(cq.name);
-        }
-      }
-    }
-
-    for (var i = 0; i < this.rows.length; i++) {
-      var tmp_cqs = [];
-      var row = this.rows[i];
-
-      for (var j = 0; j < all_cqs.length; j++) {
-        var found = false;
-        var cqs = row.cqs;
-
-        for (var k = 0; k < cqs.length; k++) {
-          var cq = cqs[k];
-
-          if (all_cqs[j] === cq.name) {
-            tmp_cqs.push(cq.value);
-
-            found = true;
-
-            break;
-          }
-        }
-
-        if (!found) {
-          tmp_cqs.push(null);
-        }
-      }
-
-      all_rows.push({
-        "key": row.key,
-        "cqs": tmp_cqs
-      });
-    }
-
-    this.fullRowkeys = all_rows;
-    this.fullCQs = all_cqs;
-  };
-
-  Table.prototype.getFullKeys = function() {
-    return this.fullRowkeys;
-  };
-
-  Table.prototype.getFullCQs = function() {
-    return this.fullCQs;
-  };
-
   Table.prototype.removeRow = function(row) {
     for (var i = 0; i < this.rows.length; i++) {
       if (this.rows[i] === row) {
@@ -163,7 +103,6 @@ app.factory("Table", function(Row) {
 app.factory("Row", function(Family, Column, Value) {
   function Row(key) {
     this.key = key;
-    this.cqs = [];
     this.families = [];
 
     return this;
@@ -254,37 +193,6 @@ app.factory("Row", function(Family, Column, Value) {
 
   Row.prototype.getKey = function() {
     return this.key;
-  };
-
-  Row.prototype.getCQs = function() {
-    return this.cqs;
-  };
-
-  Row.prototype.createCQ = function(name, value) {
-    this.cqs.push({
-      "name": name,
-      "value": value
-    });
-  };
-
-  Row.prototype.updateCQ = function(name, value) {
-    for (var i = 0; i < this.cqs.length; i++) {
-      if (this.cqs[i].name === name) {
-        this.cqs[i].value = value;
-
-        break;
-      }
-    }
-  };
-
-  Row.prototype.removeCQ = function(name) {
-    for (var i = 0; i < this.cqs.length; i++) {
-      if (this.cqs[i].name === name) {
-        this.cqs.splice(i, 1);
-
-        break;
-      }
-    }
   };
 
   return Row;
