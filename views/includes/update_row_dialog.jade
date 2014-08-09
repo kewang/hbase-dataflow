@@ -23,8 +23,8 @@
             th Column Value
           tr(ng-repeat="column in form.columns")
             td
-              p.form-control-static(ng-show="!column.new") {{ column.name }}
-              input.form-control(ng-show="column.new", type="text", ng-model="column.name", required)
+              p.form-control-static(ng-show="!column.add") {{ column.name }}
+              input.form-control(ng-show="column.add", type="text", ng-model="column.name", required)
             td
               input.form-control(type="text", ng-model="column.value", required)
 

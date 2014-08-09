@@ -285,9 +285,9 @@ app.controller("CreateRowDialogCtrl", function($rootScope, $scope, $modalInstanc
 
     var operation = new Operation($scope.form.operation.title, Operation.Type.CREATE);
 
-    operation.setSummary($scope.form.operation.summary);
-    operation.setTableName(table.getName());
-    operation.addRow(angular.copy(row));
+    operation.setSummary($scope.form.operation.summary)
+      .setTableName(table.getName())
+      .addRow(angular.copy(row));
 
     Operation.create(operation);
 
@@ -303,7 +303,7 @@ app.controller("CreateRowDialogCtrl", function($rootScope, $scope, $modalInstanc
   };
 });
 
-app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Operation) {
+app.controller("UpdateRowDialogCtrl", function($rootScope, $scope, $modalInstance, table, Operation) {
   $scope.table = table;
   $scope.form = {};
 
@@ -329,52 +329,30 @@ app.controller("UpdateRowDialogCtrl", function($scope, $modalInstance, table, Op
 
   $scope.addColumn = function() {
     $scope.form.columns.push({
-      "new": true
+      "add": true
     });
   };
 
   $scope.update = function() {
-    var o = new Operation($scope.form.operationTitle, Operation.Type.UPDATE);
+    var columns = $scope.form.columns;
 
-    o.setSummary($scope.form.operationSummary);
-    o.setTable($scope.table.getName());
-    o.setKey($scope.form.tmprow.getKey());
+    for (var i = 0; i < columns.length; i++) {
+      var column = columns[i];
 
-    for (var i = 0; i < $scope.form.tmprow.cqs.length; i++) {
-      var newCQ = $scope.form.tmprow.cqs[i];
-      var found = false;
-
-      for (var j = 0; j < $scope.form.row.cqs.length; j++) {
-        var oldCQ = $scope.form.row.cqs[j];
-
-        if (newCQ.name === oldCQ.name) {
-          found = true;
-
-          // update CQ
-          if (newCQ.value !== oldCQ.value) {
-            o.updateCQ(newCQ.name, oldCQ.value, newCQ.value);
-
-            $scope.form.row.updateCQ(newCQ.name, newCQ.value);
-          }
-
-          break;
-        }
-      }
-
-      // create CQ
-      if (!found) {
-        o.createCQ(newCQ.name, newCQ.value);
-
-        $scope.form.row.createCQ(newCQ.name, newCQ.value);
-      }
+      $scope.form.row.addColumn(column.name, column.value);
     }
 
-    // clear form field
+    var operation = new Operation($scope.form.operation.title, Operation.Type.UPDATE);
+
+    operation.setSummary($scope.form.operation.summary)
+      .setTableName($scope.table.getName())
+      .addRow(angular.copy($scope.form.row));
+
+    Operation.create(operation);
+
     delete $scope.form;
 
-    Operation.create(o);
-
-    $scope.table.buildFullTable();
+    $rootScope.$broadcast("changeTable", $scope.table);
 
     $modalInstance.close();
   };

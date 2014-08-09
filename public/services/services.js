@@ -353,6 +353,8 @@ app.factory("Operation", function() {
     this.rows = this.rows || [];
 
     this.rows.push(row);
+
+    return this;
   };
 
   Operation.prototype.getRows = function() {
@@ -361,10 +363,14 @@ app.factory("Operation", function() {
 
   Operation.prototype.setSummary = function(summary) {
     this.summary = summary;
+
+    return this;
   };
 
   Operation.prototype.setTableName = function(name) {
     this.tableName = name;
+
+    return this;
   };
 
   Operation.create = function(operation) {
