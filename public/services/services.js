@@ -437,12 +437,8 @@ app.factory("Operation", function() {
     return this.summary;
   };
 
-  Operation.prototype.getTable = function() {
-    return this.table;
-  };
-
-  Operation.prototype.getKey = function() {
-    return this.key;
+  Operation.prototype.getTableName = function() {
+    return this.tableName;
   };
 
   Operation.prototype.addRow = function(row) {
@@ -459,12 +455,8 @@ app.factory("Operation", function() {
     this.summary = summary;
   };
 
-  Operation.prototype.setTable = function(table) {
-    this.table = table;
-  };
-
-  Operation.prototype.setKey = function(key) {
-    this.key = key;
+  Operation.prototype.setTableName = function(name) {
+    this.tableName = name;
   };
 
   Operation.create = function(operation) {
@@ -927,4 +919,23 @@ app.factory("ImportService", function(Table, Operation) {
   };
 
   return ImportService;
+});
+
+app.factory("Utils", function(Row) {
+  function Utils() {}
+
+  Utils.generateId = function(length) {
+    var id = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    length = length || 6;
+
+    for (var i = 0; i < length; i++) {
+      id += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return id;
+  };
+
+  return Utils;
 });

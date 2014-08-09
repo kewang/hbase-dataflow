@@ -1,5 +1,6 @@
 .modal-header
   h4.modal-title {{ operation.getTitle() }}
+
 .modal-body
   form.form-horizontal(role="form")
     fieldset
@@ -18,18 +19,8 @@
       .form-group
         label.col-md-2.control-label Table
         .col-md-10
-          p.form-control-static {{ operation.getTable() }}
-      .form-group
-        label.col-md-2.control-label Key
-        .col-md-10
-          p.form-control-static {{ operation.getKey() }}
+          p.form-control-static {{ operation.getTableName() }}
+      hbase-table(ng-show="(table != null) && !table.isEmpty()", table="table")
 
-    h5(ng-show="operation.getCreateCQs().length > 0") Create CQ
-    table.table.table-bordered.table-condensed(ng-show="operation.getCreateCQs().length > 0")
-      tr
-        th(ng-repeat="cq in operation.getCreateCQs()") {{ cq.name }}
-      tr
-        td(ng-repeat="cq in operation.getCreateCQs()")
-          .bg-success {{ cq.value }}
 .modal-footer
   button.btn.btn-default(type="button", ng-click="close()") Close

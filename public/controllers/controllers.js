@@ -286,8 +286,7 @@ app.controller("CreateRowDialogCtrl", function($rootScope, $scope, $modalInstanc
     var operation = new Operation($scope.form.operation.title, Operation.Type.CREATE);
 
     operation.setSummary($scope.form.operation.summary);
-    operation.setTable(table.getName());
-    operation.setKey($scope.form.key);
+    operation.setTableName(table.getName());
     operation.addRow(angular.copy(row));
 
     Operation.create(operation);
@@ -502,8 +501,15 @@ app.controller("OtherDialogCtrl", function($scope, $modalInstance, Operation) {
   };
 });
 
-app.controller("OperationDialogCtrl", function($scope, $modalInstance, operation) {
+app.controller("OperationDialogCtrl", function($scope, $modalInstance, Table, operation) {
   $scope.operation = operation;
+  $scope.table = new Table($scope.operation.getTableName());
+
+  var rows = $scope.operation.getRows();
+
+  for (var i = 0; i < rows.length; i++) {
+    $scope.table.addRow(rows[i]);
+  }
 
   $scope.close = function() {
     $modalInstance.dismiss();
