@@ -423,7 +423,6 @@ app.factory("Operation", function() {
   function Operation(title, type) {
     this.title = title;
     this.type = type;
-    this.cqs = {};
   }
 
   Operation.prototype.getTitle = function() {
@@ -446,20 +445,14 @@ app.factory("Operation", function() {
     return this.key;
   };
 
-  Operation.prototype.getCreateCQs = function() {
-    return this.cqs.create;
-  };
+  Operation.prototype.addRow = function(row) {
+    this.rows = this.rows || [];
 
-  Operation.prototype.getUpdateCQs = function() {
-    return this.cqs.update;
+    this.rows.push(row);
   };
 
   Operation.prototype.getRows = function() {
     return this.rows;
-  };
-
-  Operation.prototype.getCQs = function() {
-    return this.cqs;
   };
 
   Operation.prototype.setSummary = function(summary) {
@@ -472,36 +465,6 @@ app.factory("Operation", function() {
 
   Operation.prototype.setKey = function(key) {
     this.key = key;
-  };
-
-  Operation.prototype.createCQ = function(name, value) {
-    this.cqs.create = this.cqs.create || [];
-
-    this.cqs.create.push({
-      "name": name,
-      "value": value
-    });
-  };
-
-  Operation.prototype.updateCQ = function(name, oldvalue, newvalue) {
-    this.cqs.update = this.cqs.update || [];
-
-    this.cqs.update.push({
-      "name": name,
-      "oldvalue": oldvalue,
-      "newvalue": newvalue
-    });
-  };
-
-  Operation.prototype.createRow = function(key, cqs, values) {
-    this.rows = this.rows || [];
-
-    this.cqs = cqs;
-
-    this.rows.push({
-      "key": key,
-      "values": values
-    });
   };
 
   Operation.create = function(operation) {

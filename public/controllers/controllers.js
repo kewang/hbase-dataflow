@@ -288,6 +288,7 @@ app.controller("CreateRowDialogCtrl", function($rootScope, $scope, $modalInstanc
     operation.setSummary($scope.form.operation.summary);
     operation.setTable(table.getName());
     operation.setKey($scope.form.key);
+    operation.addRow(angular.copy(row));
 
     Operation.create(operation);
 
