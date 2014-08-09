@@ -7,7 +7,8 @@ app.directive('hbaseTable', function() {
     restrict: 'E',
     templateUrl: 'includes/hbase_table',
     scope: {
-      table: "="
+      table: "=",
+      type: "@"
     },
     link: function(scope, elem, attrs) {
       // deep watch attrs.table
@@ -71,6 +72,8 @@ app.directive('hbaseTable', function() {
         }
 
         if (table) {
+          console.log("type: " + attrs.type);
+
           var rows = table.getRows();
 
           if (rows.length) {
