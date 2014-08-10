@@ -394,16 +394,71 @@ app.factory("Sample", function() {
   return Sample;
 });
 
-app.factory("ImportService", function(Table, Row, Family, Column, Operation) {
+app.factory("ImportService", function(Table, Row, Operation) {
   function ImportService() {}
 
   ImportService.import = function(data) {
     var tables = [];
     var operations = [];
 
-    if (data.tables) {}
+    function buildDataToRow(rows, callback) {
+      for (var j = 0; j < rows.length; j++) {
+        var row = new Row(rows[j].key);
+        var families = rows[j].families;
 
-    if (data.operations) {}
+        for (var k = 0; k < families.length; k++) {
+          var columns = families[k].columns;
+
+          for (var l = 0; l < columns.length; l++) {
+            var values = columns[l].values;
+
+            for (var m = values.length - 1; m >= 0; m--) {
+              if (values[m] && values[m].value) {
+                row.addColumn(families[k].name + ":" + columns[l].name, values[m].value, values[m].timestamp);
+              }
+            }
+          }
+        }
+
+        callback(row);
+      }
+    }
+
+    if (data.tables) {
+      for (var i = 0; i < data.tables.length; i++) {
+        var table = new Table(data.tables[i].name);
+        var rows = data.tables[i].rows;
+
+        for (var j = 0; j < rows.length; j++) {
+          var row = new Row(rows[j].key);
+          var families = rows[j].families;
+
+          for (var k = 0; k < families.length; k++) {
+            var columns = families[k].columns;
+
+            for (var l = 0; l < columns.length; l++) {
+              var values = columns[l].values;
+
+              for (var m = values.length - 1; m >= 0; m--) {
+                if (values[m] && values[m].value) {
+                  row.addColumn(families[k].name + ":" + columns[l].name, values[m].value, values[m].timestamp);
+                }
+              }
+            }
+          }
+
+          table.addRow(row);
+        }
+
+        tables.push(table);
+      }
+    }
+
+    if (data.operations) {
+      for (var i = 0; i < data.operations.length; i++) {
+
+      }
+    }
 
     return {
       "tables": tables,
