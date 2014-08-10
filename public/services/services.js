@@ -429,26 +429,9 @@ app.factory("ImportService", function(Table, Row, Operation) {
         var table = new Table(data.tables[i].name);
         var rows = data.tables[i].rows;
 
-        for (var j = 0; j < rows.length; j++) {
-          var row = new Row(rows[j].key);
-          var families = rows[j].families;
-
-          for (var k = 0; k < families.length; k++) {
-            var columns = families[k].columns;
-
-            for (var l = 0; l < columns.length; l++) {
-              var values = columns[l].values;
-
-              for (var m = values.length - 1; m >= 0; m--) {
-                if (values[m] && values[m].value) {
-                  row.addColumn(families[k].name + ":" + columns[l].name, values[m].value, values[m].timestamp);
-                }
-              }
-            }
-          }
-
+        buildDataToRow(rows, function(row) {
           table.addRow(row);
-        }
+        });
 
         tables.push(table);
       }
@@ -456,7 +439,19 @@ app.factory("ImportService", function(Table, Row, Operation) {
 
     if (data.operations) {
       for (var i = 0; i < data.operations.length; i++) {
+        var operation = new Operation(data.operations[i].title, data.operations[i].type);
 
+        operation.setSummary(data.operations[i].summary);
+
+        if (operation.getType() !== Operation.Type.OTHER) {
+          operation.setTableName(data.operations[i].tableName);
+
+          buildDataToRow(data.operations[i].rows, function(row) {
+            operation.addRow(row);
+          });
+        }
+
+        operations.push(operation);
       }
     }
 
