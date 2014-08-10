@@ -10,8 +10,8 @@ app.directive('hbaseTable', function() {
       table: "="
     },
     link: function(scope, elem, attrs) {
-      scope.showValues = function(value) {
-        alert(JSON.stringify(value, null, 2));
+      scope.showValues = function(column) {
+        alert(JSON.stringify(column, null, 2));
       };
 
       // deep watch attrs.table
@@ -84,21 +84,22 @@ app.directive('hbaseTable', function() {
             for (var i = 0; i < rows.length; i++) {
               var row = rows[i];
               var families = row.getColumns();
-              var values = createFixedLengthArray(scope.columns.length);
+              var columns = createFixedLengthArray(scope.columns.length);
 
               traversingFamily(families, scope.columns, function(index, column) {
                 for (var j = 0; j < scope.columns.length; j++) {
+                  // get all columns
                   if (index === j) {
-                    values[j] = values[j] && column.getValue();
+                    columns[j] = columns[j] && column;
                   } else {
-                    values[j] = values[j] || null;
+                    columns[j] = columns[j] || null;
                   }
                 }
               });
 
               scope.rows.push({
                 key: row.getKey(),
-                values: values
+                columns: columns
               });
             }
           }
