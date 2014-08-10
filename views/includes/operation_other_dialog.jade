@@ -1,42 +1,18 @@
 .modal-header
   h4.modal-title {{ operation.getTitle() }}
+
 .modal-body
   form.form-horizontal(role="form")
-    .form-group(ng-show="operation.getSummary() != null")
-      label.col-md-2.control-label Summary
-      .col-md-10
-        p.form-control-static {{ operation.getSummary() }}
-    hr(ng-show="operation.getSummary() != null")
-    .form-group(ng-show="operation.getType() !== 3")
-      label.col-md-2.control-label Table
-      .col-md-10
-        p.form-control-static {{ operation.getTable() }}
-    .form-group(ng-show="operation.getType() === 0 || operation.getType() === 1")
-      label.col-md-2.control-label Key
-      .col-md-10
-        p.form-control-static {{ operation.getKey() }}
-    h5(ng-show="operation.getCreateCQs().length > 0") Create CQ
-    table.table.table-bordered.table-condensed(ng-show="operation.getCreateCQs().length > 0")
-      tr
-        th(ng-repeat="cq in operation.getCreateCQs()") {{ cq.name }}
-      tr
-        td(ng-repeat="cq in operation.getCreateCQs()")
-          .bg-success {{ cq.value }}
-    h5(ng-show="operation.getUpdateCQs().length > 0") Update CQ
-    table.table.table-bordered.table-condensed(ng-show="operation.getUpdateCQs().length > 0")
-      tr
-        th(ng-repeat="cq in operation.getUpdateCQs()") {{ cq.name }}
-      tr
-        td(ng-repeat="cq in operation.getUpdateCQs()")
-          .bg-danger {{ cq.oldvalue }}
-          .bg-success {{ cq.newvalue }}
-    h5(ng-show="operation.getRows().length > 0") Get Rows
-    table.table.table-bordered.table-condensed(ng-show="operation.getRows().length > 0")
-      tr
-        th Row Key
-        th(ng-repeat="cq in operation.getCQs()") {{ cq }}
-      tr(ng-repeat="row in operation.getRows()")
-        th {{ row.key }}
-        td(ng-repeat="value in row.values track by $index") {{ value }}
+    fieldset
+      legend Operation
+      .form-group
+        label.col-md-2.control-label Title
+        .col-md-10
+          p.form-control-static {{ operation.getTitle() }}
+      .form-group(ng-show="operation.getSummary() != null")
+        label.col-md-2.control-label Summary
+        .col-md-10
+          p.form-control-static {{ operation.getSummary() }}
+
 .modal-footer
   button.btn.btn-default(type="button", ng-click="close()") Close

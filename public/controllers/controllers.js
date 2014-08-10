@@ -479,11 +479,14 @@ app.controller("OtherDialogCtrl", function($scope, $modalInstance, Operation) {
   $scope.form = {};
 
   $scope.other = function() {
-    var o = new Operation($scope.form.operationTitle, Operation.Type.OTHER);
+    var operation = new Operation($scope.form.operation.title, Operation.Type.OTHER);
 
-    o.setSummary($scope.form.operationSummary);
+    operation.setSummary($scope.form.operation.summary);
 
-    Operation.create(o);
+    Operation.create(operation);
+
+    // clear form field
+    delete $scope.form;
 
     $modalInstance.close();
   };
@@ -493,14 +496,16 @@ app.controller("OtherDialogCtrl", function($scope, $modalInstance, Operation) {
   };
 });
 
-app.controller("OperationDialogCtrl", function($scope, $modalInstance, Table, operation) {
+app.controller("OperationDialogCtrl", function($scope, $modalInstance, Table, Operation, operation) {
   $scope.operation = operation;
   $scope.table = new Table($scope.operation.getTableName());
 
-  var rows = $scope.operation.getRows();
+  if ($scope.operation.getType() !== Operation.Type.OTHER) {
+    var rows = $scope.operation.getRows();
 
-  for (var i = 0; i < rows.length; i++) {
-    $scope.table.addRow(rows[i]);
+    for (var i = 0; i < rows.length; i++) {
+      $scope.table.addRow(rows[i]);
+    }
   }
 
   $scope.close = function() {
