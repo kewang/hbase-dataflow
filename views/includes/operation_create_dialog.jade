@@ -14,7 +14,7 @@
         .col-md-10
           p.form-control-static {{ operation.getSummary() }}
 
-    fieldset
+    fieldset(ng-hide="operation.getType() === 3")
       legend Table
       .form-group
         label.col-md-2.control-label Table
