@@ -4,59 +4,31 @@
 </div>
 <div class="modal-body">
   <form role="form" class="form-horizontal">
-    <div ng-show="operation.getSummary() != null" class="form-group">
-      <label class="col-md-2 control-label">Summary</label>
-      <div class="col-md-10">
-        <p class="form-control-static">{{ operation.getSummary() }}</p>
+    <fieldset>
+      <legend>Operation</legend>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Title</label>
+        <div class="col-md-10">
+          <p class="form-control-static">{{ operation.getTitle() }}</p>
+        </div>
       </div>
-    </div>
-    <hr ng-show="operation.getSummary() != null"/>
-    <div ng-show="operation.getType() !== 3" class="form-group">
-      <label class="col-md-2 control-label">Table</label>
-      <div class="col-md-10">
-        <p class="form-control-static">{{ operation.getTable() }}</p>
+      <div ng-show="operation.getSummary() != null" class="form-group">
+        <label class="col-md-2 control-label">Summary</label>
+        <div class="col-md-10">
+          <p class="form-control-static">{{ operation.getSummary() }}</p>
+        </div>
       </div>
-    </div>
-    <div ng-show="operation.getType() === 0 || operation.getType() === 1" class="form-group">
-      <label class="col-md-2 control-label">Key</label>
-      <div class="col-md-10">
-        <p class="form-control-static">{{ operation.getKey() }}</p>
+    </fieldset>
+    <fieldset ng-hide="operation.getType() === 3">
+      <legend>Table</legend>
+      <div class="form-group">
+        <label class="col-md-2 control-label">Table</label>
+        <div class="col-md-10">
+          <p class="form-control-static">{{ operation.getTableName() }}</p>
+        </div>
       </div>
-    </div>
-    <h5 ng-show="operation.getCreateCQs().length &gt; 0">Create CQ</h5>
-    <table ng-show="operation.getCreateCQs().length &gt; 0" class="table table-bordered table-condensed">
-      <tr>
-        <th ng-repeat="cq in operation.getCreateCQs()">{{ cq.name }}</th>
-      </tr>
-      <tr>
-        <td ng-repeat="cq in operation.getCreateCQs()">
-          <div class="bg-success">{{ cq.value }}</div>
-        </td>
-      </tr>
-    </table>
-    <h5 ng-show="operation.getUpdateCQs().length &gt; 0">Update CQ</h5>
-    <table ng-show="operation.getUpdateCQs().length &gt; 0" class="table table-bordered table-condensed">
-      <tr>
-        <th ng-repeat="cq in operation.getUpdateCQs()">{{ cq.name }}</th>
-      </tr>
-      <tr>
-        <td ng-repeat="cq in operation.getUpdateCQs()">
-          <div class="bg-danger">{{ cq.oldvalue }}</div>
-          <div class="bg-success">{{ cq.newvalue }}</div>
-        </td>
-      </tr>
-    </table>
-    <h5 ng-show="operation.getRows().length &gt; 0">Get Rows</h5>
-    <table ng-show="operation.getRows().length &gt; 0" class="table table-bordered table-condensed">
-      <tr>
-        <th>Row Key</th>
-        <th ng-repeat="cq in operation.getCQs()">{{ cq }}</th>
-      </tr>
-      <tr ng-repeat="row in operation.getRows()">
-        <th>{{ row.key }}</th>
-        <td ng-repeat="value in row.values track by $index">{{ value }}</td>
-      </tr>
-    </table>
+      <hbase-table ng-show="(table != null) &amp;&amp; !table.isEmpty()" table="table"></hbase-table>
+    </fieldset>
   </form>
 </div>
 <div class="modal-footer">

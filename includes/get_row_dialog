@@ -4,20 +4,21 @@
 </div>
 <div class="modal-body">
   <form name="getRowDialogForm" role="form">
-    <input type="text" placeholder="Please Input Operation title" ng-model="form.operationTitle" required="required" class="form-control"/>
-    <hr/>
-    <textarea rows="5" placeholder="Please Input Operation summary" ng-model="form.operationSummary" class="form-control"></textarea>
-    <hr/>
-    <table class="table table-bordered table-condensed">
-      <tr>
-        <th>Row Key</th>
-        <th ng-repeat="c in table.getFullCQs()">{{ c }}</th>
-      </tr>
-      <tr ng-repeat="k in table.getFullKeys()">
-        <th>{{ k.key }}</th>
-        <td ng-repeat="v in k.cqs track by $index">{{ v }}</td>
-      </tr>
-    </table>
+    <fieldset>
+      <legend>Operation</legend>
+      <div class="form-group col-md-12">
+        <input type="text" placeholder="Please Input Operation title" ng-model="form.operation.title" required="required" class="form-control"/>
+      </div>
+      <div class="form-group col-md-12">
+        <textarea rows="5" placeholder="Please Input Operation summary" ng-model="form.operation.summary" class="form-control"></textarea>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Row</legend>
+      <div class="col-md-12">
+        <hbase-table ng-show="(table != null) &amp;&amp; !table.isEmpty()" table="table"></hbase-table>
+      </div>
+    </fieldset>
   </form>
 </div>
 <div class="modal-footer">

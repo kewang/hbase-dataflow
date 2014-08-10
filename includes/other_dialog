@@ -4,9 +4,15 @@
 </div>
 <div class="modal-body">
   <form name="otherDialogForm" role="form">
-    <input type="text" placeholder="Please Input Operation title" ng-model="form.operationTitle" required="required" class="form-control"/>
-    <hr/>
-    <textarea rows="5" placeholder="Please Input Operation summary" ng-model="form.operationSummary" class="form-control"></textarea>
+    <fieldset>
+      <legend>Operation</legend>
+      <div class="form-group col-md-12">
+        <input type="text" placeholder="Please Input Operation title" ng-model="form.operation.title" required="required" class="form-control"/>
+      </div>
+      <div class="form-group col-md-12">
+        <textarea rows="5" placeholder="Please Input Operation summary" ng-model="form.operation.summary" class="form-control"></textarea>
+      </div>
+    </fieldset>
   </form>
 </div>
 <div class="modal-footer">

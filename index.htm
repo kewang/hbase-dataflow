@@ -31,8 +31,8 @@
           <hbase-table ng-show="(table != null) &amp;&amp; !table.isEmpty()" table="table"></hbase-table>
         </div>
         <div id="table-search" ng-controller="TableSearchCtrl" ng-show="search === true" class="col-md-7">
-          <h2>{{ searchtable.getName() }}</h2>
-          <form ng-show="searchtable != null" role="form" class="form-inline">
+          <h2>Search {{ table.getName() }}</h2>
+          <form ng-show="table != null" role="form" class="form-inline">
             <input type="text" ng-model="key" style="width: 40%" class="form-control">
             <button type="button" ng-click="scan({'key': key})" ng-disabled="!key" class="btn btn-primary">Scan</button>
             <button type="button" ng-click="get(key)" ng-disabled="!key" class="btn btn-primary">Get</button>
@@ -41,17 +41,8 @@
             <button type="button" ng-click="addToOperation()" class="btn btn-primary">Add to Operation</button>
           </form>
           <hr>
-          <h3 ng-hide="(searchtable != null) &amp;&amp; !searchtable.isEmpty()">No data</h3>
-          <table ng-show="(searchtable != null) &amp;&amp; !searchtable.isEmpty()" class="table table-bordered table-condensed table-hover">
-            <tr>
-              <th>Row Key</th>
-              <th ng-repeat="c in searchtable.getFullCQs()">{{ c }}</th>
-            </tr>
-            <tr ng-repeat="k in searchtable.getFullKeys()">
-              <th>{{ k.key }}</th>
-              <td ng-repeat="v in k.cqs track by $index">{{ v }}</td>
-            </tr>
-          </table>
+          <h3 ng-hide="(table != null) &amp;&amp; !table.isEmpty()">No data</h3>
+          <hbase-table ng-show="(table != null) &amp;&amp; !table.isEmpty()" table="table"></hbase-table>
         </div>
         <div id="operations" ng-controller="OperationCtrl" class="col-md-3">
           <h2>OPERATIONS
@@ -105,6 +96,7 @@
     <script src="javascripts/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="services/services.js"></script>
     <script src="controllers/controllers.js"></script>
+    <script src="modules/modules.js"></script>
     <script src="directives/directives.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

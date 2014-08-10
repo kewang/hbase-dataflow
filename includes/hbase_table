@@ -2,10 +2,12 @@
 <table class="table table-bordered table-condensed table-hover">
   <tr>
     <th>Row Key</th>
-    <th ng-repeat="c in table.getFullCQs()">{{ c }}</th>
+    <th ng-repeat="column in columns">{{ column.getName() }}</th>
   </tr>
-  <tr ng-repeat="k in table.getFullKeys()">
-    <th>{{ k.key }}</th>
-    <td ng-repeat="v in k.cqs track by $index">{{ v }}</td>
+  <tr ng-repeat="row in rows">
+    <th>{{ row.key }}</th>
+    <td ng-repeat="column in row.columns track by $index">{{ column.getValue().getValue() }}
+      <div ng-hide="column | isEmpty" class="pull-right"><span ng-click="showValues(column)" class="glyphicon glyphicon-list"></span></div>
+    </td>
   </tr>
 </table>
