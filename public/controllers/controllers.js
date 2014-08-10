@@ -362,29 +362,27 @@ app.controller("UpdateRowDialogCtrl", function($rootScope, $scope, $modalInstanc
   };
 });
 
-app.controller("GetRowDialogCtrl", function($scope, $modalInstance, table, Operation) {
+app.controller("GetRowDialogCtrl", function($rootScope, $scope, $modalInstance, table, Operation) {
   $scope.table = table;
   $scope.form = {};
 
   $scope.get = function() {
-    var o = new Operation($scope.form.operationTitle, Operation.Type.GET);
+    var rows = $scope.table.getRows();
+    var operation = new Operation($scope.form.operation.title, Operation.Type.GET);
 
-    o.setSummary($scope.form.operationSummary);
-    o.setTable($scope.table.getName());
+    operation.setSummary($scope.form.operation.summary)
+      .setTableName(table.getName());
 
-    var fullKeys = angular.copy($scope.table.getFullKeys());
-    var fullCQs = angular.copy($scope.table.getFullCQs());
-
-    for (var i = 0; i < fullKeys.length; i++) {
-      var fullKey = fullKeys[i];
-
-      o.createRow(fullKey.key, fullCQs, fullKey.cqs);
+    for (var i = 0; i < rows.length; i++) {
+      operation.addRow(rows[i]);
     }
+
+    Operation.create(operation);
 
     // clear form field
     delete $scope.form;
 
-    Operation.create(o);
+    $rootScope.$broadcast("changeTable", table);
 
     $modalInstance.close();
   };
