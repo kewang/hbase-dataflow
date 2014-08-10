@@ -1,23 +1,32 @@
 .modal-header
   h4.modal-title Create {{ table.getName() }}
+  
 .modal-body
   form(name="createRowDialogForm", role="form")
-    input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operationTitle", required)
-    hr
-    textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operationSummary")
-    hr
-    input.form-control(type="text", placeholder="Please Input Key", ng-model="form.key", required)
-    hr
-    button.btn.btn-default(type="button", ng-click="addCQ()") Add CQ
-    table.table.table-bordered
-      tr
-        th CQ name
-        th Value
-      tr(ng-repeat="cq in form.cqs")
-        td
-          input.form-control(type="text", ng-model="cq.name", required)
-        td
-          input.form-control(type="text", ng-model="cq.value", required)
+    fieldset
+      legend Operation
+      .form-group.col-md-12
+        input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operation.title", required)
+      .form-group.col-md-12
+        textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operation.summary")
+
+    fieldset
+      legend Row
+      .form-group.col-md-12
+        input.form-control(type="text", placeholder="Please Input Key", ng-model="form.key", required)
+      .form-group.col-md-12
+        button.btn.btn-default(type="button", ng-click="addColumn()") Add Column
+      .col-md-12
+        table.table.table-bordered
+          tr
+            th Column Name
+            th Column Value
+          tr(ng-repeat="column in form.columns")
+            td
+              input.form-control(type="text", ng-model="column.name", required)
+            td
+              input.form-control(type="text", ng-model="column.value", required)
+
 .modal-footer
   button.btn.btn-default(type="button", ng-click="close()") Close
   button.btn.btn-primary(type="button", ng-click="create()", ng-disabled="!createRowDialogForm.$valid") Create

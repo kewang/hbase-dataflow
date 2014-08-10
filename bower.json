@@ -4,6 +4,7 @@
   "dependencies": {
     "bootstrap": "latest",
     "angular": "latest",
-    "angular-bootstrap": "latest"
+    "angular-bootstrap": "latest",
+    "angular-mocks": "latest"
   }
 }

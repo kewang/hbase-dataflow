@@ -2,9 +2,13 @@
   h4.modal-title Other
 .modal-body
   form(name="otherDialogForm", role="form")
-    input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operationTitle", required)
-    hr
-    textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operationSummary")
+    fieldset
+      legend Operation
+      .form-group.col-md-12
+        input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operation.title", required)
+      .form-group.col-md-12
+        textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operation.summary")
+
 .modal-footer
   button.btn.btn-default(type="button", ng-click="close()") Close
   button.btn.btn-primary(type="button", ng-click="other()", ng-disabled="!otherDialogForm.$valid") Other

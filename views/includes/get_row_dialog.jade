@@ -1,18 +1,20 @@
 .modal-header
   h4.modal-title Get {{ table.getName() }}
+
 .modal-body
   form(name="getRowDialogForm", role="form")
-    input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operationTitle", required)
-    hr
-    textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operationSummary")
-    hr
-    table.table.table-bordered.table-condensed
-      tr
-        th Row Key
-        th(ng-repeat="c in table.getFullCQs()") {{ c }}
-      tr(ng-repeat="k in table.getFullKeys()")
-        th {{ k.key }}
-        td(ng-repeat="v in k.cqs track by $index") {{ v }}
+    fieldset
+      legend Operation
+      .form-group.col-md-12
+        input.form-control(type="text", placeholder="Please Input Operation title", ng-model="form.operation.title", required)
+      .form-group.col-md-12
+        textarea.form-control(rows="5", placeholder="Please Input Operation summary", ng-model="form.operation.summary")
+
+    fieldset
+      legend Row
+      .col-md-12
+        hbase-table(ng-show="(table != null) && !table.isEmpty()", table="table")
+
 .modal-footer
   button.btn.btn-default(type="button", ng-click="close()") Close
   button.btn.btn-primary(type="button", ng-click="get()", ng-disabled="!getRowDialogForm.$valid") Get
