@@ -440,29 +440,8 @@ app.controller("OperationCtrl", function($scope, $modal, Operation) {
   };
 
   $scope.showOperationDialog = function(operation) {
-    var templateUrl;
-
-    switch (operation.getType()) {
-      case Operation.Type.CREATE:
-        templateUrl = "includes/operation_create_dialog";
-
-        break;
-      case Operation.Type.UPDATE:
-        templateUrl = "includes/operation_update_dialog";
-
-        break;
-      case Operation.Type.GET:
-        templateUrl = "includes/operation_get_dialog";
-
-        break;
-      case Operation.Type.OTHER:
-        templateUrl = "includes/operation_other_dialog";
-
-        break;
-    }
-
     $modal.open({
-      templateUrl: templateUrl,
+      templateUrl: "includes/operation_dialog",
       controller: "OperationDialogCtrl",
       size: "lg",
       windowClass: "dialog",
