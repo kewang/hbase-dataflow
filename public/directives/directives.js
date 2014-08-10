@@ -10,6 +10,10 @@ app.directive('hbaseTable', function() {
       table: "="
     },
     link: function(scope, elem, attrs) {
+      scope.showValues = function(value) {
+        alert(JSON.stringify(value, null, 2));
+      };
+
       // deep watch attrs.table
       scope.$watch(attrs.table, function(table) {
         function findColumnIndex(columns, column) {

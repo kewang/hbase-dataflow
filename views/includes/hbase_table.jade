@@ -4,4 +4,7 @@ table.table.table-bordered.table-condensed.table-hover
     th(ng-repeat="column in columns") {{ column.getName() }}
   tr(ng-repeat="row in rows")
     th {{ row.key }}
-    td(ng-repeat="value in row.values track by $index") {{ value.getValue() }}
+    td(ng-repeat="value in row.values track by $index")
+      {{ value.getValue() }}
+      .pull-right
+        span.glyphicon.glyphicon-list(ng-click="showValues(value)")
