@@ -201,14 +201,6 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
   $scope.exportData = function() {
     var MIMETYPE = "application/json";
     var tmpTables = angular.copy($scope.tables);
-
-    for (var i = 0; i < tmpTables.length; i++) {
-      var table = tmpTables[i];
-
-      delete table.fullRowkeys;
-      delete table.fullCQs;
-    }
-
     var root = {};
 
     root.tables = tmpTables;
