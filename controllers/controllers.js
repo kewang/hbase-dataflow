@@ -184,7 +184,7 @@ app.controller("RowCtrl", function($scope, $modal, Table) {
   });
 });
 
-app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation, Sample, ImportService) {
+app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation, Sample1, ImportService) {
   $scope.tables = Table.findAll();
   $scope.operations = Operation.findAll();
 
@@ -234,11 +234,11 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
 
     switch (index) {
       case 1:
-        result = ImportService.import(Sample.SAMPLE1);
+        result = ImportService.import(Sample1);
 
         break;
       case 2:
-        result = ImportService.import(Sample.SAMPLE2);
+        result = ImportService.import(Sample2);
 
         break;
     }

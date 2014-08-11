@@ -388,12 +388,6 @@ app.factory("Operation", function() {
   return Operation;
 });
 
-app.factory("Sample", function() {
-  function Sample() {}
-
-  return Sample;
-});
-
 app.factory("ImportService", function(Table, Row, Operation) {
   function ImportService() {}
 
