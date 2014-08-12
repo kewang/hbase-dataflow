@@ -184,7 +184,7 @@ app.controller("RowCtrl", function($scope, $modal, Table) {
   });
 });
 
-app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation, Sample1, ImportService) {
+app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operation, Sample, ImportService) {
   $scope.tables = Table.findAll();
   $scope.operations = Operation.findAll();
 
@@ -200,11 +200,10 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
 
   $scope.exportData = function() {
     var MIMETYPE = "application/json";
-    var tmpTables = angular.copy($scope.tables);
-    var root = {};
-
-    root.tables = tmpTables;
-    root.operations = angular.copy($scope.operations);
+    var root = {
+      tables: angular.copy($scope.tables),
+      operations: angular.copy($scope.operations)
+    };
 
     var blob = new Blob([JSON.stringify(root)], {
       type: MIMETYPE
@@ -230,18 +229,7 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
   };
 
   $scope.importSample = function(index) {
-    var result;
-
-    switch (index) {
-      case 1:
-        result = ImportService.import(Sample1);
-
-        break;
-      case 2:
-        result = ImportService.import(Sample2);
-
-        break;
-    }
+    var result = ImportService.import(Sample.getSample(index));
 
     $scope.clear();
 
