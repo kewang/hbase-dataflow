@@ -200,9 +200,8 @@ app.controller("SystemCtrl", function($rootScope, $scope, $modal, Table, Operati
 
   $scope.exportData = function() {
     var MIMETYPE = "application/json";
-    var tmpTables = angular.copy($scope.tables);
     var root = {
-      tables: tmpTables,
+      tables: angular.copy($scope.tables),
       operations: angular.copy($scope.operations)
     };
 
