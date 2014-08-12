@@ -2,7 +2,14 @@
 
 var app = angular.module("hbase-dataflow-app");
 
-app.constant('Sample1', {
+// imitate http://blog.jdriven.com/2013/03/how-to-create-singleton-angularjs-services-in-4-different-ways/
+var Sample = {
+  getSample: function(index) {
+    return SAMPLE[index];
+  }
+};
+
+var SAMPLE = [{
   "tables": [{
     "name": "Message",
     "rows": [{
@@ -233,4 +240,6 @@ app.constant('Sample1', {
       }]
     }]
   }]
-});
+}];
+
+app.constant('Sample', Sample);
