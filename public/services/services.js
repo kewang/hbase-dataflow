@@ -476,3 +476,84 @@ app.factory("Utils", function(Row) {
 
   return Utils;
 });
+
+app.factory("Filter", function() {
+  function Filter() {}
+
+  Filter.prototype.reset = function() {};
+
+  Filter.prototype.filterAllRemaining = function() {};
+
+  Filter.prototype.filterRowKey = function() {};
+
+  Filter.prototype.filterKeyValue = function() {};
+
+  Filter.prototype.transform = function() {};
+
+  Filter.prototype.filterRowCells = function() {};
+
+  Filter.prototype.filterRow = function() {};
+
+  return Filter;
+});
+
+app.factory("SingleColumnValueFilter", function(Filter, CompareOperator) {
+  function SingleColumnValueFilter(column, compareOperator, value) {
+    this.column = column;
+    this.compareOperator = compareOperator;
+    this.value = value;
+  }
+
+  SingleColumnValueFilter.prototype = new Filter();
+
+  SingleColumnValueFilter.prototype.filter = function() {
+    switch (compareOperator.getType()) {
+      case CompareOperator.Type.EQUAL:
+        break;
+      case CompareOperator.Type.GREATER:
+        break;
+      case CompareOperator.Type.GREATER_OR_EQUAL:
+        break;
+      case CompareOperator.Type.LESS:
+        break;
+      case CompareOperator.Type.LESS_OR_EQUAL:
+        break;
+      case CompareOperator.Type.NO_OP:
+        break;
+      case CompareOperator.Type.NOT_EQUAL:
+        break;
+    }
+  };
+
+  return SingleColumnValueFilter;
+});
+
+app.factory("CompareFilter", function(Filter) {
+  function CompareFilter() {}
+
+  CompareFilter.prototype = new Filter();
+
+  return CompareFilter;
+});
+
+app.factory("CompareOperator", function() {
+  CompareOperator.Type = {
+    EQUAL: 0,
+    GREATER: 1,
+    GREATER_OR_EQUAL: 2,
+    LESS: 3,
+    LESS_OR_EQUAL: 4,
+    NO_OP: 5,
+    NOT_EQUAL: 6
+  };
+
+  function CompareOperator(type) {
+    this.type = type;
+  }
+
+  CompareOperator.prototype.getType = function() {
+    return this.type;
+  };
+
+  return CompareOperator;
+});
