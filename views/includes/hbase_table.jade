@@ -3,13 +3,16 @@ table.table.table-bordered.table-condensed.table-hover
     th Row Key
     th(ng-repeat="column in columns") {{ column.getName() }}
       .pull-right
+      	//- show filter menu
         span.glyphicon.glyphicon-search(ng-click="filterByColumn(column.getName())")
   tr(ng-repeat="row in rows")
     th {{ row.key }}
       .pull-right
+      	//- show filter menu
         span.glyphicon.glyphicon-search(ng-click="filterByRowkey(row.key)")
     td(ng-repeat="column in row.columns track by $index") {{ column.getValue().getValue() }}
       .pull-right(ng-hide="column | isEmpty")
         span.glyphicon.glyphicon-list(ng-click="showValues(column)")
       .pull-right(ng-hide="column | isEmpty")
+      	//- show filter menu
         span.glyphicon.glyphicon-search(ng-click="filterByValue(column.getValue())")
