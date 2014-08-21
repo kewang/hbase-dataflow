@@ -10,14 +10,17 @@ app.directive('hbaseTable', function() {
       table: "="
     },
     link: function(scope, elem, attrs) {
+      // MUST ADD FILTER MENU
       scope.filterByColumn = function(column) {
         alert(column);
       };
 
+      // MUST ADD FILTER MENU
       scope.filterByRowkey = function(rowkey) {
         alert(rowkey);
       };
 
+      // MUST ADD FILTER MENU
       scope.filterByValue = function(value) {
         alert(JSON.stringify(value));
       };
