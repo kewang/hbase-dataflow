@@ -2,8 +2,14 @@ table.table.table-bordered.table-condensed.table-hover
   tr
     th Row Key
     th(ng-repeat="column in columns") {{ column.getName() }}
+      .pull-right
+        span.glyphicon.glyphicon-search
   tr(ng-repeat="row in rows")
     th {{ row.key }}
+      .pull-right
+        span.glyphicon.glyphicon-search
     td(ng-repeat="column in row.columns track by $index") {{ column.getValue().getValue() }}
       .pull-right(ng-hide="column | isEmpty")
         span.glyphicon.glyphicon-list(ng-click="showValues(column)")
+      .pull-right(ng-hide="column | isEmpty")
+        span.glyphicon.glyphicon-search
