@@ -10,6 +10,18 @@ app.directive('hbaseTable', function() {
       table: "="
     },
     link: function(scope, elem, attrs) {
+      scope.filterByColumn = function(column) {
+        alert(column);
+      };
+
+      scope.filterByRowkey = function(rowkey) {
+        alert(rowkey);
+      };
+
+      scope.filterByValue = function(value) {
+        alert(JSON.stringify(value));
+      };
+
       scope.showValues = function(column) {
         alert(JSON.stringify(column, null, 2));
       };
