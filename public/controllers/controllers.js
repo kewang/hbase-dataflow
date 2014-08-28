@@ -471,3 +471,7 @@ app.controller("OperationDialogCtrl", function($scope, $modalInstance, Table, Op
     $modalInstance.dismiss();
   };
 });
+
+app.controller("RowkeyFilterDialogCtrl", function($scope, rowkey) {
+  $scope.rowkey = rowkey;
+});

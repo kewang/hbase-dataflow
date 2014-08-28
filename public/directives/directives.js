@@ -2,7 +2,7 @@
 
 var app = angular.module("hbase-dataflow-app");
 
-app.directive('hbaseTable', function() {
+app.directive('hbaseTable', function($modal) {
   return {
     restrict: 'E',
     templateUrl: 'includes/hbase_table',
@@ -17,7 +17,17 @@ app.directive('hbaseTable', function() {
 
       // MUST ADD FILTER MENU
       scope.filterByRowkey = function(rowkey) {
-        alert(rowkey);
+        $modal.open({
+          templateUrl: "includes/rowkey_filter_dialog",
+          controller: "RowkeyFilterDialogCtrl",
+          size: "lg",
+          windowClass: "dialog",
+          resolve: {
+            rowkey: function() {
+              return rowkey;
+            }
+          }
+        });
       };
 
       // MUST ADD FILTER MENU
