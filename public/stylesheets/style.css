@@ -10,3 +10,7 @@ body {
   max-height: 400px;
   overflow-y: auto;
 }
+
+.glyphicon {
+  cursor: pointer;
+}
