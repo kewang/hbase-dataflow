@@ -18,7 +18,6 @@ block content
           input.form-control(type="text", ng-model="key", style="width: 70%")
           button.btn.btn-primary(type="button", ng-click="scan()", ng-disabled="!key") Scan
           button.btn.btn-primary(type="button", ng-click="get()", ng-disabled="!key") Get
-          button.btn.btn-primary(type="button", ng-click="filter()", ng-disabled="!key") Filter
         hr
         h3(ng-hide="(table != null) && !table.isEmpty()") No data
         hbase-table(ng-show="(table != null) && !table.isEmpty()", table="table")
@@ -29,7 +28,6 @@ block content
           input.form-control(type="text", ng-model="key", style="width: 40%")
           button.btn.btn-primary(type="button", ng-click="scan({'key': key})", ng-disabled="!key") Scan
           button.btn.btn-primary(type="button", ng-click="get(key)", ng-disabled="!key") Get
-          button.btn.btn-primary(type="button", ng-click="filter(key)", ng-disabled="!key") Filter
           button.btn.btn-primary(type="button", ng-click="clear()") Clear
           button.btn.btn-primary(type="button", ng-click="addToOperation()") Add to Operation
         hr
